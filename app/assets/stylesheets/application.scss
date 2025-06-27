@@ -1181,3 +1181,13 @@ td.day .calendar-text {
   filter: blur(1px) drop-shadow(10px 4px 6px black) brightness(115%);
   pointer-events: none;
 }
+
+#timezone-controls {
+  overflow: auto;
+  // font-size: 0.7em;
+  label { font-weight: inherit; }
+  fieldset legend { font-size: inherit; }
+  #timezone-display .unselected { display: none; }
+  .center-block { width: 80%; }
+  .close-timezone-controls { float: right; }
+}
