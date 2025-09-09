@@ -40,6 +40,7 @@
     <%# ACTUAL RESULTS LIST %>
     <% if @events.any? %>
       <div class="tab-content">
+        <%= render partial: 'events/event_timezone_control' %>
         <div id="home" class="tab-pane fade in active">
           <%= render partial: 'common/masonry_grid', locals: { objects: @events } %>
 
