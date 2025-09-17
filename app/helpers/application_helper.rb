@@ -233,6 +233,10 @@ module ApplicationHelper
     APP_VERSION.blank? ? '' : APP_VERSION.to_s
   end
 
+  def instance_version_text
+    INSTANCE_VERSION.blank? ? '' : INSTANCE_VERSION.to_s
+  end
+
   # From http://stackoverflow.com/questions/22787021/rails-4-name-of-current-layout
   def current_layout
     (controller.send :_layout).inspect.split('/').last.gsub(/.html.erb/, '')

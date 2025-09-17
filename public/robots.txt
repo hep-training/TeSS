@@ -1,1 +1,8 @@
-# See https://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+User-agent: *
+Disallow: /materials?*
+Disallow: /events?*
+Disallow: /events.rss?*
+Disallow: /content_providers?
+Disallow: /workflows?
+Disallow: /collections?
+Disallow: /learning_paths?

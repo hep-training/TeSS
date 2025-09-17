@@ -8,6 +8,9 @@
 
   <div id="content">
     <h2><%=t("features.events.long")%></h2>
+
+    <%= render_markdown(events_info) %>
+
     <% content_for :buttons do %>
       <!-- Subscribe button -->
       <% if TeSS::Config.feature['subscription'] %>
@@ -16,10 +19,6 @@
       <!-- Register button -->
       <%= link_to new_event_path, class: 'btn btn-primary' do %>
         <%= t('register.buttons.events') %>
-      <% end %>
-      <!-- Info -->
-      <%= info_button("What are events in #{TeSS::Config.site['title_short']}?", hide_text: true) do %>
-        <%= render_markdown(events_info) %>
       <% end %>
     <% end %>
     <% content_for :display_options do %>

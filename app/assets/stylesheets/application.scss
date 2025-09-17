@@ -67,7 +67,7 @@ body {
   min-width: 320px;
   position: relative;
   margin: 0;
-  padding-bottom: 500px;
+  padding-bottom: 300px;
   min-height: 100%;
 }
 
@@ -95,7 +95,7 @@ section {
 }
 
 .module-heading {
-  margin: 50px 0;
+  margin: 0 0 30px 0;
 }
 
 a.btn-icon {
@@ -275,6 +275,22 @@ ul.facet-sort-wrap {
 // Modified from CKAN - for sidebar facets
 ul.unstyled {
   @include unstyled-ul;
+}
+
+.navbar {
+  border-radius: $navbar-border-radius;
+  font-size: larger;
+  background-color: $navbar-default-bg;
+  color: $navbar-default-color;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  transition: font-size 0.3s ease, padding-bottom 0.3s ease, padding-top 0.3s ease;
+  &.scrolled {
+    font-size: medium;
+    padding-bottom: 0;
+    padding-top: 0;
+  }
 }
 
 .nav-simple {
@@ -838,6 +854,9 @@ input[type=checkbox].field-lock + label:before,
 .header-notice {
   background-color: $state-info-bg;
   color: $state-info-text;
+  z-index: 100001;
+  position: sticky;
+  top: 0;
 }
 
 .omniauth-elixir_aai {
@@ -1041,7 +1060,7 @@ td.day .calendar-text {
 
 .sticky-navbar-enabled {
   .navbar {
-    border-radius: 0;
+    border-radius: $navbar-border-radius;
     font-size: larger;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -1054,26 +1073,30 @@ td.day .calendar-text {
       padding-top: 0;
     }
   }
-
+  
   .unified-header {
     z-index: 100000;
     position: sticky;
     top: 0;
-    background-color: $navbar-default-bg;
-
+    background-color: transparent;
+    
     .navbar-brand {
-
+      
       img {
         padding: 0px 0px 0px 0px;
         transition: padding 0.3s ease;
-
+        
         &.scrolled {
           padding: 10px 5px 5px 5px;
         }
       }
     }
   }
-
+  
+  .modal, .modal-dialog {
+    padding-top: 100px
+  }
+  
   .header-notice + .navbar {
     padding-bottom: 20px;
     padding-top: 20px;
@@ -1089,6 +1112,14 @@ td.day .calendar-text {
       position: sticky;
       top: 0;
     }
+
+    .modal, .modal-dialog {
+      padding-top: 120px
+    }
+  }
+
+  #sitemaps, #example, #automatic, #trainer_details, #editorial, .row, .even-about-block, .odd-about-block {
+    scroll-margin-top: 85px;
   }
 }
 
@@ -1120,4 +1151,33 @@ td.day .calendar-text {
 
 .tag-topic, .tag-operation {
   text-decoration: none;
+}
+
+/* Liquid glass effect class cf. https://dev.to/kevinbism/recreating-apples-liquid-glass-effect-with-pure-css-3gpl */
+.glass {
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(2px) saturate(180%);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.8);
+  border-radius: 2rem;
+  padding: 1.25rem;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3);
+}
+
+.glass::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2rem;
+  backdrop-filter: blur(1px);
+  box-shadow: inset -10px -8px 0px -11px rgba(255, 255, 255, 1),
+    inset 0px -9px 0px -8px rgba(255, 255, 255, 1);
+  opacity: 0.6;
+  z-index: -1;
+  filter: blur(1px) drop-shadow(10px 4px 6px black) brightness(115%);
+  pointer-events: none;
 }

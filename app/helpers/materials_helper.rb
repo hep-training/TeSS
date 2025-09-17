@@ -16,6 +16,22 @@ module MaterialsHelper
     I18n.t('info.topics.description')
   end
 
+  def topics_info
+    format(TOPICS_INFO, site_name: TeSS::Config.site['title_short'])
+  end
+
+  def learning_paths_info
+    I18n.t('info.learning_paths.description',
+           link: link_to(I18n.t('info.learning_paths.link'),
+                         registering_learning_paths_path(anchor: 'register_paths')))
+  end
+
+  def learning_path_topics_info
+    I18n.t('info.learning_path_topics.description',
+           link: link_to(I18n.t('info.learning_path_topics.link'),
+                         registering_learning_paths_path(anchor: 'topics')))
+  end
+
   # Returns an array of two-element arrays of licences ready to be used in options_for_select() for generating option/select tags
   # [['Licence 1 full name','Licence 1 abbreviation'], ['Licence 2 full name','Licence 2 abbreviation'], ...]
   def licence_options_for_select

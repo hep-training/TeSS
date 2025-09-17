@@ -10,7 +10,7 @@
     </nav>
   <% end %>
 
-  <nav class="navbar navbar-default">
+  <nav class="navbar navbar-default <%= 'glass' if TeSS::Config.site['default_theme'] == 'everse' %>">
     <div class="container-fluid" id="header-container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -45,14 +45,14 @@
             { feature: 'about', link: about_path },
             { feature: 'events', link: events_path },
             { feature: 'materials', link: materials_path },
-            { feature: 'elearning_materials', link: elearning_materials_path },
-            { feature: 'learning_paths', link: learning_paths_path },
-            { feature: 'workflows', link: workflows_path },
-            { feature: 'collections', link: collections_path },
+            # { feature: 'elearning_materials', link: elearning_materials_path },
+            # { feature: 'learning_paths', link: learning_paths_path },
+            # { feature: 'workflows', link: workflows_path },
+            # { feature: 'collections', link: collections_path },
             { feature: 'trainers', link: trainers_path },
-            { feature: 'content_providers', link: content_providers_path },
-            { feature: 'nodes', link: nodes_path },
-            { feature: 'spaces', link: spaces_path }
+            # { feature: 'content_providers', link: content_providers_path },
+            # { feature: 'nodes', link: nodes_path },
+            # { feature: 'spaces', link: spaces_path }
           ].select do |t|
             t[:feature] == 'about' || feature_enabled?(t[:feature])
           end.sort_by do |t|

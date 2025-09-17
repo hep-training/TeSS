@@ -5,7 +5,8 @@
     <li class="about-page-category">
       <%= link_to t('about.sidebar.what_is', title: TeSS::Config.site['title_short']), about_path %>
     </li>
-    <li><%= about_nav_link(t('about.sidebar.what_we_catalogue'), about_path, 'events') %></li>
+    <li><%= about_nav_link(t('about.sidebar.materials'), about_path, 'materials') %></li>
+    <li><%= about_nav_link(t('about.sidebar.events'), about_path, 'events') %></li>
     <li><%= about_nav_link(t('about.sidebar.subscribing_to_notifications'),
             about_path, 'subscribe') %></li>
     <li><%= about_nav_link(t('about.sidebar.widgets_and_api'),

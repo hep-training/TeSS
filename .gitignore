@@ -12,8 +12,10 @@
 !/log/.keep
 /tmp
 config/secrets.yml
+config/secrets-*
 config/sunspot.yml
 config/tess.yml
+config/tess-*
 config/ingestion.yml
 config/initializers/local_hosts.rb
 tmp/
@@ -28,8 +30,7 @@ public/sitemaps/*
 public/system
 .idea/*
 coverage
-.env
-.env-production
+.env*
 letsencrypt
 docker-volumes
 
@@ -43,3 +44,5 @@ tess.crontab
 
 app-secrets*
 node_modules/
+config/secrets
+config/locales/overrides/custom.en.yml

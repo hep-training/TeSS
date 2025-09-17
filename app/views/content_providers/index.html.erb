@@ -8,12 +8,12 @@
 
   <div id="content">
     <h2><%=t("features.content_providers.long")%></h2>
+
+    <%= render_markdown(content_providers_info) %>
+
     <% content_for :buttons do %>
       <%= link_to new_content_provider_path, class: 'btn btn-primary' do %>
         <%= t('register.buttons.content_providers') %>
-      <% end %>
-      <%= info_button("What are content providers in #{TeSS::Config.site['title_short']}?", hide_text: true) do %>
-        <%= render_markdown(content_providers_info) %>
       <% end %>
     <% end %>
 

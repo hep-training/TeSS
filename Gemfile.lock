@@ -758,6 +758,10 @@ GEM
     sparql-client (3.3.0)
       net-http-persistent (~> 4.0, >= 4.0.2)
       rdf (~> 3.3)
+    spring (4.3.0)
+    spring-watcher-listen (2.1.0)
+      listen (>= 2.7, < 4.0)
+      spring (>= 4)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -930,6 +934,7 @@ DEPENDENCIES
   sitemap-parser
   sitemap_generator
   slim
+  spring-watcher-listen
   sunspot_rails
   terser
   tess_rdf_extractors!
