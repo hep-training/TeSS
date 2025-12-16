@@ -30,6 +30,7 @@
       <% if current_space.default? %>
 
         <%= render partial: 'static/home/welcome' %>
+        <%= render partial: 'static/home/search_box' if TeSS::Config.site.dig('home_page', 'search_box') %>
 
       <% else %>
 
@@ -62,8 +63,6 @@
   <%= render partial: 'static/home/counters', locals: { features: ['events', 'materials'] } %>
 
 <% if current_space.default? %>
-
-  <%= render partial: 'static/home/search_box' if TeSS::Config.site.dig('home_page', 'search_box') %>
 
   <%= render partial: 'static/home/provider_carousel' if TeSS::Config.site.dig('home_page', 'provider_carousel') %>
 
