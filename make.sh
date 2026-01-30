@@ -53,6 +53,7 @@ condition() {
     echo -e "${YELLOW}CHECKLIST:\n \
       Did you build locally the right version of TeSS?\n \
       Did you change 'INSTANCE_VERSION' in .env ?\n \
+      Do you have the right tess.yml config?\n \
       [y/n]${NC}"
     read -p "" yn
     case $yn in
