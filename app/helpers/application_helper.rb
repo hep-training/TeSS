@@ -39,7 +39,7 @@ module ApplicationHelper
   PRIORITY_LANGUAGES = ['EN']
 
   # Country timezones that have priority in the timezone selection menu. Using ISO 3166-1 Alpha2 country code.
-  PRIORITY_TIME_ZONES = %w[NL GB]
+  PRIORITY_TIME_ZONES = %w[FR GB]
 
   # Currencies that have priority in the currency selection menu. Using ISO 4217 code.
   PRIORITY_CURRENCIES = %w[EUR GBP]
