@@ -55,7 +55,7 @@
 
     <div class="col-sm-6 col-xs-12">
 
-      <%= render partial: 'static/home/featured_trainer' if TeSS::Config.site.dig('home_page', 'featured_trainer') %>
+      <%= render partial: 'static/home/featured_trainer' if TeSS::Config.site.dig('home_page', 'featured_trainer') && @featured_trainer.any? %>
 
     </div>
   </section>
