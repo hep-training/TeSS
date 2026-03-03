@@ -4,8 +4,8 @@ set -euo pipefail
 # ------------------------------------------------------------------------------
 # make.sh — Build, push, and deploy TeSS
 # Usage:
-#   ./make.sh <trainingstg|training|eversetraining> <REGISTRY> <USERNAME> <REMOTE_REPO> <TAG>
-#   ./make.sh local <trainingstg|training|eversetraining>
+#   ./make.sh <trainingstg|heptraining|eversetraining> <REGISTRY> <USERNAME> <REMOTE_REPO> <TAG>
+#   ./make.sh local <trainingstg|heptraining|eversetraining>
 #   ./make.sh clean
 #   ./make.sh re
 # ------------------------------------------------------------------------------
@@ -22,8 +22,8 @@ NC="\033[0m"
 
 usage() {
   echo -e "${RED}[MAKE] Usage:${NC}"
-  echo "  ./make.sh <trainingstg|training|eversetraining> <REGISTRY> <USERNAME> <REMOTE_REPO> <TAG>"
-  echo "  ./make.sh local <trainingstg|training|eversetraining>"
+  echo "  ./make.sh <trainingstg|heptraining|eversetraining> <REGISTRY> <USERNAME> <REMOTE_REPO> <TAG>"
+  echo "  ./make.sh local <trainingstg|heptraining|eversetraining>"
   echo "  ./make.sh test <pathtotest>"
   echo "  ./make.sh clean"
   echo "  ./make.sh re"
@@ -135,7 +135,7 @@ main() {
   shift || true
 
   case "$CMD" in
-    trainingstg|training|eversetraining)
+    trainingstg|heptraining|eversetraining)
       BUILD="$CMD"
       REGISTRY="${1:-}"
       USERNAME="${2:-}"
