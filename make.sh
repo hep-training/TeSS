@@ -4,8 +4,8 @@ set -euo pipefail
 # ------------------------------------------------------------------------------
 # make.sh — Build, push, and deploy TeSS
 # Usage:
-#   ./make.sh <trainingstg|heptraining|eversetraining> <REGISTRY> <USERNAME> <REMOTE_REPO> <TAG>
-#   ./make.sh local <trainingstg|heptraining|eversetraining>
+#   ./make.sh <trainingstg|training|eversetraining> <REGISTRY> <USERNAME> <REMOTE_REPO> <TAG>
+#   ./make.sh local <trainingstg|training|eversetraining>
 #   ./make.sh clean
 #   ./make.sh re
 # ------------------------------------------------------------------------------
@@ -22,8 +22,8 @@ NC="\033[0m"
 
 usage() {
   echo -e "${RED}[MAKE] Usage:${NC}"
-  echo "  ./make.sh <trainingstg|heptraining|eversetraining> <REGISTRY> <USERNAME> <REMOTE_REPO> <TAG>"
-  echo "  ./make.sh local <trainingstg|heptraining|eversetraining>"
+  echo "  ./make.sh <trainingstg|training|eversetraining> <REGISTRY> <USERNAME> <REMOTE_REPO> <TAG>"
+  echo "  ./make.sh local <trainingstg|training|eversetraining>"
   echo "  ./make.sh test <pathtotest>"
   echo "  ./make.sh clean"
   echo "  ./make.sh re"
@@ -98,6 +98,7 @@ local_env() {
 
   docker compose run --remove-orphans app bundle install
   docker compose run --remove-orphans app bundle exec rake db:setup
+  docker compose run --remove-orphans app yarn install
   echo -e "${GREEN}[MAKE] Ready to build${NC}"
   docker compose up -d --build
 }
@@ -135,7 +136,7 @@ main() {
   shift || true
 
   case "$CMD" in
-    trainingstg|heptraining|eversetraining)
+    trainingstg|training|eversetraining)
       BUILD="$CMD"
       REGISTRY="${1:-}"
       USERNAME="${2:-}"
