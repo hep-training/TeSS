@@ -16,10 +16,6 @@ module MaterialsHelper
     I18n.t('info.topics.description')
   end
 
-  def topics_info
-    format(TOPICS_INFO, site_name: TeSS::Config.site['title_short'])
-  end
-
   def learning_paths_info
     I18n.t('info.learning_paths.description',
            link: link_to(I18n.t('info.learning_paths.link'),
