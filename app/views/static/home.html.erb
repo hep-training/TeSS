@@ -68,7 +68,7 @@
 
   <%= render partial: 'static/home/catalogue_blocks' if TeSS::Config.site.dig('home_page', 'catalogue_blocks') %>
 
-  <%= render partial: 'static/home/provider_grid' if TeSS::Config.site.dig('home_page', 'provider_grid' && @content_providers.any?) %>
+  <%= render partial: 'static/home/provider_grid' if TeSS::Config.site.dig('home_page', 'provider_grid') %>
 
   <%= render partial: 'static/home/faq' if TeSS::Config.site.dig('home_page', 'faq')&.any? %>
 
