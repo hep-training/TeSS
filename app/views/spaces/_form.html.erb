@@ -28,12 +28,11 @@
 
   <div id="groups_container" style="display: none;">
     <%= f.autocompleter :groups,
-                      url: groups_path, transform_function: 'groups',
+                      url: '/search_groups', transform_function: 'groups',
                       template: 'autocompleter/group_id',
-                      form_field_name: 'space[group_ids]',
+                      form_field_name: 'space[groups]',
                       label_field: :title,
-                      id_field: :id,
-                      existing_items_method: :groups %>
+                      id_field: :id %>
   </div>
 
   <div>

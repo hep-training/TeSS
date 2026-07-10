@@ -1,5 +1,7 @@
 # The controller for actions related to the Spaces model
 class SpacesController < ApplicationController
+  include ApiService
+
   before_action :ensure_feature_enabled
   before_action :set_space, only: [:show, :edit, :update, :destroy]
   before_action :set_breadcrumbs
@@ -92,6 +94,22 @@ class SpacesController < ApplicationController
     end
   end
 
+  def search_groups
+    authorize Space
+    query = params[:q]
+    data = get_groups_from_query(query)
+    
+    # Transformer les données pour correspondre au template
+    transformed_data = data.map do |group|
+      {
+        id: group['groupIdentifier'],
+        title: group['displayName']
+      }
+    end
+    
+    render json: transformed_data
+  end
+
   private
 
   # Loads the Space identified by <tt>params[:id]</tt> into +@space+.
@@ -103,7 +121,7 @@ class SpacesController < ApplicationController
   #           update. Includes +:host+ only when the current user is an
   #           admin.
   def space_params
-    permitted = [:title, :description, :theme, :image, :image_url, :is_private, { administrator_ids: [] }, { enabled_features: [] }, { group_ids: [] }]
+    permitted = [:title, :description, :theme, :image, :image_url, :is_private, { administrator_ids: [] }, { enabled_features: [] }, { groups: [] }]
     permitted += [:host] if current_user.is_admin?
     params.require(:space).permit(*permitted)
   end

@@ -99,55 +99,57 @@
     </div>
 
     <%# ---- Groups ---- %>
-    <% user_groups = @user.groups.includes(:group_memberships) %>
-    <% groups_limit = 5 %>
-    <h4 class="nav-heading">
-      Groups
-      <% if user_groups.any? %>
-        <span class="badge" style="background: #2a6ebb; margin-left: 4px;"><%= user_groups.count %></span>
-      <% end %>
-    </h4>
-    <div class="nav-block">
-      <% if user_groups.any? %>
-        <% visible_groups = user_groups.first(groups_limit) %>
-        <% hidden_groups  = user_groups.drop(groups_limit) %>
-
-        <% visible_groups.each do |group| %>
-          <p style="margin-bottom: 0.4rem;">
-            <% if @user.is_group_owner?(group) %>
-              <i class="glyphicon glyphicon-star" style="color: #E9822C;" title="Owner"></i>
-            <% else %>
-              <i class="glyphicon glyphicon-user" style="color: #aaa;"></i>
-            <% end %>
-            &nbsp;<%= link_to group.title, group %>
-          </p>
+    <% unless TeSS::Config.feature['api_system_for_groups'] %>
+      <% user_groups = @user.groups.includes(:group_memberships) %>
+      <% groups_limit = 5 %>
+      <h4 class="nav-heading">
+        Groups
+        <% if user_groups.any? %>
+          <span class="badge" style="background: #2a6ebb; margin-left: 4px;"><%= user_groups.count %></span>
         <% end %>
+      </h4>
+      <div class="nav-block">
+        <% if user_groups.any? %>
+          <% visible_groups = user_groups.first(groups_limit) %>
+          <% hidden_groups  = user_groups.drop(groups_limit) %>
 
-        <% if hidden_groups.any? %>
-          <div class="collapse" id="user-groups-overflow">
-            <% hidden_groups.each do |group| %>
-              <p style="margin-bottom: 0.4rem;">
-                <% if @user.is_group_owner?(group) %>
-                  <i class="glyphicon glyphicon-star" style="color: #E9822C;" title="Owner"></i>
-                <% else %>
-                  <i class="glyphicon glyphicon-user" style="color: #aaa;"></i>
-                <% end %>
-                &nbsp;<%= link_to group.title, group %>
-              </p>
-            <% end %>
-          </div>
-          <a href="#user-groups-overflow"
-             data-toggle="collapse"
-             class="user-groups-toggle small"
-             aria-expanded="false">
-            Show <%= hidden_groups.count %> more
-            <i class="glyphicon glyphicon-chevron-down" style="font-size: 0.75em;"></i>
-          </a>
+          <% visible_groups.each do |group| %>
+            <p style="margin-bottom: 0.4rem;">
+              <% if @user.is_group_owner?(group) %>
+                <i class="glyphicon glyphicon-star" style="color: #E9822C;" title="Owner"></i>
+              <% else %>
+                <i class="glyphicon glyphicon-user" style="color: #aaa;"></i>
+              <% end %>
+              &nbsp;<%= link_to group.title, group %>
+            </p>
+          <% end %>
+
+          <% if hidden_groups.any? %>
+            <div class="collapse" id="user-groups-overflow">
+              <% hidden_groups.each do |group| %>
+                <p style="margin-bottom: 0.4rem;">
+                  <% if @user.is_group_owner?(group) %>
+                    <i class="glyphicon glyphicon-star" style="color: #E9822C;" title="Owner"></i>
+                  <% else %>
+                    <i class="glyphicon glyphicon-user" style="color: #aaa;"></i>
+                  <% end %>
+                  &nbsp;<%= link_to group.title, group %>
+                </p>
+              <% end %>
+            </div>
+            <a href="#user-groups-overflow"
+              data-toggle="collapse"
+              class="user-groups-toggle small"
+              aria-expanded="false">
+              Show <%= hidden_groups.count %> more
+              <i class="glyphicon glyphicon-chevron-down" style="font-size: 0.75em;"></i>
+            </a>
+          <% end %>
+        <% else %>
+          <span class="empty">Not a member of any group.</span>
         <% end %>
-      <% else %>
-        <span class="empty">Not a member of any group.</span>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 
   <div id="content">

@@ -11,6 +11,8 @@
 # this and override individual query methods as needed.
 class ApplicationPolicy
 
+  include ApiService
+
   attr_reader :user, :record
   attr_accessor :request
 
@@ -113,9 +115,9 @@ class ApplicationPolicy
     return true if !@space.is_private
     return false unless @user # and so if space is private
     if @space == Space.current_space || @record == @space
-      user_groups  = @user.groups.pluck(:id)
-      space_groups = @space.groups.pluck(:id)
-      return @user.is_admin? || space_groups.any? { |group_id| user_groups.include?(group_id) }
+      user_groups = get_groups_by_username(@user.username).map { |obj| obj['groupIdentifier'] }
+      space_groups = @space.groups
+      return @user.is_admin? || space_groups.any? { |group| user_groups.include?(group) }
     end
 
     return false
