@@ -26,14 +26,26 @@
     <%= f.input :is_private, label: "", input_html: { id: "space_is_private" } %>
   </div>
 
-  <div id="groups_container" style="display: none;">
-    <%= f.autocompleter :groups,
-                      url: '/search_groups', transform_function: 'groups',
-                      template: 'autocompleter/group_id',
-                      form_field_name: 'space[groups]',
-                      label_field: :title,
-                      id_field: :id %>
-  </div>
+  <% if TeSS::Config.feature['api_system_for_groups'] %>
+    <div id="groups_container" style="display: none;">
+      <%= f.autocompleter :api_groups,
+                        url: '/search_groups', transform_function: 'groups',
+                        template: 'autocompleter/group_id',
+                        form_field_name: 'space[api_groups]',
+                        label_field: :title,
+                        id_field: :id %>
+    </div>
+  <% else %>
+      <div id="groups_container" style="display: none;">
+        <%= f.autocompleter :groups,
+                          url: groups_path, transform_function: 'groups',
+                          template: 'autocompleter/group_id',
+                          form_field_name: 'space[group_ids]',
+                          label_field: :title,
+                          id_field: :id,
+                          existing_items_method: :groups %>
+      </div>
+  <% end %>
 
   <div>
     <%= f.input :enabled_features, label: t('features.enabled'), collection: space_feature_options, as: :check_boxes %>

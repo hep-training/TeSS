@@ -117,13 +117,13 @@ class ApplicationPolicy
     if @space == Space.current_space || @record == @space
       if TeSS::Config.feature['api_system_for_groups']
         user_groups = get_groups_by_username(@user.username).map { |obj| obj['groupIdentifier'] }
-        space_groups = @space.groups
-        return @user.is_admin? || space_groups.any? { |group| user_groups.include?(group) }
+        space_groups = @space.api_groups
       else
         user_groups  = @user.groups.pluck(:id)
         space_groups = @space.groups.pluck(:id)
-        return @user.is_admin? || space_groups.any? { |group_id| user_groups.include?(group_id) }
+        
       end
+      return @user.is_admin? || space_groups.any? { |group_id| user_groups.include?(group_id) }
     end
 
     return false

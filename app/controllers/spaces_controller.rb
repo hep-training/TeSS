@@ -123,7 +123,7 @@ class SpacesController < ApplicationController
   def space_params
     permitted = [:title, :description, :theme, :image, :image_url, :is_private, { administrator_ids: [] }, { enabled_features: [] }]
     permitted += [:host] if current_user.is_admin?
-    permitted += TeSS::Config.feature['api_system_for_groups'] ? [{ groups: [] }] : [{ group_ids: [] }]
+    permitted += TeSS::Config.feature['api_system_for_groups'] ? [{ api_groups: [] }] : [{ group_ids: [] }]
     params.require(:space).permit(*permitted)
   end
 end

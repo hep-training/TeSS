@@ -26,6 +26,8 @@ class Space < ApplicationRecord
   has_many :administrator_roles, -> { where(key: :admin) }, class_name: 'SpaceRole'
   has_many :administrators, through: :administrator_roles, source: :user, class_name: 'User'
 
+  has_and_belongs_to_many :groups unless TeSS::Config.feature['api_system_for_groups']
+
   auto_strip_attributes :title, :description, :host
 
   validates :title, presence: true

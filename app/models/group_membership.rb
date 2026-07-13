@@ -5,4 +5,9 @@
 # GroupsController#sync_owners), which grants additional permissions such
 # as editing or destroying the group (see GroupPolicy#owner?).
 class GroupMembership < ApplicationRecord
+  unless TeSS::Config.feature['api_system_for_groups']
+    self.primary_key = [:group_id, :user_id]   # Composite primary key: a user can only have a single membership per group
+    belongs_to :user
+    belongs_to :group
+  end
 end
