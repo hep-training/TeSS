@@ -121,8 +121,9 @@ class SpacesController < ApplicationController
   #           update. Includes +:host+ only when the current user is an
   #           admin.
   def space_params
-    permitted = [:title, :description, :theme, :image, :image_url, :is_private, { administrator_ids: [] }, { enabled_features: [] }, { groups: [] }]
+    permitted = [:title, :description, :theme, :image, :image_url, :is_private, { administrator_ids: [] }, { enabled_features: [] }]
     permitted += [:host] if current_user.is_admin?
+    permitted += TeSS::Config.feature['api_system_for_groups'] ? [{ groups: [] }] : [{ group_ids: [] }]
     params.require(:space).permit(*permitted)
   end
 end

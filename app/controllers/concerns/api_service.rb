@@ -49,7 +49,7 @@ module ApiService
 
   def getNewToken
     response = HTTParty.post(
-        "https://auth.cern.ch/auth/realms/cern/api-access/token",
+        ENV["SSO_ISSUER"] + "/api-access/token",
         headers: {
             "Content-Type" => "application/x-www-form-urlencoded"
         },

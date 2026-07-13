@@ -115,9 +115,15 @@ class ApplicationPolicy
     return true if !@space.is_private
     return false unless @user # and so if space is private
     if @space == Space.current_space || @record == @space
-      user_groups = get_groups_by_username(@user.username).map { |obj| obj['groupIdentifier'] }
-      space_groups = @space.groups
-      return @user.is_admin? || space_groups.any? { |group| user_groups.include?(group) }
+      if TeSS::Config.feature['api_system_for_groups']
+        user_groups = get_groups_by_username(@user.username).map { |obj| obj['groupIdentifier'] }
+        space_groups = @space.groups
+        return @user.is_admin? || space_groups.any? { |group| user_groups.include?(group) }
+      else
+        user_groups  = @user.groups.pluck(:id)
+        space_groups = @space.groups.pluck(:id)
+        return @user.is_admin? || space_groups.any? { |group_id| user_groups.include?(group_id) }
+      end
     end
 
     return false
