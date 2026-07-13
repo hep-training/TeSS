@@ -94,12 +94,14 @@ class SpacesController < ApplicationController
     end
   end
 
+  # GET /search_groups
+  #
+  # Get all the groups of the space. Requires authorization via SpacePolicy#search_groups?.
+  # Used only when Group API System is enabled. 
   def search_groups
     authorize Space
     query = params[:q]
     data = get_groups_from_query(query)
-    
-    # Transformer les données pour correspondre au template
     transformed_data = data.map do |group|
       {
         id: group['groupIdentifier'],

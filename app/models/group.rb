@@ -3,6 +3,7 @@
 # Groups are primarily used to control access to private Space objects: a
 # private space is only accessible to users belonging to one of the space's
 # associated groups (see ApplicationPolicy#shown?).
+# Used only when Group API System is enabled.
 class Group < ApplicationRecord
     unless TeSS::Config.feature['api_system_for_groups']
         # The individual user memberships (with owner status) belonging to this

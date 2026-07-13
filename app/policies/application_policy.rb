@@ -108,6 +108,8 @@ class ApplicationPolicy
   #   an admin, or belong to at least one of the space's groups (and only
   #   when the space in question is the current space, or the record *is*
   #   the space itself).
+  # When Group API System is enabled, we check if user groups are in redis cache, otherwise we fetch them.
+  # When it is not, we use regular groups in the database.
   #
   # Returns:: +true+ or +false+.
   def shown?
