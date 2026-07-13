@@ -11,7 +11,7 @@
 # this and override individual query methods as needed.
 class ApplicationPolicy
 
-  include ApiService
+  include UserGroupCacheService
 
   attr_reader :user, :record
   attr_accessor :request
@@ -115,15 +115,16 @@ class ApplicationPolicy
     return true if !@space.is_private
     return false unless @user # and so if space is private
     if @space == Space.current_space || @record == @space
+      return true if @user.is_admin?
       if TeSS::Config.feature['api_system_for_groups']
-        user_groups = get_groups_by_username(@user.username).map { |obj| obj['groupIdentifier'] }
+          user_groups = get_cached_groups_of_user_or_fetch(@user)
         space_groups = @space.api_groups
       else
         user_groups  = @user.groups.pluck(:id)
         space_groups = @space.groups.pluck(:id)
         
       end
-      return @user.is_admin? || space_groups.any? { |group_id| user_groups.include?(group_id) }
+      return space_groups.any? { |group_id| user_groups.include?(group_id) }
     end
 
     return false

@@ -77,6 +77,12 @@ class User < ApplicationRecord
            :omniauthable, :authentication_keys => [:login]
   end
 
+  after_save :clear_cached_groups
+
+  def clear_cached_groups
+    Redis.new(url: TeSS::Config.redis_url).del("user:#{id}:groups")
+  end
+
   auto_strip_attributes :username, squish: false
 
   validates :username, presence: true, uniqueness: { case_sensitive: false }
