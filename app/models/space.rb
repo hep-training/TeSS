@@ -44,7 +44,7 @@ class Space < ApplicationRecord
     #
     # record:: the Space instance being validated.
     def validate(record)
-      groupsCount = TeSS::Config.feature['api_system_for_groups'] ? record.api_groups.length : record.api_groups.length
+      groupsCount = TeSS::Config.feature['api_system_for_groups'] ? record.api_groups.length-1 : record.api_groups.length # api_groups needs -1 because if list is empty, a default "" value is added for PostgreSQL
       Rails.logger.info "Validating space: is_private=#{record.is_private}, groups_count=#{groupsCount}"
       if record.is_private && groupsCount == 0
         record.errors.add(:base, "If the space is private, you must add required groups.")

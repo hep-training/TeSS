@@ -119,7 +119,7 @@ class ApplicationPolicy
     if @space == Space.current_space || @record == @space
       return true if @user.is_admin?
       if TeSS::Config.feature['api_system_for_groups']
-          user_groups = get_cached_groups_of_user_or_fetch(@user)
+        user_groups = get_cached_groups_of_user_or_fetch(@user)
         space_groups = @space.api_groups
       else
         user_groups  = @user.groups.pluck(:id)
