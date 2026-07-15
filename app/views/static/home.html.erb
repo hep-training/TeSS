@@ -29,11 +29,13 @@
 
   <%= render partial: 'static/home/counters' if TeSS::Config.site.dig('home_page', 'counters') %>
 
+  <%= render partial: 'static/home/who_are_you' %>
+
   <%= render partial: 'static/home/additional_links' if TeSS::Config.site.dig('home_page', 'additional_links') %>
 
-  <%= render partial: 'static/home/our_goals' %>
-
   <%= render partial: 'static/home/community' %>
+
+  <%= render partial: 'static/home/our_goals' %>
 
   <%= render partial: 'static/home/faq' if TeSS::Config.site.dig('home_page', 'faq')&.any? %>
 
@@ -41,7 +43,7 @@
 <% else %>
   <%= render partial: 'static/home/space_welcome' %>
 
-  <%= render partial: 'static/home/counters', locals: { features: ['events', 'materials', 'workflows', 'learning_paths'] } %>
+  <%= render partial: 'static/home/counters' %>
 <% end %>
 
 
