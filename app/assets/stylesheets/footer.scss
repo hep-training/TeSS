@@ -7,8 +7,8 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: $footer-bg;
-  color: $footer-text;
+  background-color: #051e2f;
+  color: #fff;
   padding-top: $footer-padding-top;
   padding: $footer-padding-top 5px 5px 5px;
 
@@ -19,7 +19,7 @@
   .footer-item {
     margin: 6px;
     a {
-      color: $gray;
+      color: #fff;
       text-decoration: none;
 
       &:hover {
@@ -37,10 +37,13 @@
   }
 
   .supporters {
+    margin-top: 25px;
+    margin-bottom: 40px;
     display: flex;
     flex-direction: row-reverse;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 60px;
+    justify-content: center;
   }
 
   .footer-logo {
@@ -77,4 +80,9 @@
       color: $gray;
     }
   }
+}
+
+.cern-logo img {
+  margin: 30px;
+  max-width: 120px;
 }

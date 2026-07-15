@@ -505,10 +505,8 @@ ul.unstyled {
 .dropdown-menu {
   border-radius: 10px;
   padding: $padding-base-vertical $padding-base-horizontal;
-  overflow: hidden;
   display: block;
   opacity: 0;
-  visibility: hidden;
   transform: translateY(-10px);
   transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
   pointer-events: none;
