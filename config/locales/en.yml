@@ -503,6 +503,8 @@ en:
       The CERN training platform for <span class="text-primary">High Energy Physics</span>
     search_placeholder: >
       Browse %{site_name}...
+    community:
+      A lively and dynamic <span class="text-primary">community</span>
     catalogue:
       title: Browse the catalogue
       link_text: Start browsing
