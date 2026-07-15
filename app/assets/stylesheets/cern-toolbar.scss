@@ -1,0 +1,237 @@
+#cern-toolbar {
+	background-color: #222;
+	background-color: rgba(30, 30, 30, 0.95);
+	font-family: 'PT Sans', 'Trebuchet MS', Tahoma, sans-serif;
+	color: #999;
+	font-size: 14px;
+	line-height: 1;
+	padding: 0 5%;
+	overflow: hidden;
+	-moz-box-shadow: inset 0 -1px 0 rgba(100, 100, 100, 0.2);
+	-webkit-box-shadow: inset 0 -1px 0 rgba(100, 100, 100, 0.2);
+	box-shadow: inset 0 -1px 0 rgba(100, 100, 100, 0.2);
+	height: 40px;
+
+	nav ul {
+		list-style: none;
+	}
+
+	blockquote, q {
+		quotes: none;
+
+		&:before, &:after {
+			content: '';
+			content: none;
+		}
+	}
+
+	ins {
+		background-color: #ff9;
+		color: #000;
+		text-decoration: none;
+	}
+
+	mark {
+		background-color: #ff9;
+		color: #000;
+		font-style: italic;
+		font-weight: bold;
+	}
+
+	del {
+		text-decoration: line-through;
+	}
+
+	abbr[title], dfn[title] {
+		border-bottom: 1px dotted;
+		cursor: help;
+	}
+
+	table {
+		border-collapse: collapse;
+		border-spacing: 0;
+	}
+
+	hr {
+		display: block;
+		height: 1px;
+		border: 0;
+		border-top: 1px solid #cccccc;
+		margin: 1em 0;
+		padding: 0;
+	}
+
+	input, select {
+		vertical-align: middle;
+	}
+
+	// Clearfix — http://nicolasgallagher.com/micro-clearfix-hack/
+	.clearfix {
+		zoom: 1; // IE 6/7
+
+		&:before, &:after {
+			content: "";
+			display: table;
+		}
+
+		&:after {
+			clear: both;
+		}
+	}
+
+	// -- Styles propres au toolbar --
+
+	a {
+		margin: 0;
+		padding: 0;
+		font-size: 100%;
+		vertical-align: baseline;
+		background: transparent;
+		color: #ccc;
+		text-decoration: none;
+		padding: 6px 8px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+		display: inline-block;
+		-moz-transition: background-color 0.1s ease-out;
+		-webkit-transition: background-color 0.1s ease-out;
+		-ms-transition: background-color 0.1s ease-out;
+		-o-transition: background-color 0.1s ease-out;
+		transition: background-color 0.1s ease-out;
+
+		&:hover {
+			background-color: #000;
+			color: #fff;
+		}
+	}
+
+	.active {
+		a {
+			background-color: #f6f6f6;
+			color: #000;
+			padding-bottom: 20px;
+		}
+
+		.cern-account {
+			background-color: #fff;
+		}
+	}
+
+	h1 {
+		float: left;
+		font-size: 14px;
+		font-weight: 400;
+		line-height: 1;
+		position: relative;
+		left: -8px;
+		padding: 6px 0;
+		letter-spacing: 0.08em;
+		margin: 0;
+
+		a {
+			color: #fff;
+
+			span {
+				color: #999;
+				letter-spacing: normal;
+				padding: 0;
+			}
+
+			&:hover span {
+				color: #fff;
+			}
+		}
+	}
+
+	ul {
+		float: right;
+		list-style: none;
+		position: relative;
+		right: -8px;
+		margin: 0;
+	}
+
+	li {
+		float: left;
+		display: block;
+		margin-left: 1em;
+		padding: 6px 0;
+	}
+
+	.cern-multifactor {
+		padding-left: 32px;
+		background-image: url("../img/toolbarsprite.png");
+		background-repeat: no-repeat;
+		background-position: 0 -120px;
+	}
+
+	.cern-signout {
+		margin-left: 1em;
+	}
+
+	@media only screen and (max-width: 750px) {
+
+		h1 span {
+			display: none;
+		}
+
+		ul {
+			border-right: 1px solid #000;
+			-moz-box-shadow: 1px 0 0 #444;
+			-webkit-box-shadow: 1px 0 0 #444;
+			box-shadow: 1px 0 0 #444;
+		}
+
+		li {
+			padding: 0;
+			margin: 0;
+			border-left: 1px solid #000;
+
+			a {
+				background-image: url("../img/toolbarsprite.png");
+				background-repeat: no-repeat;
+				height: 40px;
+				width: 40px;
+				-moz-border-radius: 0;
+				-webkit-border-radius: 0;
+				border-radius: 0;
+				text-indent: -5000px;
+				overflow: hidden;
+				border-left: 1px solid #444;
+			}
+		}
+
+		.cern-account {
+			background-position: 9px 0;
+		}
+
+		.cern-directory {
+			background-position: 9px -40px;
+		}
+
+		.cern-signout {
+			background-position: 9px -80px;
+			margin-left: 0;
+		}
+
+		.active {
+			.cern-account {
+				background-position: -31px 0;
+			}
+
+			.cern-directory {
+				background-position: -31px -40px;
+			}
+		}
+
+		.cern-accountlinks span {
+			display: none;
+		}
+
+		.cern-multifactor {
+			background-image: none;
+			padding: 0;
+		}
+	}
+}

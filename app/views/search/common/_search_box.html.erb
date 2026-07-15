@@ -3,10 +3,14 @@ Parameters
 - resource_path - the path to the route to perform the search e.g. materials_path, events_path or general search_path
 %>
 
-<% placeholder ||= "Search..." %>
+<% placeholder ||= t('home.search_placeholder') %>
+<% resource_path ||= search_path %>
+<% is_lg ||= false %>
+<% is_for_nav ||= false %>
 
-<div class="searchbox-sm">
-  <%= form_tag resource_path, role: 'form', method: :get, enforce_utf8: false do %>
+
+<div class=<%= is_lg ? "searchbox" : is_for_nav ? "searchbox-nav" : "searchbox-sm" %>>
+  <%= form_tag resource_path, role: (resource_path != search_path ? 'form' : 'search'), method: :get, enforce_utf8: false do %>
     <div class="searchbox-wrapper">
       <%= text_field_tag 'q', params[:q], class: 'searchbox-field', placeholder: placeholder %>
       <button type="submit" class="searchbox-btn">

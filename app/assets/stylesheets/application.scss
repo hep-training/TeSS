@@ -43,6 +43,7 @@
 @import "showcase";
 @import "toggle";
 @import "workflows";
+@import "cern-toolbar";
 
 // Vendor
 @import "cytoscape-panzoom";
@@ -77,6 +78,10 @@ h1 {
 
 h2, h3, h4, h5, h6 {
   font-weight: 700;
+}
+
+li {
+  background: transparent;
 }
 
 .sub-heading {
@@ -473,7 +478,20 @@ ul.unstyled {
 
 .dropdown-toggle {
   cursor: pointer;
-  //padding: $padding-base-horizontal $padding-base-vertical;
+
+  &:focus,
+  &:active,
+  &:hover {
+    background: transparent !important;
+    outline: none;
+    box-shadow: none;
+    text-decoration: none;
+  }
+}
+
+.dropdown.open > .dropdown-toggle {
+  background-color: transparent !important;
+  box-shadow: none;
 }
 
 .dropdown-option {
@@ -485,7 +503,26 @@ ul.unstyled {
 }
 
 .dropdown-menu {
+  border-radius: 10px;
   padding: $padding-base-vertical $padding-base-horizontal;
+  overflow: hidden;
+  display: block;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+  pointer-events: none;
+
+  &:active {
+    background: transparent;
+  }
+}
+
+.dropdown.open > .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .dropdown-option-delete {
@@ -587,6 +624,49 @@ sup {
       &:hover {
         opacity: 1;
       }
+    }
+  }
+}
+
+.searchbox-nav {
+  padding-right: 10px;
+  text-align: center;
+  margin-top: 10px;
+  margin-left: 25px;
+  display: inline-flex;
+
+  border: none;
+  border-radius: 50px;
+  background-color: #F4F4F4;
+
+  .searchbox-wrapper {
+    display: inline-flex;
+  }
+
+  .searchbox-field {
+    border: none;
+    box-shadow: none;
+    outline: 0 none;
+    background: transparent;
+    line-height: $line-height-base;
+    padding: $padding-base-vertical $padding-base-horizontal $padding-base-vertical ($padding-base-vertical + 16px);
+    flex: 1;
+    min-width: 220px;
+    border-radius: 100px;
+  }
+
+  .searchbox-btn {
+    border: none;
+    background-color: transparent;
+    opacity: 0.5;
+    box-shadow: none;
+    padding: 8px 8px 8px 8px;
+    flex-shrink: 0;
+
+    transition: $transition-time;
+
+    &:hover {
+      opacity: 1;
     }
   }
 }
@@ -1066,8 +1146,11 @@ td.day .calendar-text {
       img {
         padding: 0px 0px 0px 0px;
         transition: padding 0.3s ease;
+        max-width: 150px;
+        margin-top: 5px;
 
         &.scrolled {
+          margin-top: 0;
           padding: 10px 5px 5px 5px;
         }
       }

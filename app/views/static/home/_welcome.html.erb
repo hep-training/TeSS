@@ -2,9 +2,9 @@
   <%# Welcome text %>
   <div class="welcome-text">
     <h1 class="module-heading"><%== t 'home.welcome' %></h1>
-    <p class="font-size-lg"><%== t 'home.subtitle' %></p>
+    <p style="font-size:25px"><%== t 'home.subtitle' %></p>
   </div>
 
-  <%= render partial: 'static/home/search_box' if TeSS::Config.site.dig('home_page', 'search_box') %>
+  <%= render partial: 'search/common/search_box', locals: { is_lg: true } if TeSS::Config.site.dig('home_page', 'search_box') %>
 
 </section>

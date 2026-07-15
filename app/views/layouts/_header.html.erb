@@ -1,4 +1,5 @@
 <header class="unified-header">
+<%= render partial: 'layouts/CERN-toolbar' %>
   <%# header notice -%>
   <% if TeSS::Config.header_notice&.strip.present? %>
     <nav class="header-notice">
@@ -68,7 +69,7 @@
           <% end %>
 
           <% if directory_tabs.present? %>
-            <li class="dropdown directory-menu">
+            <li class="dropdown directory-menu border">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                  aria-expanded="false">
                 Directory <span class="caret"></span>
@@ -80,6 +81,7 @@
               </ul>
             </li>
           <% end %>
+          <%= render partial: 'search/common/search_box', locals: { resource_path: search_path, is_for_nav: true } %>
         <% end %>
       </div>
     </div>

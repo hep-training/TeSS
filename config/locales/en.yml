@@ -498,12 +498,11 @@ en:
         From the topic page, you can view all training materials, in order.</li></ol>
   home:
     welcome: |
-      How can <span class="text-primary">%{site_name}</span> help you?
+      Welcome to <span class="text-primary">%{site_name}</span>!
     subtitle: |
-      Search the portal for courses, events, videos, presentations, learning pathways, handbooks...<br>
-      All types of resources at all levels for leveraging <span class="text-primary">computational resources in the life sciences</span>.
+      The CERN training platform for <span class="text-primary">High Energy Physics</span>
     search_placeholder: >
-      Search %{site_name}...
+      Browse %{site_name}...
     catalogue:
       title: Browse the catalogue
       link_text: Start browsing
