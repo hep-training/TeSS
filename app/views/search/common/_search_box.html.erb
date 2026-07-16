@@ -1,21 +1,32 @@
 <%#
 Parameters
 - resource_path - the path to the route to perform the search e.g. materials_path, events_path or general search_path
+- suggested_values - array of suggested search terms to display
 %>
 
 <% placeholder ||= t('home.search_placeholder') %>
 <% resource_path ||= search_path %>
 <% is_lg ||= false %>
 <% is_for_nav ||= false %>
-
+<% suggested_values ||= [] %>
 
 <div class=<%= is_lg ? "searchbox" : is_for_nav ? "searchbox-nav" : "searchbox-sm" %>>
   <%= form_tag resource_path, role: (resource_path != search_path ? 'form' : 'search'), method: :get, enforce_utf8: false do %>
     <div class="searchbox-wrapper">
-      <%= text_field_tag 'q', params[:q], class: 'searchbox-field', placeholder: placeholder %>
+      <%= text_field_tag 'q', params[:q], class: 'searchbox-field', placeholder: placeholder, autocomplete: 'off' %>
       <button type="submit" class="searchbox-btn">
         <i class="icon icon-h4 search-icon"></i>
       </button>
     </div>
   <% end %>
 </div>
+<% if suggested_values.any? %>
+  <div class="searchbox-suggestions">
+      Topics:
+      <ul>
+        <% suggested_values.each do |value| %>
+          <li><a href="/search?q=<%= value %>" class="suggestion-item"><%= value %></a></li>
+        <% end %>
+      </ul>
+  </div>
+<% end %>

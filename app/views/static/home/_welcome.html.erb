@@ -9,6 +9,6 @@
     <%= image_tag("Bohr_atom_animation.gif", class: 'img-responsive') %>
   </div>
 
-  <%= render partial: 'search/common/search_box', locals: { is_lg: true } if TeSS::Config.site.dig('home_page', 'search_box') %>
+  <%= render partial: 'search/common/search_box', locals: { is_lg: true, suggested_values: ["Python", "C++", "R", "Git"] } if TeSS::Config.site.dig('home_page', 'search_box') %>
 
 </section>

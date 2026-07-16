@@ -113,12 +113,7 @@ en:
       learn_more_widgets: Learn more about Widgets
       learn_more_api: Learn more about our API
     registry: >
-      %{site_name} is a platform that was developed to provide a one-stop shop for trainers and trainees to discover
-      online information and content, including training materials, events and interactive tutorials.
-      For training providers, %{site_name} provides opportunities to promote training events and news, and to contribute
-      to a growing catalogue of materials; for trainers, the portal offers an environment for sharing materials
-      and event information; for trainees, it offers a convenient gateway via which to identify relevant training
-      events and resources, and to perform specific, guided analysis tasks via customised training workflows.
+      %{site_name} is a platform inventories training ressources from other websites. %{site_name} does not "host" the ressources themselves, rather than their informations and their URL.
     mtessx: >
       The <a href='https://elixirtess.github.io/mTeSS-X' target='_blank'>mTeSS-X Project</a> 
       (Multi-space Training e-Support System with eXchange)
@@ -128,11 +123,7 @@ en:
       <a href='https://www.panosc.eu/training-catalogue/' target='_blank'>PaN-Training (photon and neutron)</a>
       by building an aggregator for these and similar platforms.
     history: >
-      %{site_name} was originally developed as part of <a href='https://elixir-europe.org/' target='_blank'>ELIXIR</a>,
-      Europe's distributed infrastructure for life-science data. One of the goals of ELIXIR is to train research
-      scientists to better use available computational infrastructures to address critical research questions.
-      This requires access both to face-to-face training opportunities and to disparate training materials and resources,
-      currently dispersed across Europe.
+      %{site_name} was originally developed...
     events: >
       Events in %{site_name} are defined as face-to-face or online training opportunities that have set start and end times.
       These primarily take the form of workshops, courses, webinars, etc.; but %{site_name} also collects information about

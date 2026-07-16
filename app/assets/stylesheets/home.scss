@@ -20,7 +20,7 @@
 
     border: none;
     border-radius: 50px;
-    background-color: #F4F4F4;
+    background-color: #f1f1f1;
 
     .searchbox-wrapper {
       display: flex;
@@ -437,4 +437,21 @@ ul.content-providers-grid {
   padding: $item-padding-base / 2;
   margin: 0 auto;
   float: right;
+}
+
+.searchbox-suggestions {
+  justify-content: center;
+  font-size: 18px;
+  display: flex;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+
+  .suggestion-item {
+    margin-inline: 10px;
+  }
 }
