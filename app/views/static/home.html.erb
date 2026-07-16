@@ -30,12 +30,12 @@
   <%= render partial: 'static/home/counters' if TeSS::Config.site.dig('home_page', 'counters') %>
 
   <%= render partial: 'static/home/who_are_you' %>
+  
+  <%= render partial: 'static/home/who_are_we' %>
 
   <%= render partial: 'static/home/additional_links' if TeSS::Config.site.dig('home_page', 'additional_links') %>
 
   <%= render partial: 'static/home/community' %>
-
-  <%= render partial: 'static/home/our_goals' %>
 
   <%= render partial: 'static/home/faq' if TeSS::Config.site.dig('home_page', 'faq')&.any? %>
 
