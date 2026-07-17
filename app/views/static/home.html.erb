@@ -29,9 +29,13 @@
 
   <%= render partial: 'static/home/counters' if TeSS::Config.site.dig('home_page', 'counters') %>
 
-  <%= render partial: 'static/home/who_are_you' %>
-  
-  <%= render partial: 'static/home/who_are_we' %>
+  <div style="background-color: #e5e5e5ff; margin-inline:-50%">
+    <%= render partial: 'static/home/who_are_you' %>
+  </div>
+
+  <div style="background-color: #abb3dfff; margin-inline:-50%">
+    <%= render partial: 'static/home/who_are_we' %>
+  </div>
 
   <%= render partial: 'static/home/additional_links' if TeSS::Config.site.dig('home_page', 'additional_links') %>
 

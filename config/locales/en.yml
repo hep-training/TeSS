@@ -491,7 +491,7 @@ en:
     welcome: |
       Welcome to <span class="text-primary">%{site_name}</span>!
     subtitle: |
-      The CERN training platform for <span class="text-primary">High Energy Physics</span>
+      The CERN community training platform for <span class="text-primary">High Energy Physics</span>
     search_placeholder: >
       Browse %{site_name}...
     community:
