@@ -95,10 +95,10 @@
       </div>
     </div>
   <% end %>
-
-  <div id="flash-container" class="container-fluid">
-    <%= flash_messages %>
-  </div>
 </header>
+
+<div id="flash-container" class="container-fluid">
+  <%= flash_messages %>
+</div>
 
 <%= render(partial: 'layouts/cookie_banner') if cookie_consent.show_banner? %>
