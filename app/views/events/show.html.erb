@@ -28,9 +28,12 @@
             <%= suggestion_icon(@event, 'large') -%>
           <% end %>
 
-          <i class="icon icon-h2 <%= @event.presence %>-event-icon" ></i>
+          <i class="icon icon-h2 <%= @event.presence %>-event-icon"></i>
 
           <%= @event.title %>
+          <% unless @event.visible? %>
+            <span class="label label-default">Hidden</span>
+          <% end %>
         </h2>
         <p><%= @event.subtitle %></p>
       </div>
@@ -55,16 +58,8 @@
         <% end %>
       </div>
 
+      <!-- DESCRIPTION SECTION -->
       <div class="my-3">
-        <!-- Field: start and end -->
-        <p class="date no-spacing">
-          <strong class="text-primary"> Date: </strong>
-          <%= neatly_printed_date_range(@event.start, @event.end) %>
-        </p>
-        <%= display_attribute(@event, :timezone) %>
-        <%= display_attribute(@event, :duration) %>
-        <%= display_attribute(@event, :language) { |value| render_language_name(value) } %>
-        <!-- Field: description -->
         <div class="description">
           <%= map_javascript_api_tag(@event) if @event.show_map? %>
           <% if @event.description.present? %>
@@ -75,6 +70,363 @@
         </div>
       </div>
 
+      <!-- KEY INFORMATION CARDS -->
+      <div class="row" style="margin-top: 30px; margin-bottom: 30px;">
+
+        <!-- DATE & TIME CARD -->
+        <div class="col-md-6 col-sm-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <span class="glyphicon glyphicon-calendar"></span> Date & Time
+              </h4>
+            </div>
+            <div class="panel-body">
+              <div class="mb-2">
+                <strong class="text-primary">When:</strong>
+                <p class="no-spacing"><%= neatly_printed_date_range(@event.start, @event.end) %></p>
+              </div>
+              <% if @event.timezone.present? %>
+                <div class="mb-2">
+                  <strong class="text-primary">Timezone:</strong>
+                  <p class="no-spacing"><%= @event.timezone %></p>
+                </div>
+              <% end %>
+              <% if @event.duration.present? %>
+                <div class="mb-2">
+                  <strong class="text-primary">Duration:</strong>
+                  <p class="no-spacing"><%= @event.duration %></p>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <!-- LOCATION CARD -->
+        <% if @event.venue.present? || @event.city.present? || @event.county.present? || @event.country.present? || @event.postcode.present? %>
+          <div class="col-md-6 col-sm-12">
+            <div class="panel panel-info">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <span class="glyphicon glyphicon-map-marker"></span> Location
+                </h4>
+              </div>
+              <div class="panel-body">
+                <% if @event.venue.present? %>
+                  <div class="mb-2">
+                    <strong>Venue:</strong>
+                    <p class="no-spacing"><%= @event.venue %></p>
+                  </div>
+                <% end %>
+                <% if @event.city.present? %>
+                  <div class="mb-2">
+                    <strong>City:</strong>
+                    <p class="no-spacing"><%= @event.city %></p>
+                  </div>
+                <% end %>
+                <% if @event.county.present? %>
+                  <div class="mb-2">
+                    <strong>County:</strong>
+                    <p class="no-spacing"><%= @event.county %></p>
+                  </div>
+                <% end %>
+                <% if @event.country.present? %>
+                  <div class="mb-2">
+                    <strong>Country:</strong>
+                    <p class="no-spacing"><%= @event.country %></p>
+                  </div>
+                <% end %>
+                <% if @event.postcode.present? %>
+                  <div class="mb-2">
+                    <strong>Postcode:</strong>
+                    <p class="no-spacing"><%= @event.postcode %></p>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+
+      <!-- PEOPLE & AUDIENCE CARDS -->
+      <div class="row" style="margin-bottom: 30px;">
+
+        <!-- PEOPLE INVOLVED CARD -->
+        <% if @event.user.present? || @event.organizer.present? || @event.contact.present? || @event.host_institutions.any? %>
+          <div class="col-md-6 col-sm-12">
+            <div class="panel panel-success">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <span class="glyphicon glyphicon-user"></span> People Involved
+                </h4>
+              </div>
+              <div class="panel-body">
+                <% if @event.user.present? %>
+                  <div class="mb-2">
+                    <strong>Submitted by:</strong>
+                    <p class="no-spacing">
+                      <%= link_to @event.user.full_name, @event.user %>
+                    </p>
+                  </div>
+                <% end %>
+                <% if @event.organizer.present? %>
+                  <div class="mb-2">
+                    <strong>Organizer:</strong>
+                    <p class="no-spacing"><%= @event.organizer %></p>
+                  </div>
+                <% end %>
+                <% if @event.contact.present? %>
+                  <div class="mb-2">
+                    <strong>Contact:</strong>
+                    <p class="no-spacing"><%= simple_format(@event.contact) %></p>
+                  </div>
+                <% end %>
+                <% if @event.host_institutions.any? %>
+                  <div class="mb-2">
+                    <strong>Host institutions:</strong>
+                    <ul class="list-unstyled">
+                      <% @event.host_institutions.each do |institution| %>
+                        <li><%= institution %></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- AUDIENCE & REQUIREMENTS CARD -->
+        <% if @event.target_audience.any? || @event.eligibility.any? || @event.prerequisites.present? || @event.capacity.present? %>
+          <div class="col-md-6 col-sm-12">
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <span class="glyphicon glyphicon-ok-circle"></span> Audience & Requirements
+                </h4>
+              </div>
+              <div class="panel-body">
+                <% if @event.target_audience.any? %>
+                  <div class="mb-2">
+                    <strong>Target audience:</strong>
+                    <p class="no-spacing">
+                      <% @event.target_audience.each do |audience| %>
+                        <span class="badge badge-info"><%= audience %></span>
+                      <% end %>
+                    </p>
+                  </div>
+                <% end %>
+                <% if @event.eligibility.any? %>
+                  <div class="mb-2">
+                    <strong>Eligibility:</strong>
+                    <p class="no-spacing">
+                      <% @event.eligibility.each do |e| %>
+                        <span class="badge badge-info"><%= e %></span>
+                      <% end %>
+                    </p>
+                  </div>
+                <% end %>
+                <% if @event.prerequisites.present? %>
+                  <div class="mb-2">
+                    <strong>Prerequisites:</strong>
+                    <p class="no-spacing"><%= @event.prerequisites %></p>
+                  </div>
+                <% end %>
+                <% if @event.capacity.present? %>
+                  <div class="mb-2">
+                    <strong>Capacity:</strong>
+                    <p class="no-spacing"><%= @event.capacity %></p>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+
+      <!-- COST & FUNDING / KEYWORDS & LANGUAGE CARDS -->
+      <div class="row" style="margin-bottom: 30px;">
+
+        <!-- COST & FUNDING CARD -->
+        <% if @event.cost_value.present? || @event.cost_basis.present? || @event.funding.present? %>
+          <div class="col-md-6 col-sm-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <span class="glyphicon glyphicon-euro"></span> Cost & Funding
+                </h4>
+              </div>
+              <div class="panel-body">
+                <% if @event.cost_basis.present? %>
+                  <div class="mb-2">
+                    <strong>Cost basis:</strong>
+                    <p class="no-spacing"><%= @event.cost_basis %></p>
+                  </div>
+                <% end %>
+                <% if @event.cost_value.present? %>
+                  <div class="mb-2">
+                    <strong>Cost:</strong>
+                    <p class="no-spacing">
+                      <%= @event.cost_value %> <%= @event.cost_currency %>
+                    </p>
+                  </div>
+                <% end %>
+                <% if @event.funding.present? %>
+                  <div class="mb-2">
+                    <strong>Funding:</strong>
+                    <p class="no-spacing"><%= @event.funding %></p>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- KEYWORDS, FIELDS & LANGUAGE CARD -->
+        <% if @event.keywords.any? || @event.fields.any? || @event.language.present? %>
+          <div class="col-md-6 col-sm-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <span class="glyphicon glyphicon-tag"></span> Keywords & Language
+                </h4>
+              </div>
+              <div class="panel-body">
+                <% if @event.fields.any? %>
+                  <div class="mb-2">
+                    <strong>Fields:</strong>
+                    <p class="no-spacing">
+                      <% @event.fields.each do |f| %>
+                        <span class="label label-default"><%= f %></span>
+                      <% end %>
+                    </p>
+                  </div>
+                <% end %>
+                <% if @event.keywords.any? %>
+                  <div class="mb-2">
+                    <strong>Keywords:</strong>
+                    <p class="no-spacing">
+                      <% @event.keywords.each do |k| %>
+                        <span class="label label-primary"><%= k %></span>
+                      <% end %>
+                    </p>
+                  </div>
+                <% end %>
+                <% if @event.language.present? %>
+                  <div class="mb-2">
+                    <strong>Language:</strong>
+                    <p class="no-spacing"><%= render_language_name(@event.language) %></p>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+
+      <!-- SPONSORS & STATS CARDS -->
+      <div class="row" style="margin-bottom: 30px;">
+
+        <!-- SPONSORS CARD -->
+        <% if @event.sponsors.any? %>
+          <div class="col-md-6 col-sm-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <span class="glyphicon glyphicon-star"></span> Sponsors
+                </h4>
+              </div>
+              <div class="panel-body">
+                <ul class="list-unstyled">
+                  <% @event.sponsors.each do |sponsor| %>
+                    <li><%= sponsor %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- ATTENDANCE STATS CARD -->
+        <% if @event.attendee_count.present? || @event.applicant_count.present? || @event.trainer_count.present? %>
+          <div class="col-md-6 col-sm-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <span class="glyphicon glyphicon-stats"></span> Attendance
+                </h4>
+              </div>
+              <div class="panel-body">
+                <% if @event.attendee_count.present? %>
+                  <div class="mb-2">
+                    <strong>Attendees:</strong>
+                    <p class="no-spacing"><%= @event.attendee_count %></p>
+                  </div>
+                <% end %>
+                <% if @event.applicant_count.present? %>
+                  <div class="mb-2">
+                    <strong>Applicants:</strong>
+                    <p class="no-spacing"><%= @event.applicant_count %></p>
+                  </div>
+                <% end %>
+                <% if @event.trainer_count.present? %>
+                  <div class="mb-2">
+                    <strong>Trainers:</strong>
+                    <p class="no-spacing"><%= @event.trainer_count %></p>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+
+      <!-- ADDITIONAL CONTENT CARD (learning objectives, tech requirements, recognition, notes) -->
+      <% if @event.learning_objectives.present? || @event.tech_requirements.present? || @event.recognition.present? || @event.notes.present? %>
+        <div class="row" style="margin-bottom: 30px;">
+          <div class="col-md-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <span class="glyphicon glyphicon-info-sign"></span> Additional Information
+                </h4>
+              </div>
+              <div class="panel-body">
+                <% if @event.learning_objectives.present? %>
+                  <div class="mb-2">
+                    <strong class="text-primary">Learning objectives:</strong>
+                    <p class="no-spacing"><%= @event.learning_objectives %></p>
+                  </div>
+                <% end %>
+                <% if @event.tech_requirements.present? %>
+                  <div class="mb-2">
+                    <strong class="text-primary">Technical requirements:</strong>
+                    <p class="no-spacing"><%= @event.tech_requirements %></p>
+                  </div>
+                <% end %>
+                <% if @event.recognition.present? %>
+                  <div class="mb-2">
+                    <strong class="text-primary">Recognition:</strong>
+                    <p class="no-spacing"><%= @event.recognition %></p>
+                  </div>
+                <% end %>
+                <% if @event.notes.present? %>
+                  <div class="mb-2">
+                    <strong class="text-primary">Notes:</strong>
+                    <p class="no-spacing"><%= @event.notes %></p>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- EXISTING CONTENT -->
       <div>
         <%= render partial: 'common/extra_metadata', locals: { resource: @event } %>
 
@@ -112,3 +464,43 @@
     <%= render partial: 'activities/activity_log_button', locals: { resource: @event } if @event.persisted? %>
   </div>
 </div>
+
+<style>
+  .no-spacing { margin: 0; padding: 0; }
+  .mb-2 { margin-bottom: 15px; }
+
+  .panel-heading {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #0275d8;
+    padding: 12px 15px;
+  }
+
+  .panel-heading h4 {
+    margin: 0;
+    color: #333;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .panel-heading .glyphicon {
+    margin-right: 8px;
+    color: #0275d8;
+  }
+
+  .panel-primary .panel-heading { border-bottom-color: #0275d8; }
+  .panel-primary .panel-heading .glyphicon { color: #0275d8; }
+
+  .panel-info .panel-heading { border-bottom-color: #5bc0de; }
+  .panel-info .panel-heading .glyphicon { color: #5bc0de; }
+
+  .panel-success .panel-heading { border-bottom-color: #5cb85c; }
+  .panel-success .panel-heading .glyphicon { color: #5cb85c; }
+
+  .panel-warning .panel-heading { border-bottom-color: #f0ad4e; }
+  .panel-warning .panel-heading .glyphicon { color: #f0ad4e; }
+
+  .badge-info { background-color: #5bc0de; }
+
+  .list-unstyled { margin: 0; padding-left: 0; }
+  .list-unstyled li { margin-bottom: 5px; }
+</style>
