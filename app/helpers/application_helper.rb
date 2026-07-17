@@ -454,13 +454,17 @@ module ApplicationHelper
 
   def star_button(resource)
     star = current_user.stars.where(resource_id: resource.id, resource_type: resource.class.name).first
+    star_count = resource.stars.count
 
-    link_to '', '#', class: 'btn btn-icon',
-                     title: "Star this #{resource.class.model_name.human}",
-                     data: { role: 'star-button',
-                             starred: !star.nil?,
-                             resource: { id: resource.id, type: resource.class.name },
-                             url: stars_path }
+    link_to '', '#', 
+            class: 'btn btn-default btn',
+            data: { 
+              role: 'star-button',
+              starred: !star.nil?,
+              resource: { id: resource.id, type: resource.class.name },
+              url: stars_path,
+              star_count: star_count
+            }
   end
 
   def external_link_button(text, url, options = {})
