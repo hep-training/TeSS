@@ -54,6 +54,17 @@
   }
 }
 
+.who-are-we-section,
+.who-are-you-section {
+  .panel {
+    transition: transform .2s;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
 ul.catalogue {
   padding: 10px 0;
   margin: 0 -10px;
