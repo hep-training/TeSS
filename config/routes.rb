@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   get 'about/developers' => 'about#developers', as: 'developers'
   get 'about/us' => 'about#us', as: 'us'
 
+  get 'about/content_providers' => 'about#content_providers'
+
   get 'privacy' => 'static#privacy', as: 'privacy'
 
   post 'materials/check_exists' => 'materials#check_exists'
