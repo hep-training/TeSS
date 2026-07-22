@@ -60,6 +60,8 @@
           end
 
           directory_tabs, main_tabs = tabs.partition { |t| TeSS::Config.site['directory_tabs']&.include?(t[:feature]) }
+          directory_tabs = directory_tabs.sort_by { |t| TeSS::Config.site['directory_tabs'].index(t[:feature]) || 99 }
+          
         %>
 
         <%= menu_group(pull: 'right') do %>
