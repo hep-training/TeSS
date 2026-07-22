@@ -3,7 +3,7 @@
 <footer class="footer">
   <div class="container">
     <div class="row">
-      <div class="col-sm-3 col-xs-6">
+      <div class="col-sm-4 col-xs-6">
         <div class="footer-logo footer-item">
           <% if TeSS::Config.site.dig('footer', 'show_space_logo') && current_space.image? %>
             <%= image_tag(current_space.image.url, :alt => current_space.logo_alt) %>
@@ -29,7 +29,7 @@
         <%= link_to t("home.providers.button_text"), registering_resources_path, class: 'btn btn-primary btn-sm', style: 'margin-top: 1em' %>
       </div>
 
-      <div class="col-sm-3 col-xs-6 text-left">
+      <div class="col-sm-4 col-xs-6 text-center">
         <div class="footer-item">
           <%= link_to t('footer.about', title: TeSS::Config.site['title_short']), about_path %>
         </div>
@@ -61,7 +61,7 @@
        
       </div>
 
-      <div class="col-sm-3 col-xs-6 text-left">
+      <div class="col-sm-4 col-xs-6 text-right">
         <div class="footer-item">
           <%= t('footer.version') %> <code><%= app_version_text -%></code>
         </div>
@@ -89,12 +89,6 @@
             <% end %>
           <% end %>
         <% end %>
-      </div>
-
-      <div class="col-sm-3 col-xs-6 text-center cern-logo">
-        <a href="https://home.cern/" target="blank">
-          <%= image_tag("cern-logo.svg") %>
-        </a>
       </div>
 
       <%= render partial: 'layouts/supported_by' %>
