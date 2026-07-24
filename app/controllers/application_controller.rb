@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
   include PublicActivity::StoreController
 
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :locale_from_params_or_session
   before_action :timezone_from_params_or_session
 
   # Prevent CSRF attacks by raising an exception.
@@ -16,11 +15,13 @@ class ApplicationController < ActionController::Base
 
   # Should allow token authentication for API calls
   acts_as_token_authentication_handler_for User, except: [:index, :show, :embed, :calendar, :check_exists, :handle_error, :count,
-                                                          :redirect] #only: [:new, :create, :edit, :update, :destroy]
+                                                          :redirect, :event_time_data]
+  #only: [:new, :create, :edit, :update, :destroy]
 
   # User auth should be required in the web interface as well; it's here rather than in routes so that it
   # doesn't override the token auth, above.
-  before_action :authenticate_user!, except: [:index, :show, :embed, :calendar, :check_exists, :handle_error, :count, :redirect]
+  before_action :authenticate_user!, except: [:index, :show, :embed, :calendar, :check_exists,
+                                              :handle_error, :count, :redirect, :event_time_data]
   before_action :set_current_space
   before_action :set_current_user
 
@@ -163,19 +164,6 @@ class ApplicationController < ActionController::Base
     response.headers.delete 'X-Frame-Options'
   end
 
-  def locale_from_params_or_session
-    loc_ids = Rails.application.config.i18n.available_locales.map(&:to_s)
-    loc = session['locale']
-    I18n.locale = if params[:locale] && loc_ids.include?(params[:locale])
-                    params[:locale].to_sym
-                  elsif !loc.blank? && loc_ids.include?(loc.to_s)
-                    loc.to_sym
-                  else
-                    Rails.application.config.i18n.default_locale
-                  end
-    session['locale'] = I18n.locale.to_s
-  end
-
   def timezone_from_params_or_session
     # TODO? have a list of acceptable time zones, maybe via config?
     tz = params[:tz] || session['tz']
@@ -185,6 +173,8 @@ class ApplicationController < ActionController::Base
                     elsif ActiveSupport::TimeZone[tz].present?
                       tz
                     end
+
+    true
   end
 
 end
