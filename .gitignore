@@ -45,4 +45,3 @@ tess.crontab
 app-secrets*
 node_modules/
 config/secrets
-config/locales/overrides/custom.en.yml
