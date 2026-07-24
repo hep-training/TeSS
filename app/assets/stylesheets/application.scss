@@ -516,10 +516,6 @@ ul.unstyled {
   transform: translateY(-10px);
   transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
   pointer-events: none;
-
-  &:active {
-    background: transparent;
-  }
 }
 
 .dropdown.open > .dropdown-menu {
