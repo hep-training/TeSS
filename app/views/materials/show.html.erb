@@ -77,9 +77,9 @@
         <div class="row">
           <%= render partial: 'common/box_info',
             locals: {
-              title: 'Training specifications 🎓',
-              title_color: '#222',
-              bg_color: '#d4e5f4ff',
+              title: 'Training specifications',
+              title_color: '#fff',
+              bg_color: '#497dbbff',
               glyphicon: 'ok',
               infos: {
                 ('Learning objectives' if @material.learning_objectives.present?) => @material.learning_objectives,
@@ -102,8 +102,8 @@
               <%= render partial: 'common/box_info',
                 locals: {
                   title: 'Prerequisites & Audience',
-                  title_color: '#222',
-                  bg_color: '#fdf3e0',
+                  title_color: '#fff',
+                  bg_color: '#a7642eff',
                   glyphicon: 'education',
                   infos: {
                     ('Target audience' if @material.target_audience.any?) => safe_join(@material.target_audience.map { |a| content_tag(:span, a, class: 'badge badge-info') }, ' '),
@@ -121,8 +121,8 @@
               <%= render partial: 'common/box_info',
                 locals: {
                   title: 'Date',
-                  title_color: '#222',
-                  bg_color: '#e0f0f7',
+                  title_color: '#fff',
+                  bg_color: '#376779ff',
                   glyphicon: 'calendar',
                   infos: {
                     ('Created' if @material.date_created.present?) => @material.date_created,
@@ -145,8 +145,8 @@
               <%= render partial: 'common/box_info',
                 locals: {
                   title: 'Metadata',
-                  title_color: '#222',
-                  bg_color: '#e6f4ea',
+                  title_color: '#fff',
+                  bg_color: '#466d4bff',
                   glyphicon: 'info-sign',
                   infos: {
                     ('License' if @material.licence.present?) => @material.licence,
