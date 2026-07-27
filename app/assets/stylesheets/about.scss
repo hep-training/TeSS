@@ -29,6 +29,10 @@
 }
 
 .about-block {
+
+  margin-top: 55px;
+  font-size: 18px;
+
   .odd-about-block, .even-about-block {
     &>h1, &>h2, &>h3 {
       margin-top: 0;

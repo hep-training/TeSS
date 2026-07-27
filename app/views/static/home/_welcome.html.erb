@@ -2,6 +2,13 @@
   <%# Welcome text %>
   <div class="welcome-text">
     <h1 class="module-heading"><%== t 'home.welcome' %></h1>
-    <p class="font-size-lg"><%== t 'home.subtitle' %></p>
+    <p class="module-subtitle"><%== t 'home.subtitle' %></p>
   </div>
+
+  <div class="centered-img">
+    <%= image_tag("Bohr_atom_animation.gif", class: 'img-responsive') %>
+  </div>
+
+  <%= render partial: 'search/common/search_box', locals: { is_lg: true, suggested_values: ["Python", "C++", "R", "Git"] } if TeSS::Config.site.dig('home_page', 'search_box') %>
+
 </section>

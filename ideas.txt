@@ -1,0 +1,2 @@
+change texts of panels to be more explicit
+move upcoming events to top 

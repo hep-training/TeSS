@@ -13,7 +13,7 @@ class StarsController < ApplicationController
 
     if @star.save
       respond_to do |format|
-        format.json { render json: @star.to_json, status: :ok }
+        format.json { render json: { star_count: @star.resource.stars.count }, status: :ok }
       end
     else
       respond_to do |format|
@@ -24,10 +24,10 @@ class StarsController < ApplicationController
 
   def destroy
     @star = current_user.stars.where(star_params).first
-
+    resource = @star.resource
     if @star.destroy
       respond_to do |format|
-        format.json { render json: {}, status: :ok }
+        format.json { render json: { star_count: @star.resource.stars.count } , status: :ok }
       end
     else
       respond_to do |format|

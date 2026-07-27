@@ -204,20 +204,25 @@ document.addEventListener("turbolinks:load", function(e) {
     Curation.init();
 
     var setStarButtonState = function (button) {
+        var starCount = button.data('starCount') || 0;
+        
         if (button.data('starred')) {
-            button.html("<i class='icon icon-h3 star-fill-icon'> </i>");
+            button.html("Starred <i class='glyphicon glyphicon-star'></i> " + starCount);
+            button.removeClass('btn-default').addClass('btn-warning');
         } else {
-            button.html("<i class='icon icon-h3 star-icon'> </i>");
+            button.html("Star <i class='glyphicon glyphicon-star-empty'></i> " + starCount);
+            button.removeClass('btn-warning').addClass('btn-default');
         }
     };
 
     $('[data-role="star-button"]').each(function () {
         var button = $(this);
         var resource = button.data('resource');
-
+        
         setStarButtonState(button);
 
-        button.click(function () {
+        button.click(function (e) {
+            e.preventDefault();
             var starred = button.data('starred');
             button.addClass('loading');
             $.ajax({
@@ -225,8 +230,9 @@ document.addEventListener("turbolinks:load", function(e) {
                 dataType: 'json',
                 url: button.data('url'),
                 data: { star: { resource_id: resource.id, resource_type: resource.type } },
-                success: function () {
+                success: function (response) {
                     button.data('starred', !starred);
+                    button.data('starCount', response.star_count);
                     setStarButtonState(button);
                 },
                 complete: function () {
@@ -235,8 +241,9 @@ document.addEventListener("turbolinks:load", function(e) {
             });
 
             return false;
-        })
+        });
     });
+
 
     $('.has-popover').each(function () {
         $(this).popover({

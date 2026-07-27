@@ -1,0 +1,17 @@
+<div class="panel shadow-lg rounded" style="box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-inline: 35px; margin-block: 12px;">
+    <div class="panel-heading" style="background-color: <%= bg_color %>">
+        <h4 class="panel-title" style="color: <%= title_color %>;">
+            <span class="glyphicon glyphicon-<%= glyphicon %> mr-2" style="color: <%= title_color %>;"></span> <%= title %>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <% infos.each do |key, value| %>
+            <div class="mb-3">
+                <% unless key == false || key == :text_alone %>
+                    <strong class="text-primary"><%= key %></strong>
+                <% end %>
+                <p class="no-spacing"><%= value %></p>
+            </div>
+        <% end %>
+    </div>
+</div>

@@ -28,9 +28,12 @@
             <%= suggestion_icon(@event, 'large') -%>
           <% end %>
 
-          <i class="icon icon-h2 <%= @event.presence %>-event-icon" ></i>
+          <i class="icon icon-h2 <%= @event.presence %>-event-icon"></i>
 
           <%= @event.title %>
+          <% unless @event.visible? %>
+            <span class="label label-default">Hidden</span>
+          <% end %>
         </h2>
         <p><%= @event.subtitle %></p>
       </div>
@@ -55,25 +58,9 @@
         <% end %>
       </div>
 
+      <!-- DESCRIPTION SECTION -->
       <div class="my-3">
-
-        <% if TeSS::Config.feature.fetch('timezone_controls') %>
-          <%= render partial: 'events/event_timezone_control' %>
-          <%= render partial: 'event_time_div', locals: {event: @event} %>
-        <% else %>
-          <!-- Field: start and end -->
-          <p class="date no-spacing">
-             <strong class="text-primary"> Date: </strong>
-             <%= neatly_printed_date_range(@event.start, @event.end) %>
-             </p>
-          <%= display_attribute(@event, :timezone) %>
-        <% end %>
-
-        <%= display_attribute(@event, :duration) %>
-        <%= display_attribute(@event, :language) { |value| render_language_name(value) } %>
-        <!-- Field: description -->
         <div class="description">
-          <%= map_javascript_api_tag(@event) if @event.show_map? %>
           <% if @event.description.present? %>
             <%= render_markdown @event.description %>
           <% else %>
@@ -82,27 +69,222 @@
         </div>
       </div>
 
-      <div>
-        <%= render partial: 'common/extra_metadata', locals: { resource: @event } %>
+      <!-- KEYWORDS -->
+      <% if @event.keywords.any? %>
+        <div class="my-4">
+          <%= safe_join(@event.keywords.map { |k| content_tag(:span, k, class: 'badge badge-info') }, ' ') %>
+        </div>
+      <% end %>
 
-        <!-- Field: external resources -->
-        <% if @event.external_resources.any? %>
-          <strong class="text-primary">External resources:</strong>
-          <%= render partial: 'common/external_resources_list',
-                     locals: { external_resources: @event.external_resources } %>
-        <% end %>
+      <!-- Training specifications -->
+      <% if @event.learning_objectives.present? || @event.materials.any? %>
+        <div class="row">
+          <% if @event.learning_objectives.present? || @event.materials.any? %>
+            <div class="row">
+              <%= render partial: 'common/box_info',
+                locals: {
+                  title: 'Training specifications',
+                  title_color: '#222',
+                  bg_color: '#d4e5f4ff',
+                  glyphicon: 'ok',
+                  infos: {
+                    ('Learning objectives' if @event.learning_objectives.present?) => @event.learning_objectives,
+                    ('Related materials' if @event.materials.any?) => (safe_join(
+                      @event.materials.map { |material| content_tag(:li, link_to(material.title, material)) },
+                      "".html_safe
+                    ).then { |lis| content_tag(:ul, lis) })
+                  }.compact
+                }
+              %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
 
-        <!-- Field: material -->
-        <% if @event.materials.any? %>
-          <div>
-            <strong class="text-primary">Related training materials: </strong>
-            <ul>
-              <% @event.materials.each do |material| %>
-                <li><%= link_to material.title, material %></li>
-              <% end %>
-            </ul>
+      <!-- DEUX COLONNES: gauche = Date & Time / Infos pratiques / People, droite = Prerequisites & Audience / Location / Sponsors and fundings -->
+      <div class="row">
+
+        <!-- COLONNE GAUCHE -->
+        <div class="col-md-6 col-sm-12">
+
+          <!-- PREREQUISITES / TECHNICAL REQUIREMENTS / TARGET AUDIENCE -->
+          <% if @event.prerequisites.present? || @event.tech_requirements.present? || @event.target_audience.any? %>
+            <div class="row">
+              <%= render partial: 'common/box_info',
+                locals: {
+                  title: 'Prerequisites & Audience',
+                  title_color: '#222',
+                  bg_color: '#d4e5f4ff',
+                  glyphicon: 'education',
+                  infos: {
+                    ('Prerequisites' if @event.prerequisites.present?) => @event.prerequisites,
+                    ('Technical requirements' if @event.tech_requirements.present?) => @event.tech_requirements,
+                    ('Target audience' if @event.target_audience.any?) => safe_join(@event.target_audience.map { |a| content_tag(:span, a, class: 'badge badge-info') }, ' ')
+                  }.compact
+                }
+              %>
+            </div>
+          <% end %>
+
+          <!-- INFOS PRATIQUES -->
+          <% if @event.cost_basis.present? || @event.cost_value.present? || @event.eligibility.any? || @event.recognition.present? || @event.capacity.present? || @event.language.present? || @event.contact.present? %>
+            <div class="row">
+              <%= render partial: 'common/box_info',
+                locals: {
+                  title: 'Practical infos',
+                  title_color: '#222',
+                  bg_color: '#e6f4ea',
+                  glyphicon: 'info-sign',
+                  infos: {
+                    ('Cost basis' if @event.cost_basis.present?) => @event.cost_basis,
+                    ('Cost' if @event.cost_value.present?) => "#{@event.cost_value} #{@event.cost_currency}",
+                    ('Eligibility' if @event.eligibility.any?) => safe_join(@event.eligibility.map { |e| content_tag(:span, e, class: 'badge badge-info') }, ' '),
+                    ('Recognition' if @event.recognition.present?) => @event.recognition,
+                    ('Capacity' if @event.capacity.present?) => @event.capacity,
+                    ('Language' if @event.language.present?) => render_language_name(@event.language),
+                    ('Contact' if @event.contact.present?) => simple_format(@event.contact)
+                  }.compact
+                }
+              %>
+            </div>
+          <% end %>
+        </div>
+
+        <!-- COLONNE DROITE -->
+        <div class="col-md-6 col-sm-12">
+
+          <!-- DATE & TIME -->
+          <div class="row">
+            <%= render partial: 'common/box_info',
+              locals: {
+                title: 'Date & Time',
+                title_color: '#222',
+                bg_color: '#fdf3e0',
+                glyphicon: 'calendar',
+                infos: {
+                  'When' => neatly_printed_date_range(@event.start, @event.end),
+                  ('Timezone' if @event.timezone.present?) => @event.timezone,
+                  ('Duration' if @event.duration.present?) => @event.duration
+                }.compact
+              }
+            %>
           </div>
-        <% end %>
+
+          <!-- LOCATION -->
+          <% if @event.venue.present? || @event.city.present? || @event.county.present? || @event.country.present? || @event.postcode.present? %>
+            <div class="row">
+              <%= render partial: 'common/box_info',
+                locals: {
+                  title: 'Location',
+                  title_color: '#222',
+                  bg_color: '#e0f0f7',
+                  glyphicon: 'map-marker',
+                  infos: {
+                    ('Venue' if @event.venue.present?) => @event.venue,
+                    ('City' if @event.city.present?) => @event.city,
+                    ('County' if @event.county.present?) => @event.county,
+                    ('Country' if @event.country.present?) => @event.country,
+                    ('Postcode' if @event.postcode.present?) => @event.postcode
+                  }.compact
+                }
+              %>
+            </div>
+          <% end %>
+
+          <!-- SPONSORS AND FUNDING -->
+          <% if @event.sponsors.any? || @event.funding.present? %>
+            <div class="row">
+              <%= render partial: 'common/box_info',
+                locals: {
+                  title: 'Sponsors and fundings',
+                  title_color: '#222',
+                  bg_color: '#fff7e0',
+                  glyphicon: 'star',
+                  infos: {
+                    ('Funding' if @event.funding.present?) => @event.funding,
+                    ('Sponsors' if @event.sponsors.any?) => safe_join(@event.sponsors, ', ')
+                  }.compact
+                }
+              %>
+            </div>
+          <% end %>
+
+        </div>
+
+      </div>
+
+      <!-- PEOPLE -->
+      <% if @event.user.present? || @event.organizer.present? || @event.host_institutions.any? %>
+        <div class="row">
+          <%= render partial: 'common/box_info',
+            locals: {
+              title: 'People',
+              title_color: '#222',
+              bg_color: '#eef2f7',
+              glyphicon: 'user',
+              infos: {
+                ('Submitted by' if @event.user.present?) => (link_to @event.user.full_name, @event.user),
+                ('Organizer' if @event.organizer.present?) => @event.organizer,
+                ('Host institutions' if @event.host_institutions.any?) => safe_join(@event.host_institutions.map { |i| content_tag(:span, i) }, ', ')
+              }.compact
+            }
+          %>
+        </div>
+      <% end %>
+
+      <!-- ATTENDANCE STATS -->
+      <% if @event.attendee_count.present? || @event.applicant_count.present? || @event.trainer_count.present? %>
+        <div class="row">
+          <%= render partial: 'common/box_info',
+            locals: {
+              title: 'Attendance',
+              title_color: '#222',
+              bg_color: '#f2f2f2',
+              glyphicon: 'stats',
+              infos: {
+                ('Attendees' if @event.attendee_count.present?) => @event.attendee_count,
+                ('Applicants' if @event.applicant_count.present?) => @event.applicant_count,
+                ('Trainers' if @event.trainer_count.present?) => @event.trainer_count
+              }.compact
+            }
+          %>
+        </div>
+      <% end %>
+
+      <!-- ADDITIONAL INFO: keywords, fields, notes -->
+      <% if @event.fields.any? || @event.notes.present? %>
+        <div class="row">
+          <%= render partial: 'common/box_info',
+            locals: {
+              title: 'Additional information',
+              title_color: '#222',
+              bg_color: '#f2f2f2',
+              glyphicon: 'tag',
+              infos: {
+                ('Fields' if @event.fields.any?) => safe_join(@event.fields.map { |f| content_tag(:span, f, class: 'label label-default') }, ' '),
+                ('Notes' if @event.notes.present?) => @event.notes
+              }.compact
+            }
+          %>
+        </div>
+      <% end %>
+
+      <div style="margin-top: 30px;">
+        <div style="margin-bottom: 40px;">
+          <% if @event.external_resources.any? %>
+            <%= render partial: 'common/box_info',
+              locals: {
+                title: 'External ressources',
+                title_color: '#222',
+                bg_color: '#f2f2f2',
+                glyphicon: 'th-list',
+                infos: {
+                  text_alone: (render partial: 'common/external_resources_list', locals: { external_resources: @event.external_resources })
+                }.compact
+              }
+            %>
+          <% end %>
+        </div>
 
         <%= render partial: 'events/partials/twitter_card', locals: { event: @event } %>
 
@@ -112,10 +294,15 @@
           <%= render partial: 'common/approve_term_suggestions',
                      locals: { suggestion: @event.edit_suggestion } %>
         <% end %>
-
       </div>
     </div>
 
     <%= render partial: 'activities/activity_log_button', locals: { resource: @event } if @event.persisted? %>
   </div>
 </div>
+
+<style>
+  .no-spacing { margin: 0; padding: 0; }
+  .mb-2 { margin-bottom: 15px; }
+  .badge-info { background-color: #5bc0de; }
+</style>

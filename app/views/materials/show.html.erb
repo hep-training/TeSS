@@ -1,8 +1,8 @@
 <div class="wrapper collapsing-wrapper">
   <div class="collapsing-sidebar" id="sidebar">
     <%= render partial: 'learning_paths/partials/navigation',
-               locals: { topic_link: @learning_path_topic_link,
-                         topic_item: @learning_path_topic_item } if @learning_path_topic_link && @learning_path_topic_item %>
+      locals: { topic_link: @learning_path_topic_link,
+                topic_item: @learning_path_topic_item } if @learning_path_topic_link && @learning_path_topic_item %>
     <%= render partial: 'content_providers/partials/content_provider_info', locals: { content_provider: @material.content_provider } %>
     <%= render partial: 'nodes/partials/associated_node_info', locals: { associated_nodes: @material.associated_nodes } %>
     <%= render(partial: 'users/partials/user_info', locals: { user: @material.user }) if current_user.try(:is_admin?) %>
@@ -15,8 +15,9 @@
         <%= archived_notice(@material) if @material.archived? %>
         <%= unverified_notice(@material) if @material.from_unverified_or_rejected? %>
 
-        <!-- Field: title -->
+        <!-- Field: resource type -->
         <div class="sub-heading"><%= display_attribute_no_label(@material, :resource_type) { |values| values.join(', ') } %></div>
+
         <h2 class="mt-0">
           <% if current_user&.is_admin? %>
             <%= missing_icon(@material, 'large') %>
@@ -49,42 +50,159 @@
         <%= embed_youtube(@material) %>
         <%= embed_zenodo(@material) %>
 
-        <!-- Field: long description -->
+        <!-- DESCRIPTION -->
         <div class="description">
           <%= render_markdown @material.description %>
         </div>
       </div>
 
-      <div>
-        <!-- Other metadata -->
-        <%= render partial: 'common/extra_metadata', locals: { resource: @material } %>
+      <!-- SCIENTIFIC TOPICS (fields) & KEYWORDS -->
+      <% if @material.fields.any? || @material.keywords.any? %>
+        <div class="my-4">
+          <%= safe_join(@material.fields.map { |f| content_tag(:span, f, class: 'label label-primary') }, ' ') %>
+          <%= safe_join(@material.keywords.map { |k| content_tag(:span, k, class: 'badge badge-info') }, ' ') %>
+        </div>
+      <% end %>
 
+      <!-- TRAINING SPECIFICATIONS (learning objectives + related events) -->
+      <% if @material.learning_objectives.present? || @material.events.any? %>
+        <% events_html = if @material.events.any?
+          content_tag(:ul,
+            safe_join(
+              @material.events.not_finished.map { |event| content_tag(:li, link_to(event.title, event)) } +
+              @material.events.finished.map { |event| content_tag(:li, "#{link_to(event.title, event)} (ended)".html_safe) }
+            )
+          )
+        end %>
+        <div class="row">
+          <%= render partial: 'common/box_info',
+            locals: {
+              title: 'Training specifications',
+              title_color: '#fff',
+              bg_color: '#497dbbff',
+              glyphicon: 'ok',
+              infos: {
+                ('Learning objectives' if @material.learning_objectives.present?) => @material.learning_objectives,
+                ('Related events' if @material.events.any?) => events_html
+              }.compact
+            }
+          %>
+        </div>
+      <% end %>
+
+      <!-- DEUX COLONNES: gauche = Prerequisites & Audience / Date, droite = Metadata -->
+      <div class="row">
+
+        <!-- COLONNE GAUCHE -->
+        <div class="col-md-6 col-sm-12">
+
+          <!-- PREREQUISITES & AUDIENCE -->
+          <% if @material.target_audience.any? || @material.difficulty_level.present? || @material.prerequisites.present? %>
+            <div class="row">
+              <%= render partial: 'common/box_info',
+                locals: {
+                  title: 'Prerequisites & Audience',
+                  title_color: '#fff',
+                  bg_color: '#a7642eff',
+                  glyphicon: 'education',
+                  infos: {
+                    ('Target audience' if @material.target_audience.any?) => safe_join(@material.target_audience.map { |a| content_tag(:span, a, class: 'badge badge-info') }, ' '),
+                    ('Competency level' if @material.difficulty_level.present?) => @material.difficulty_level,
+                    ('Prerequisites' if @material.prerequisites.present?) => @material.prerequisites
+                  }.compact
+                }
+              %>
+            </div>
+          <% end %>
+
+          <!-- DATE -->
+          <% if @material.date_created.present? || @material.date_modified.present? || @material.date_published.present? %>
+            <div class="row">
+              <%= render partial: 'common/box_info',
+                locals: {
+                  title: 'Date',
+                  title_color: '#fff',
+                  bg_color: '#376779ff',
+                  glyphicon: 'calendar',
+                  infos: {
+                    ('Created' if @material.date_created.present?) => @material.date_created,
+                    ('Modified' if @material.date_modified.present?) => @material.date_modified,
+                    ('Published' if @material.date_published.present?) => @material.date_published
+                  }.compact
+                }
+              %>
+            </div>
+          <% end %>
+
+        </div>
+
+        <!-- COLONNE DROITE -->
+        <div class="col-md-6 col-sm-12">
+
+          <!-- METADATA -->
+          <% if @material.licence.present? || @material.doi.present? || @material.version.present? || @material.status.present? %>
+            <div class="row">
+              <%= render partial: 'common/box_info',
+                locals: {
+                  title: 'Metadata',
+                  title_color: '#fff',
+                  bg_color: '#466d4bff',
+                  glyphicon: 'info-sign',
+                  infos: {
+                    ('License' if @material.licence.present?) => @material.licence,
+                    ('DOI' if @material.doi.present?) => @material.doi,
+                    ('Version' if @material.version.present?) => @material.version,
+                    ('Status' if @material.status.present?) => @material.status
+                  }.compact
+                }
+              %>
+            </div>
+          <% end %>
+
+        </div>
+
+      </div>
+
+      <!-- PEOPLE INVOLVED -->
+      <% if @material.deprecated_authors.any? || @material.deprecated_contributors.any? || @material.contact.present? %>
+        <div class="row">
+          <%= render partial: 'common/box_info',
+            locals: {
+              title: 'People involved',
+              title_color: '#222',
+              bg_color: '#eef2f7',
+              glyphicon: 'user',
+              infos: {
+                ('Authors' if @material.deprecated_authors.any?) => safe_join(@material.deprecated_authors, ', '),
+                ('Contributors' if @material.deprecated_contributors.any?) => safe_join(@material.deprecated_contributors, ', '),
+                ('Contact' if @material.contact.present?) => simple_format(@material.contact)
+              }.compact
+            }
+          %>
+        </div>
+      <% end %>
+
+      <div>
         <% if policy(@material).update? && @material.edit_suggestion %>
           <%= render partial: 'common/approve_term_suggestions', locals: { suggestion: @material.edit_suggestion } %>
         <% end %>
 
-        <!-- Field: events -->
-        <% if @material.events.any? %>
-          <div>
-            <b>Related events: </b>
-            <ul>
-              <% @material.events.not_finished.each do |event| %>
-                <li><%= link_to event.title, event %></li>
-              <% end %>
-              <% @material.events.finished.each do |event| %>
-                <li><%= link_to event.title, event %> (ended)</li>
-              <% end %>
-            </ul>
+        <!-- EXTERNAL RESOURCES -->
+        <% if @material.external_resources.any? %>
+          <div class="row">
+            <%= render partial: 'common/box_info',
+              locals: {
+                title: 'External resources',
+                title_color: '#222',
+                bg_color: '#f2f2f2',
+                glyphicon: 'th-list',
+                infos: {
+                  text_alone: (render partial: 'common/external_resources_list', locals: { external_resources: @material.external_resources })
+                }
+              }
+            %>
           </div>
         <% end %>
-
-        <!-- Field: eternal resources -->
-        <div>
-          <% if @material.external_resources.any? %>
-            <b>External resources: </b>
-            <%= render partial: 'common/external_resources_list', locals: { external_resources: @material.external_resources} %>
-          <% end %>
-        </div>
 
         <%= render :partial => 'materials/partials/twitter_card', :locals => {:material => @material} %>
       </div>
@@ -92,3 +210,9 @@
     <%= render partial: 'activities/activity_log_button', locals: { resource: @material } if @material.persisted? %>
   </div>
 </div>
+
+<style>
+  .no-spacing { margin: 0; padding: 0; }
+  .mb-2 { margin-bottom: 15px; }
+  .badge-info { background-color: #5bc0de; }
+</style>
