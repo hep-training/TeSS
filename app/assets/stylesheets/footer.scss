@@ -19,7 +19,7 @@
   .footer-item {
     margin: 6px;
     a {
-      color: $gray;
+      color: $footer-text;
       text-decoration: none;
 
       &:hover {
@@ -37,10 +37,13 @@
   }
 
   .supporters {
+    margin-top: 25px;
+    margin-bottom: 40px;
     display: flex;
     flex-direction: row-reverse;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 60px;
+    justify-content: center;
   }
 
   .footer-logo {
@@ -77,4 +80,9 @@
       color: $gray;
     }
   }
+}
+
+.cern-logo img {
+  margin: 30px;
+  max-width: 120px;
 }

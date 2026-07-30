@@ -1,0 +1,14 @@
+<div class="wrapper">
+  <div id="sidebar" class="popout-sidebar">
+    <%= render partial: 'about_nav', locals: { show: 'learning_paths' } %>
+  </div>
+
+  <div id="content">
+    <div class="about-block">
+        <h2>Get Started as a content provider</h2>
+        <p>Welcome to HEP Training. First of first, if you don't know what HEP Training is, check <a href="/about">this link</a>.</p>
+        <p>As a content provider, you can create ressources...</p>
+    </div>
+    <%= render partial: 'links', locals: { show: 'learningpaths' } %>
+  </div>
+</div>

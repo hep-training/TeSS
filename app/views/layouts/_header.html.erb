@@ -60,18 +60,20 @@
           end
 
           directory_tabs, main_tabs = tabs.partition { |t| TeSS::Config.site['directory_tabs']&.include?(t[:feature]) }
+          directory_tabs = directory_tabs.sort_by { |t| TeSS::Config.site['directory_tabs'].index(t[:feature]) || 99 }
+          
         %>
 
         <%= menu_group(pull: 'right') do %>
           <% main_tabs.each do |t| %>
-            <%= menu_item t("features.#{t[:feature]}.short"), t[:link] %>
+            <%= menu_item t("features.#{t[:feature]}.short"), t[:link], style: 'background: transparent;' %>
           <% end %>
 
           <% if directory_tabs.present? %>
-            <li class="dropdown directory-menu">
+            <li class="dropdown directory-menu border">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                  aria-expanded="false">
-                Directory <span class="caret"></span>
+                 aria-expanded="false">
+                <%= t('home.header.directory') %><span class="caret"></span>
               </a>
               <ul class="dropdown-menu dropdown-menu-right">
                 <% directory_tabs.each do |t| %>
@@ -80,6 +82,7 @@
               </ul>
             </li>
           <% end %>
+          <%= render partial: 'search/common/search_box', locals: { resource_path: search_path, is_for_nav: true } %>
         <% end %>
       </div>
     </div>
@@ -93,10 +96,10 @@
       </div>
     </div>
   <% end %>
-
-  <div id="flash-container" class="container-fluid">
-    <%= flash_messages %>
-  </div>
 </header>
+
+<div id="flash-container" class="container-fluid">
+  <%= flash_messages %>
+</div>
 
 <%= render(partial: 'layouts/cookie_banner') if cookie_consent.show_banner? %>

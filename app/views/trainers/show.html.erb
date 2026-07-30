@@ -33,17 +33,67 @@
     <% end %>
 
     <!-- Field: other fields -->
-    <div>
-      <%= display_attribute(@trainer, :email) %>
-      <%= display_attribute(@trainer, :location) %>
-      <%= display_attribute(@trainer, :experience) %>
-      <%= display_attribute(@trainer, :expertise_academic) { |values| values.join(', ') } %>
-      <%= display_attribute(@trainer, :expertise_technical) { |values| values.join(', ') } %>
-      <%= display_attribute(@trainer, :fields) { |values| values.join(', ') } %>
-      <%= display_attribute(@trainer, :interest) { |values| values.join(', ') } %>
-      <%= display_attribute(@trainer, :activity) { |values| values.join(', ') } %>
-      <%= display_attribute(@trainer, :language) { |values| values.map { |l| I18nData.languages[l] }.compact.join(', ') } %>
-      <%= display_attribute(@trainer, :social_media) { |values| values.join(', ') } %>
+    <div style="margin-bottom: 60px;">
+      <!-- SKILLS -->
+      <% if @trainer.expertise_academic.present? || @trainer.expertise_technical.present? || @trainer.fields.present? || @trainer.experience.present? %>
+        <div class="row">
+          <%= render partial: 'common/box_info',
+            locals: {
+              title: 'Skills',
+              title_color: '#222',
+              bg_color: '#d4e5f4ff',
+              glyphicon: 'education',
+              infos: {
+                ('Experience' if @trainer.experience.present?) => @trainer.experience,
+                ('Academic expertise' if @trainer.expertise_academic.any?) => @trainer.expertise_academic.join(', '),
+                ('Technical expertise' if @trainer.expertise_technical.any?) => @trainer.expertise_technical.join(', '),
+                ('Fields' if @trainer.fields.any?) => @trainer.fields.join(', ')
+              }.compact
+            }
+          %>
+        </div>
+      <% end %>
+
+      <div class="row">
+        <!-- CONTACT -->
+        <% if @trainer.email.present? || @trainer.location.present? || @trainer.social_media.present? || @trainer.language.present? %>
+          <div class="col-md-6 col-sm-12">
+            <%= render partial: 'common/box_info',
+              locals: {
+                title: 'Contact',
+                title_color: '#222',
+                bg_color: '#f1dec9ff',
+                glyphicon: 'envelope',
+                infos: {
+                  ('Email' if @trainer.email.present?) => @trainer.email,
+                  ('Location' if @trainer.location.present?) => @trainer.location,
+                  ('Language' if @trainer.language.any?) => @trainer.language.join(', '),
+                  ('Social media' if @trainer.social_media.any?) => @trainer.social_media.join(', ')
+                }.compact
+              }
+            %>
+          </div>
+        <% end %>
+
+        <!-- OTHERS -->
+        <% if @trainer.interest.present? || @trainer.activity.present? %>
+          <div class="col-md-6 col-sm-12">
+            <%= render partial: 'common/box_info',
+              locals: {
+                title: 'Others',
+                title_color: '#222',
+                bg_color: '#e6f4ea',
+                glyphicon: 'info-sign',
+                infos: {
+                  ('Interest' if @trainer.interest.any?) => @trainer.interest.join(', '),
+                  ('Activity' if @trainer.activity.any?) => @trainer.activity.join(', ')
+                }.compact
+              }
+            %>
+          </div>
+        <% end %>
+        
+      </div>
 
       <!-- Other metadata -->
       <%= render partial: 'trainers/partials/twitter_card', locals: { trainer: @trainer } %>

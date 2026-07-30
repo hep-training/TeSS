@@ -509,6 +509,8 @@ en:
       All types of resources at all levels for leveraging <span class="text-primary">computational resources in the life sciences</span>.
     search_placeholder: >
       Search %{site_name}...
+    community:
+      A lively and dynamic <span class="text-primary">community</span>
     catalogue:
       title: Browse the catalogue
       link_text: Start browsing
@@ -581,6 +583,8 @@ en:
       title: Connecting from %{country_name}?
       body: Visit the %{community_name} portal to browse local training.
     upcoming_events: 'Upcoming events'
+    header:
+      directory: 'Directory'
   privacy:
     registration: |
       <p>When you register with %{site_name} we ask for a username, password and email address.</p>
