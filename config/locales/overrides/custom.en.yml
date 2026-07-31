@@ -5,6 +5,8 @@ en:
     subtitle: |
       Browse the catalogue and find local and online courses, events, as well as videos, presentations, tutorials ...<br>
       All types of resources at all levels for leveraging<br><span class="text-primary">High Energy Physics research</span>.
+    community:
+      A lively and dynamic <span class="text-primary">community</span>
     promo:
       community:
         title: By HEP professionals, for a HEP workforce
@@ -59,6 +61,8 @@ en:
       title: Training Providers
     upcoming_events: 'Upcoming events'
     more_events: 'More events ...'
+    header:
+      directory: 'Others'
   about:
     registry: >
       <p>A one-stop shop for the HEP community gathering training materials and events.</p>

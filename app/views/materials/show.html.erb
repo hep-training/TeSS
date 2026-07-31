@@ -106,9 +106,9 @@
                   bg_color: '#fdf3e0',
                   glyphicon: 'education',
                   infos: {
-                    ('Target audience' if @material.target_audience.any?) => safe_join(@material.target_audience.map { |a| content_tag(:span, a, class: 'badge badge-info') }, ' '),
+                    ('Prerequisites' if @material.prerequisites.present?) => @material.prerequisites,
                     ('Competency level' if @material.difficulty_level.present?) => @material.difficulty_level,
-                    ('Prerequisites' if @material.prerequisites.present?) => @material.prerequisites
+                    ('Target audience' if @material.target_audience.any?) => safe_join(@material.target_audience.map { |a| content_tag(:span, a, class: 'badge badge-info') }, ' ')
                   }.compact
                 }
               %>

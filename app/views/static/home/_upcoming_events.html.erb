@@ -1,9 +1,9 @@
 <% cache(['home', 'upcoming_events', I18n.locale, session[:tz], @events]) do %>
   <section id="upcoming_events">
     <div class="tab-content">
-      <h2 class="text-center">
+      <h3 class="text-center">
         <%= link_to(t('home.upcoming_events'), events_path, class: 'home-title-link' ) %>
-      </h2>
+      </h3>
 
       <% if TeSS::Config.feature.fetch('timezone_controls') %>
         <%= render partial: 'events/event_timezone_control' %>
