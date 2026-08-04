@@ -34,7 +34,7 @@
 
   <%= render partial: 'static/home/additional_links' if TeSS::Config.site.dig('home_page', 'additional_links') %>
 
-  <%= render partial: 'static/home/community' %>
+  <%= render partial: 'static/home/featured_ressources.html.erb' %>
 
   <%= render partial: 'static/home/faq' if TeSS::Config.site.dig('home_page', 'faq')&.any? %>
 
