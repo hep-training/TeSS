@@ -3,7 +3,7 @@
     <div class="tab-content">
       <h3 class="text-center"><%= link_to('Latest materials', materials_path, class: 'home-title-link' ) %></h3>
       <ul class="tab-pane fade in active">
-        <%= render partial: 'common/masonry_grid', locals: { objects: @materials } %>
+        <%= render partial: 'common/masonry_grid', locals: { objects: @materials }, horizontal: true %>
       </ul>
     </div>
   </section>
