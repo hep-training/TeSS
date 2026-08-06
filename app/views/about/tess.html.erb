@@ -37,6 +37,31 @@
 
       <% @feature_count = 0 %>
 
+      <!-- MATERIALS-->
+      <% if feature_enabled?('materials') %>
+        <div id="materials" class="row <%= next_about_block(@feature_count += 1) %>">
+          <h3 class="col-lg-12"><%= t('about.headings.materials') %></h3>
+
+
+          <div class="col-lg-2 col-lg-push-10 about-resource-icon">
+            <%= image_tag("#{theme_path}/icons/materials-icon.svg", height: '65px', alt: 'Materials') %>
+          </div>
+
+          <div class="col-lg-10 col-lg-pull-2 about-resource">
+            <p><%== t 'about.materials' %></p>
+
+            <p><%== t('about.collect_materials', site_name: current_space.title, count: Material.distinct.count(:content_provider_id)) %>
+            </p>
+
+            <br/>
+
+            <%= link_to materials_path do %>
+              <%== t 'about.discover_materials' %> <i class="icon icon-sm arrow-right-icon"></i>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
       <!-- EVENTS-->
       <% if feature_enabled?('events') %>
         <div id="events" class="row <%= next_about_block(@feature_count += 1) %>">
@@ -53,30 +78,6 @@
 
             <%= link_to events_path do %>
               <%== t 'about.discover_events' %> <i class="icon icon-sm arrow-right-icon"></i>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
-
-      <!-- MATERIALS-->
-      <% if feature_enabled?('materials') %>
-        <div id="materials" class="row <%= next_about_block(@feature_count += 1) %>">
-          <h3 class="col-lg-12"><%= t('about.headings.materials') %></h3>
-
-          <div class="col-lg-2 col-lg-push-10 about-resource-icon">
-            <%= image_tag("#{theme_path}/icons/materials-icon.svg", height: '65px', alt: 'Materials') %>
-          </div>
-
-          <div class="col-lg-10 col-lg-pull-2 about-resource">
-            <p><%== t 'about.materials' %></p>
-
-            <p><%== t('about.collect_materials', site_name: current_space.title, count: Material.distinct.count(:content_provider_id)) %>
-            </p>
-
-            <br/>
-
-            <%= link_to materials_path do %>
-              <%== t 'about.discover_materials' %> <i class="icon icon-sm arrow-right-icon"></i>
             <% end %>
           </div>
         </div>
@@ -141,7 +142,12 @@
         <%= link_to t('about.links.learn_more_api'),
             developers_path(anchor: 'api'), class: 'btn btn-default' %>
       </div>
+
+      <!-- LINK TESS -->
+      <%= render partial: 'about_tess_acknowledgements' if TeSS::Config.site.dig('about_tess_acknowledgments') %>
+
     </div>
+
 
     <hr/>
 

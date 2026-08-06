@@ -41,14 +41,17 @@
         <h3>Automatic Registration</h3>
         <p><%== t 'register.automatic' %></p>
 
+        <!-- TL;DR -->
+        <h4>TL;DR</h4>
+        <p><%== t('register.tldr', contact_email: TeSS::Config.contact_email) %></p>
+
         <!-- STRUCTURED DATA -->
         <h4>Structured Data Types</h4>
         <%== t 'register.structured' %>
 
         <!-- BIOSCHEMAS -->
         <div id="bioschemas" class="sub-about-block">
-          <h5>Schema.org / Bioschemas</h5>
-          <%= image_tag 'about/bioschemas.png', class: 'structured-data-graphic' %>
+          <h5>Schema.org</h5>
           <%== t 'register.schema' %>
         </div>
 
@@ -71,7 +74,7 @@
           <%== t 'register.calendar' %>
         </div>
 
-        <!--  CONTACT US -->
+        <!--  SOURCES -->
         <div id="sources">
           <%#= render :partial => "common/contact_form"%>
           <% if user_creatable_ingestion_methods.any? %>
@@ -88,14 +91,24 @@
                 <li><%= method %></li>
               <% end %>
             </ul>
-
-            for other methods...
           <% end %>
+        </div>
+
+        <!-- EXAMPLE -->
+        <div id="example" class="sub-about-block">
+          <h4>Schema.org metadata example</h4>
+          <%== t 'register.example' %>
+        </div>
+
+        <!--  CONTACT US -->
+        <div id="contact-us" class="sub-about-block">
           <h4>Contact Us</h4>
           <p><%== t('register.advice', contact_email: TeSS::Config.contact_email) %></p>
         </div>
       </div>
 
+
+      <!--  MANUAL REGISTRATION -->
       <div id="manual" class="even-about-block">
         <h3>Manual Registration</h3>
         <p><%== t 'register.manual' %></p>

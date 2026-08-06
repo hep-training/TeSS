@@ -39,6 +39,9 @@
           </div>
         <% end %>
         <div class="footer-item">
+          <%= link_to t('footer.provider'), content_providers_path %>
+        </div>
+        <div class="footer-item">
           <%= link_to t('footer.funding'), us_path(anchor: 'funding') %>
         </div>
         <div class="footer-item">
@@ -64,6 +67,10 @@
       <div class="col-sm-4 col-xs-6 text-left">
         <div class="footer-item">
           <%= t('footer.version') %> <code><%= app_version_text -%></code>
+        </div>
+
+        <div class="footer-item">
+          <%= t('footer.instance_version') %> <code><%= instance_version_text -%></code>
         </div>
 
         <div class="footer-item">

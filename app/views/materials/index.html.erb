@@ -9,6 +9,8 @@
   <div id="content">
     <h2><%=t("features.materials.long")%></h2>
 
+    <%= render_markdown(materials_info) %>
+    
     <% content_for :buttons do %>
       <!-- Subscribe button -->
       <% if TeSS::Config.feature['subscription'] %>
@@ -17,10 +19,6 @@
       <!-- Register button -->
       <%= link_to new_material_path, class: 'btn btn-primary' do %>
         <%= t('register.buttons.materials') %>
-      <% end %>
-      <!-- Info -->
-      <%= info_button("What are materials in #{TeSS::Config.site['title_short']}?", hide_text: true) do %>
-        <%= render_markdown(materials_info) %>
       <% end %>
     <% end %>
 

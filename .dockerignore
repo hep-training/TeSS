@@ -8,3 +8,4 @@ log/
 tmp/
 test/
 .DS_Store
+config/secrets
