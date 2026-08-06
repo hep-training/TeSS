@@ -398,11 +398,7 @@ class User < ApplicationRecord
   end
 
   def is_owner_in_any_group?
-    unless TeSS::Config.feature['api_system_for_groups']
-      Group.all.any? { |group| group.group_memberships.find_by(user: self)&.owner == true }
-    else
-      false
-    end
+    group_memberships.where(owner: true).exists?
   end
 
   # Get user's registrations

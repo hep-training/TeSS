@@ -21,7 +21,7 @@ class Space < ApplicationRecord
   has_many :learning_paths
   has_many :learning_path_topics
   has_many :subscriptions
-  has_many :space_roles
+  has_many :space_roles, dependent: :destroy
   has_many :space_role_users, through: :space_roles, source: :user, class_name: 'User'
   has_many :administrator_roles, -> { where(key: :admin) }, class_name: 'SpaceRole'
   has_many :administrators, through: :administrator_roles, source: :user, class_name: 'User'
@@ -44,10 +44,8 @@ class Space < ApplicationRecord
     #
     # record:: the Space instance being validated.
     def validate(record)
-      groupsCount = TeSS::Config.feature['api_system_for_groups'] ? record.api_groups.length-1 : record.api_groups.length # api_groups needs -1 because if list is empty, a default "" value is added for PostgreSQL
-      Rails.logger.info "Validating space: is_private=#{record.is_private}, groups_count=#{groupsCount}"
-      if record.is_private && groupsCount == 0
-        record.errors.add(:base, "If the space is private, you must add required groups.")
+    if record.is_private && !(record.group_ids.length > 0)
+        record.errors.add(:base, I18n.t('private_space.needs_groups_in_form'))
       end
     end
   end
@@ -206,7 +204,7 @@ class Space < ApplicationRecord
       records = send(relation)
 
       if is_private
-        records.delete_all
+        records.destroy_all
       else
         # explicitly ask Solr to reindex those records so they reappear under the default space.
         klass = records.klass
@@ -219,6 +217,5 @@ class Space < ApplicationRecord
         end
       end
     end
-    send(:space_roles).delete_all
   end
 end

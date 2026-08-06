@@ -39,8 +39,7 @@ module SearchableIndex
   # <tt>@index_resources</tt> and <tt>@#{controller_name}</tt>.
   #
   # When Solr is enabled, delegates to <tt>@model.search_and_filter</tt>,
-  # filters the results through Pundit (#policy(record).shown?), and wraps
-  # the filtered set in a WillPaginate::Collection with a corrected total.
+  # wrap the results set in a WillPaginate::Collection with a corrected total.
   # Otherwise falls back to a plain <tt>policy_scope(@model).paginate</tt>.
   def fetch_resources
     if TeSS::Config.solr_enabled
@@ -48,18 +47,8 @@ module SearchableIndex
       per_page = per_page_param.blank? ? DEFAULT_PAGE_SIZE : per_page_param.to_i
 
       @search_results = @model.search_and_filter(current_user, @search_params, @facet_params,
-                                    page: page, per_page: per_page, sort_by: @sort_by)
-
-      filtered = @search_results.results.select { |record| policy(record).shown? }
-
-      # Override total on the Solr result object so the view gets the right count
-      @search_results.instance_variable_set(:@total, filtered.length)
-      def @search_results.total; @total; end
-
-      @index_resources = WillPaginate::Collection.create(page, per_page, filtered.length) do |pager|
-        pager.replace(filtered)
-      end
-
+                                    page: page, per_page: per_page, sort_by: @sort_by, space: Space.current_space)
+      @index_resources = @search_results.results
       instance_variable_set("@#{controller_name}_results", @search_results) # e.g. @nodes_results
     else
       @index_resources = policy_scope(@model).paginate(page: @page)
@@ -120,10 +109,10 @@ module SearchableIndex
     {
         links: links,
         meta: {
-          facets: facets,
-          :'available-facets' => available_facets,
-          query: @search_params,
-          :'results-count' => total
+            facets: facets,
+            available_facets: available_facets,
+            query: @search_params,
+            results_count: total
         }
     }
   end

@@ -188,7 +188,7 @@ class GroupsControllerTest < ActionController::TestCase
     assert_difference('Group.count', -1) do
       delete :destroy, params: { id: @group }
     end
-    assert_response :success
+    assert_redirected_to groups_url
   end
 
   test 'should allow admin to destroy group' do

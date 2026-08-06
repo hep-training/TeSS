@@ -26,9 +26,9 @@ class ApplicationController < ActionController::Base
 
   # User auth should be required in the web interface as well; it's here rather than in routes so that it
   # doesn't override the token auth, above.
+  before_action :set_current_user
   before_action :authenticate_user!, except: [:index, :show, :embed, :calendar, :check_exists, :handle_error, :count, :redirect]
   before_action :set_current_space
-  before_action :set_current_user
 
   # Should prevent forgery errors for JSON posts.
   skip_before_action :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
@@ -181,11 +181,11 @@ class ApplicationController < ActionController::Base
     if TeSS::Config.feature['spaces'] && Space.current_space != Space.default
       unless policy(Space.current_space).shown?
         if current_user
-          flash[:alert] = "You are not authorized to access this page."
-          redirect_to TeSS::Config.base_url, allow_other_host: true
+          flash[:alert] = t('private_space.no_authorized')
+          raise Pundit::NotAuthorizedError
         else
-          flash[:alert] = "Sign in to access this page."
-          redirect_to TeSS::Config.base_url + '/users/sign_in', allow_other_host: true
+          flash[:alert] = t('private_space.needs_sign_in')
+          raise Pundit::NotAuthorizedError
         end
       end
     end

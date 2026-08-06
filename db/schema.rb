@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_18_141208) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_10_154329) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -212,6 +212,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_18_141208) do
     t.text "notes"
     t.string "open_science", default: [], array: true
     t.string "organizer"
+    t.string "origin_uri"
     t.string "postcode"
     t.text "prerequisites"
     t.integer "presence", default: 0
@@ -287,6 +288,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_18_141208) do
   create_table "groups_spaces", id: false, force: :cascade do |t|
     t.bigint "group_id", null: false
     t.bigint "space_id", null: false
+    t.index ["group_id"], name: "index_groups_spaces_on_group_id"
+    t.index ["space_id"], name: "index_groups_spaces_on_space_id"
   end
 
   create_table "learning_path_topic_items", force: :cascade do |t|
@@ -392,6 +395,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_18_141208) do
     t.date "last_scraped"
     t.text "learning_objectives"
     t.string "licence", default: "notspecified"
+    t.string "origin_uri"
     t.string "other_types"
     t.text "prerequisites"
     t.date "remote_created_date"

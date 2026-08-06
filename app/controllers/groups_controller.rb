@@ -5,6 +5,7 @@
 # objects.
 class GroupsController < ApplicationController
   before_action :set_group, only: %i[ show edit update destroy ]
+  before_action :set_breadcrumbs
 
   # GET /groups
   #
@@ -18,6 +19,7 @@ class GroupsController < ApplicationController
   # Shows a single group. Requires authorization via GroupPolicy#show?.
   def show
     authorize @group
+    @memberships = @group.group_memberships.includes(:user)
   end
 
   # GET /groups/new
@@ -94,7 +96,10 @@ class GroupsController < ApplicationController
     # Returns:: the strong-parameters Hash permitted for Group creation and
     #           update (+:title+, +:user_ids+, +:owner_ids+).
     def group_params
-      params.require(:group).permit(:title, user_ids: [], owner_ids: [])
+      permitted = params.require(:group).permit(:title, user_ids: [], owner_ids: [])
+      permitted[:user_ids] = permitted[:user_ids] if permitted.key?(:user_ids)
+      permitted[:owner_ids] = permitted[:owner_ids] if permitted.key?(:owner_ids)
+      permitted
     end
 
     # Synchronizes the +owner+ flag on each of +@group+'s memberships based

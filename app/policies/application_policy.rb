@@ -92,10 +92,9 @@ class ApplicationPolicy
     user_has_role?(:curator, :admin, :scraper_user)
   end
 
-  # Returns:: the default Pundit policy scope for the record's class,
-  #           filtered by #shown?.
+  # Returns:: the default Pundit policy scope for the record's class.
   def scope
-    Pundit.policy_scope!(user, record.class).shown?
+    Pundit.policy_scope!(user, record.class)
   end
 
   # Determines whether the record should be visible to the current user,
@@ -126,7 +125,7 @@ class ApplicationPolicy
         space_groups = @space.groups.pluck(:id)
         
       end
-      return space_groups.any? { |group_id| user_groups.include?(group_id) }
+      return @user.groups.where(id: @space.groups).any?
     end
 
     return false

@@ -24,7 +24,6 @@ class MaterialsController < ApplicationController
       format.json
       format.json_api { render({ json: @materials }.merge(api_collection_properties)) }
     end
-    @results_count = @search_results&.total || 0
   end
 
   # GET /materials/1
@@ -171,7 +170,7 @@ class MaterialsController < ApplicationController
                                      :last_scraped, :scraper_record, :remote_created_date, :remote_updated_date,
                                      :content_provider_id, :difficulty_level, :version, :status,
                                      :date_created, :date_modified, :date_published, :other_types,
-                                     :prerequisites, :syllabus, :visible, :learning_objectives, { subsets: [] },
+                                     :prerequisites, :syllabus, :visible, :learning_objectives, :origin_uri, { subsets: [] },
                                      { target_audience: [] },
                                      { collection_ids: [] }, { keywords: [] }, { resource_type: [] },
                                      { scientific_topic_names: [] }, { scientific_topic_uris: [] },
