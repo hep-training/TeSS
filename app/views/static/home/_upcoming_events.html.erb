@@ -2,8 +2,13 @@
   <section id="upcoming_events">
     <div class="tab-content">
       <div class="row">
-        <div class="col-xs-12 mb-4">
-          <h3><%= link_to(t('home.upcoming_events'), events_path, class: 'home-title-link' ) %></h3>
+        <div class="col-sm-6 mb-4">
+          <h3>Upcoming events</h3>
+        </div>
+        <div class="col-sm-6 text-right">
+          <button class="btn mr-2" style="margin-bottom: -50px;"><%= link_to('Add to calendar', '/', class: 'home-title-link' ) %></button>
+          <button class="btn ml-2" style="margin-bottom: -50px;"><%= link_to('View all', events_path, class: 'home-title-link' ) %></button>
+          <button class="btn ml-2" style="margin-bottom: -50px;"><%= link_to('Register an event', '/events/new', class: 'home-title-link' ) %></button>
         </div>
       </div>
 
