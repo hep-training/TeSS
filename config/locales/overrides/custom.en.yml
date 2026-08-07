@@ -1,10 +1,9 @@
 en:
   home:
     welcome: |
-      <span class="text-primary">Training</span> and events for the HEP community <span class="text-primary">by the HEP community</span>
+      Welcome to <span class="text-primary">HEP Training</span>!
     subtitle: |
-      Browse the catalogue and find local and online courses, events, as well as videos, presentations, tutorials ...<br>
-      All types of resources at all levels for leveraging<br><span class="text-primary">High Energy Physics research</span>.
+      The community training platform for <span class="text-primary">High Energy Physics</span>.
     community:
       A lively and dynamic <span class="text-primary">community</span>
     promo:
