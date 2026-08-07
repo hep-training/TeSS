@@ -1,4 +1,4 @@
-<li class="masonry-brick media-item long">
+<li class="masonry-brick media-item long <%= 'masonry-horizontal-item' if horizontal %>">
   <%= link_to trainer_path(trainer), class: 'link-overlay' do %>
     <%= image_tag trainer.user.avatar_url, class: 'small-avatar pull-right' %>
 

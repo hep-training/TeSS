@@ -1,0 +1,93 @@
+// ===== Variables =====
+$spacing-vertical: 60px;
+$border-radius: 12px;
+$shadow-default: 0 4px 8px rgba(0, 0, 0, 0.1);
+$shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.15);
+$transition-duration: 0.3s;
+$icon-size: 38px;
+$text-dark: #333;
+$text-muted: #666;
+$text-size: 17px;
+
+// Couleurs des cartes
+$card-colors: (
+  newcomer: #497dbbff,
+  trainer: #466d4bff,
+  group: #a7642eff,
+  collective: #784c8aff
+);
+
+// ===== Section =====
+.who-are-you-section {
+
+  a { text-decoration: none; }
+
+  padding: $spacing-vertical 0;
+
+  .panel {
+    transition: transform .2s;
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  @mixin card-color($color) {
+    .card-icon {
+      color: $color;
+    }
+  }
+
+  // ===== Pathway Card =====
+  .pathway-card {
+    border-radius: $border-radius;
+    box-shadow: $shadow-default;
+    height: 100%;
+    transition: transform $transition-duration ease, box-shadow $transition-duration ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: $shadow-hover;
+    }
+
+    .card-icon {
+      font-size: $icon-size;
+      float: right;
+      margin-top: -5px;
+    }
+
+    .card-title {
+      margin: 0 0 12px 0;
+      color: $text-dark;
+    }
+
+    .card-text {
+      margin: 0 0 20px 0;
+      color: $text-muted;
+      font-size: $text-size;
+      padding-right: 45px;
+    }
+
+    .btn {
+      border: none;
+      padding: 10px 20px;
+    }
+  }
+
+  // ===== Card Variants =====
+  .card-newcomer {
+    @include card-color(map-get($card-colors, newcomer));
+  }
+
+  .card-trainer {
+    @include card-color(map-get($card-colors, trainer));
+  }
+
+  .card-group {
+    @include card-color(map-get($card-colors, group));
+  }
+
+  .card-collective {
+    @include card-color(map-get($card-colors, collective));
+  }
+
+}

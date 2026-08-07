@@ -1,6 +1,6 @@
 <% learning_path_topic_item ||= nil %>
 <% collection_item ||= learning_path_topic_item %>
-<li class="masonry-brick media-item long">
+<li class="masonry-brick media-item long <%= 'masonry-horizontal-item' if horizontal %>">
   <%= link_to event, class: 'link-overlay with-left-icon' do %>
     <%= item_order_badge(collection_item) if collection_item %>
     <div class="with-left-icon">

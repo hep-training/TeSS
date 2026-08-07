@@ -1,10 +1,13 @@
 <% horizontal ||= false %>
+<% ul_class ||= nil %>
 
-<% if !objects.blank? && objects.count > 0 %>
-    <ul class="<% horizontal ? "masonry-horizontal" : "masonry media-grid" %>">
-      <% objects.each do |object| %>
-          <%= render object %>
-      <% end %>
-    </ul>
+<% if objects.present? && objects.count > 0 %>
+  <% base_class = horizontal ? 'masonry-horizontal' : 'masonry media-grid' %>
+  <% classes = [base_class, ul_class].compact.join(' ') %>
+  <ul class="<%= classes %>">
+    <% objects.each do |object| %>
+      <%= render object, horizontal: horizontal %>
+    <% end %>
+  </ul>
 <% end %>
 

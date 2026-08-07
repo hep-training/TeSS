@@ -6,7 +6,7 @@
     show_order = true
   end
 %>
-<li class="masonry-brick media-item long">
+<li class="masonry-brick media-item long <%= 'masonry-horizontal-item' if horizontal %>">
   <%= link_to material_path(material, **link_params), class: 'link-overlay' do %>
     <%= item_order_badge(collection_item) if show_order && collection_item %>
 
