@@ -350,7 +350,7 @@ ul.unstyled {
 
 .nav-item.active > a {
   position: relative;
-  color: $brand-primary;
+  color: $primary-color;
   background-color: #eee;
 }
 
@@ -512,7 +512,8 @@ ul.unstyled {
   }
 }
 
-.dropdown.open > .dropdown-toggle {
+.dropdown.open > .dropdown-toggle,
+.btn-group.open > .dropdown-toggle {
   background-color: transparent !important;
   box-shadow: none;
 }
@@ -535,7 +536,8 @@ ul.unstyled {
   pointer-events: none;
 }
 
-.dropdown.open > .dropdown-menu {
+.dropdown.open > .dropdown-menu,
+.btn-group.open > .dropdown-menu {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -753,12 +755,12 @@ sup {
 
 .delete-icon {
   vertical-align: middle;
-  color: $brand-danger;
+  color: $danger-color;
   font-weight: bold;
   font-size: 120%;
 
   &:hover {
-    color: darken($brand-danger, 20%);
+    color: darken($danger-color, 20%);
   }
 }
 
@@ -772,22 +774,22 @@ sup {
 }
 
 .fresh-icon {
-  color: $brand-primary;
+  color: $primary-color;
   margin-left: 5px;
 }
 
 .stale-icon {
-  color: $brand-secondary;
+  color: $secondary-color;
   margin-left: 5px;
 }
 
 .missing-icon {
-  color: $brand-secondary;
+  color: $secondary-color;
   margin-left: 5px;
 }
 
 .event-started-icon {
-  color: $brand-primary;
+  color: $primary-color;
   margin-left: 5px;
 }
 
@@ -868,13 +870,13 @@ input[type=checkbox].field-lock:checked + label:before {
 
 input[type=checkbox].field-lock:checked + label:before,
 .field-lock-example-locked {
-  color: $brand-success;
+  color: $success-color;
   font-size: 110%;
 }
 
 input[type=checkbox].field-lock + label:before,
 .field-lock-example-open {
-  color: $brand-warning;
+  color: $warning-color;
   font-size: 110%;
 }
 
@@ -995,7 +997,7 @@ input[type=checkbox].field-lock + label:before,
 }
 
 .filter-heading-active {
-  color: $brand-primary;
+  color: $primary-color;
 }
 
 .embedded-content {

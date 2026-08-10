@@ -242,9 +242,9 @@ dl.faq {
     padding: 5px 30px 20px;
 
     &.opened {
-      border: 1px solid $brand-primary;
+      border: 1px solid $primary-color;
       dt {
-        color: $brand-primary;
+        color: $primary-color;
       }
     }
 

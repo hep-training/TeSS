@@ -78,7 +78,7 @@ a {
 }
 
 $btn-secondary-color: #fff !default;
-$btn-secondary-bg: $brand-secondary !default;
+$btn-secondary-bg: $secondary-color !default;
 $btn-secondary-border: darken($btn-secondary-bg, 5%) !default;
 
 .btn-secondary {

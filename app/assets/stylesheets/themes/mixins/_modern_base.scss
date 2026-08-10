@@ -56,12 +56,12 @@ $font-size-h3: 32px;
 $font-size-h4: 24px;
 
 // Colours
-$brand-primary: $secondary-color;
-$brand-secondary: $accent-color;
-$brand-danger: #d9534f;
-$brand-success: #129e37;
-$brand-warning: #f0be3e;
-$brand-info: #9fc7c5;
+$primary-color: $secondary-color;
+$secondary-color: $accent-color;
+$danger-color: #d9534f;
+$success-color: #129e37;
+$warning-color: #f0be3e;
+$info-color: #9fc7c5;
 
 $headings-color: $primary-color;
 
@@ -71,19 +71,19 @@ $gray: darken($dark-60-color, 10%);
 $gray-light: $dark-60-color;
 $gray-lighter: #fafafa;
 
-$state-success-text: darken($brand-success, 10%);
+$state-success-text: darken($success-color, 10%);
 $state-success-bg: #d5f5dd;
 $state-success-border: $state-success-bg;
 
-$state-info-text: darken($brand-info, 35%);
+$state-info-text: darken($info-color, 35%);
 $state-info-bg: #d9f4f3;
 $state-info-border: $state-info-bg;
 
-$state-warning-text: darken($brand-warning, 30%);
+$state-warning-text: darken($warning-color, 30%);
 $state-warning-bg: #fff6c6;
 $state-warning-border: $state-warning-bg;
 
-$state-danger-text: darken($brand-danger, 20%);
+$state-danger-text: darken($danger-color, 20%);
 $state-danger-bg: #ffe9e9;
 $state-danger-border: $state-danger-bg;
 
@@ -129,33 +129,33 @@ $link-color: $accent-color;
 $link-hover-color: darken(rgb(244, 125, 33), 15%);
 
 // Buttons
-$btn-default-color: $brand-secondary;
+$btn-default-color: $secondary-color;
 $btn-default-bg: #fff;
-$btn-default-border: $brand-secondary;
+$btn-default-border: $secondary-color;
 
 $btn-primary-color: $light-color;
 $btn-primary-bg: $accent-color;
 $btn-primary-border: $accent-color;
 
-$btn-secondary-color: $brand-primary; // Yes I know this is backwards
+$btn-secondary-color: $primary-color; // Yes I know this is backwards
 $btn-secondary-bg: $btn-default-bg;
-$btn-secondary-border: $brand-primary;
+$btn-secondary-border: $primary-color;
 
-$btn-info-color: $brand-info;
+$btn-info-color: $info-color;
 $btn-info-bg: #fff;
-$btn-info-border: $brand-info;
+$btn-info-border: $info-color;
 
-$btn-success-color: $brand-success;
+$btn-success-color: $success-color;
 $btn-success-bg: #fff;
-$btn-success-border: $brand-success;
+$btn-success-border: $success-color;
 
-$btn-warning-color: $brand-warning;
+$btn-warning-color: $warning-color;
 $btn-warning-bg: #fff;
-$btn-warning-border: $brand-warning;
+$btn-warning-border: $warning-color;
 
-$btn-danger-color: $brand-danger;
+$btn-danger-color: $danger-color;
 $btn-danger-bg: #fff;
-$btn-danger-border: $brand-danger;
+$btn-danger-border: $danger-color;
 
 // Nav
 $nav-pills-active-link-hover-bg: $secondary-color;

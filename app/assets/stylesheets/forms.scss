@@ -41,7 +41,7 @@ label.required abbr {
   margin-bottom: 10px;
 
   &.deleted {
-    color: $brand-danger;
+    color: $danger-color;
     text-decoration: line-through;
   }
 }

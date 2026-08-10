@@ -46,9 +46,9 @@
   }
 
   // ===== Card Variants (use theme colours) =====
-  .card-newcomer .card-icon { color: $brand-primary; }
-  .card-trainer .card-icon   { color: lighten($brand-primary, 30%); }
-  .card-group .card-icon     { color: darken($brand-secondary, 10%); }
-  .card-collective .card-icon{ color: $brand-secondary; }
+  .card-newcomer .card-icon { color: $primary-color; }
+  .card-trainer .card-icon   { color: lighten($primary-color, 30%); }
+  .card-group .card-icon     { color: darken($secondary-color, 10%); }
+  .card-collective .card-icon{ color: $secondary-color; }
 
 }

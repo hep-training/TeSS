@@ -8,9 +8,9 @@
 
 .activity-log-button {
   text-decoration: none;
-  color: $brand-primary;
+  color: $primary-color;
   &:hover, &:active, &:focus {
-    color: $brand-primary;
+    color: $primary-color;
     text-decoration: none;
   }
 }
