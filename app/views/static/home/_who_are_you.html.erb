@@ -4,7 +4,7 @@
     <!-- Title Row -->
     <div class="row">
       <div class="col-xs-12 mb-4">
-        <h3>Find your path</h3>
+        <h3><%= t('home.who_are_you.heading') %></h3>
       </div>
     </div>
 
@@ -13,14 +13,14 @@
 
       <!-- Newcomer Card -->
       <div class="col-sm-6 col-md-6 m-b-30">
-        <a href="/about" style="text-decoration: none; color: inherit;">
+        <a href="/about" class="pathway-link">
           <div class="panel panel-default pathway-card p-2 card-newcomer">
             <div class="panel-body">
               <div class="card-icon">
                 <i class="glyphicon glyphicon-star"></i>
               </div>
-              <h4 class="card-title mb-5">I'm New Here</h4>
-              <p class="card-text">Welcome! If you don't know where to start, click here.</p>
+              <h4 class="card-title mb-5"><%= t('home.who_are_you.newcomer.title') %></h4>
+              <p class="card-text"><%= t('home.who_are_you.newcomer.text') %></p>
             </div>
           </div>
         </a>
@@ -28,14 +28,14 @@
 
       <!-- Trainer Card -->
       <div class="col-sm-6 col-md-6 m-b-30">
-        <a href="/about/registering" style="text-decoration: none; color: inherit;">
+        <a href="/about/registering" class="pathway-link">
           <div class="panel panel-default pathway-card p-2 card-trainer">
             <div class="panel-body">
               <div class="card-icon">
                 <i class="glyphicon glyphicon-blackboard"></i>
               </div>
-              <h4 class="card-title mb-5">I'm a Trainer</h4>
-              <p class="card-text">Share your expertise! Create and deliver engaging courses.</p>
+              <h4 class="card-title mb-5"><%= t('home.who_are_you.trainer.title') %></h4>
+              <p class="card-text"><%= t('home.who_are_you.trainer.text') %></p>
             </div>
           </div>
         </a>
@@ -43,14 +43,14 @@
 
       <!-- Group Member Card -->
       <div class="col-sm-6 col-md-6 m-b-30">
-        <a href="#" style="text-decoration: none; color: inherit;">
+        <a href="#" class="pathway-link">
           <div class="panel panel-default pathway-card p-2 card-group">
             <div class="panel-body">
               <div class="card-icon">
                 <i class="glyphicon glyphicon-flag"></i>
               </div>
-              <h4 class="card-title mb-5">I'm in a Group</h4>
-              <p class="card-text">Already part of our community? Access your group now!</p>
+              <h4 class="card-title mb-5"><%= t('home.who_are_you.group.title') %></h4>
+              <p class="card-text"><%= t('home.who_are_you.group.text') %></p>
             </div>
           </div>
         </a>
@@ -58,14 +58,14 @@
 
       <!-- Content Provider Card -->
       <div class="col-sm-6 col-md-6 m-b-30">
-        <a href="/about/content_providers" style="text-decoration: none; color: inherit;">
+        <a href="/about/content_providers" class="pathway-link">
           <div class="panel panel-default pathway-card p-2 card-collective">
             <div class="panel-body">
               <div class="card-icon">
                 <i class="glyphicon glyphicon-home"></i>
               </div>
-              <h4 class="card-title mb-5">I'm a Collective</h4>
-              <p class="card-text">Register yourself as a provider to share your resources!</p>
+              <h4 class="card-title mb-5"><%= t('home.who_are_you.collective.title') %></h4>
+              <p class="card-text"><%= t('home.who_are_you.collective.text') %></p>
             </div>
           </div>
         </a>

@@ -1,93 +1,54 @@
-// ===== Variables =====
-$spacing-vertical: 60px;
-$border-radius: 12px;
-$shadow-default: 0 4px 8px rgba(0, 0, 0, 0.1);
-$shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.15);
-$transition-duration: 0.3s;
-$icon-size: 38px;
-$text-dark: #333;
-$text-muted: #666;
-$text-size: 17px;
+// Use shared theme variables where possible
+@import "themes/mixins/hep_base";
 
-// Couleurs des cartes
-$card-colors: (
-  newcomer: #497dbbff,
-  trainer: #466d4bff,
-  group: #a7642eff,
-  collective: #784c8aff
-);
-
-// ===== Section =====
 .who-are-you-section {
 
-  a { text-decoration: none; }
+  .pathway-link { text-decoration: none; color: inherit; }
 
-  padding: $spacing-vertical 0;
+  padding: $layout-spacing-base * 2 0;
 
   .panel {
-    transition: transform .2s;
-    &:hover {
-      transform: scale(1.05);
-    }
-  }
-
-  @mixin card-color($color) {
-    .card-icon {
-      color: $color;
-    }
+    transition: transform $transition-time;
+    &:hover { transform: scale(1.02); }
   }
 
   // ===== Pathway Card =====
   .pathway-card {
-    border-radius: $border-radius;
-    box-shadow: $shadow-default;
+    border-radius: $border-radius-base;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
     height: 100%;
-    transition: transform $transition-duration ease, box-shadow $transition-duration ease;
+    transition: transform $transition-time ease, box-shadow $transition-time ease;
 
     &:hover {
       transform: translateY(-5px);
-      box-shadow: $shadow-hover;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
     }
 
     .card-icon {
-      font-size: $icon-size;
+      font-size: 35px;
       float: right;
       margin-top: -5px;
     }
 
     .card-title {
       margin: 0 0 12px 0;
-      color: $text-dark;
+      color: $headings-color;
     }
 
     .card-text {
       margin: 0 0 20px 0;
-      color: $text-muted;
-      font-size: $text-size;
+      color: $gray-dark;
+      font-size: $font-size-base;
       padding-right: 45px;
     }
 
-    .btn {
-      border: none;
-      padding: 10px 20px;
-    }
+    .btn { border: none; padding: $padding-base-vertical $padding-base-horizontal; }
   }
 
-  // ===== Card Variants =====
-  .card-newcomer {
-    @include card-color(map-get($card-colors, newcomer));
-  }
-
-  .card-trainer {
-    @include card-color(map-get($card-colors, trainer));
-  }
-
-  .card-group {
-    @include card-color(map-get($card-colors, group));
-  }
-
-  .card-collective {
-    @include card-color(map-get($card-colors, collective));
-  }
+  // ===== Card Variants (use theme colours) =====
+  .card-newcomer .card-icon { color: $brand-primary; }
+  .card-trainer .card-icon   { color: lighten($brand-primary, 30%); }
+  .card-group .card-icon     { color: darken($brand-secondary, 10%); }
+  .card-collective .card-icon{ color: $brand-secondary; }
 
 }

@@ -6,6 +6,20 @@ en:
       The community training platform for <span class="text-primary">High Energy Physics</span>.
     community:
       A lively and dynamic <span class="text-primary">community</span>
+    who_are_you:
+      heading: "Find your path"
+      newcomer:
+        title: "I'm New Here"
+        text: "Welcome! If you don't know where to start, click here."
+      trainer:
+        title: "I'm a Trainer"
+        text: "Share your expertise! Create and deliver engaging courses."
+      group:
+        title: "I'm in a Group"
+        text: "Already part of our community? Access your group now!"
+      collective:
+        title: "I'm a Collective"
+        text: "Register yourself as a provider to share your resources!"
     promo:
       community:
         title: By HEP professionals, for a HEP workforce
