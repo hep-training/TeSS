@@ -2,8 +2,12 @@
   <section id="featured_trainer">
     <div class="tab-content">
       <div class="row">
-        <div class="col-xs-12 mb-4">
-          <h3><%= link_to('Featured trainer', trainers_path, class: 'home-title-link' ) %></h3>
+        <div class="col-sm-6 mb-4">
+          <h3>Featured trainers</h3>
+        </div>
+        <div class="col-sm-6 text-right">
+          <button class="btn mr-2" style="margin-bottom: -50px;"><%= link_to('View all', materials_path, class: 'home-title-link' ) %></button>
+          <button class="btn ml-2" style="margin-bottom: -50px;"><%= link_to('Register a material', '/materials/new', class: 'home-title-link' ) %></button>
         </div>
       </div>
       <%= render partial: 'common/masonry_grid', locals: { objects: [@featured_trainer], ul_class: 'tab-pane fade in active', horizontal: true } %>
