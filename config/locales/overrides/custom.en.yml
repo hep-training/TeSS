@@ -1,0 +1,410 @@
+en:
+  home:
+    welcome: |
+      <span class="text-primary">Training</span> and events for the HEP community <span class="text-primary">by the HEP community</span>
+    subtitle: |
+      Browse the catalogue and find local and online courses, events, as well as videos, presentations, tutorials ...<br>
+      All types of resources at all levels for leveraging<br><span class="text-primary">High Energy Physics research</span>.
+    promo:
+      community:
+        title: By HEP professionals, for a HEP workforce
+        description: |
+          Built by an international community of HEP professionals
+      domain:
+        title: HEP focused
+        description: |
+          For the entire HEP workforce
+    faq:
+      title: Frequently asked questions
+      who:
+        q: Who can register content in %{site_name}?
+        a: >
+          <p>We welcome any training content relevant to people working in high energy physics.</p>
+      how:
+        q: How do I register content in %{site_name}?
+        a: >
+          <p>You can register content in %{site_name} automatically or manually.</p>
+          <p>To add content manually, you will need to log in (CERN SSO supported) and fill in the registration form for either materials or events.</p>
+          <p>%{site_name} can also automatically register content from an external website, or other source on the web.</p>
+          <p><a href='about/registering'>See here for more information.</a></p>
+      why:
+        q: Why register content in %{site_name}?
+        a: >
+          <p>Registering training events and materials in %{site_name} makes them more findable in a variety ways to various user bases.</p>
+
+          <p>Training in %{site_name} can be discovered...</p>
+          <ul>
+            <li><strong>in %{site_name}</strong>, by visitors browsing %{site_name} or subscribing to notifications.</li>
+            <li><strong>in search engine results</strong>, owing to our search-engine optimisation.</li>
+            <li><strong>through other websites</strong> that display %{site_name} content either using our embeddable widgets or our public API.</li>
+          </ul>
+      embed:
+        q: Can I display %{site_name} content on my organisation's website?
+        a: >
+          <p>Yes, a selection of embeddable widgets are available to display training events and materials from %{site_name} in a variety of formats.</p>
+          <p><a href='https://elixirtess.github.io/TeSS_widgets/' target='_blank'>Click here to see examples of widgets and how to use them.</a></p>
+      subscribe:
+        q: Can I subscribe to updates?
+        a: >
+          <p>%{site_name} provides a customizable subscription service, letting you choose exactly what types of training you want to be notified about.</p>
+          <p>Choose how you would like receive updates:</p>
+          <ul>
+            <li><strong>Email</strong> - Daily, weekly or monthly emails containing a digest of new events or materials.</li>
+            <li><strong>Calendar</strong> - See new events directly to your online calendar.</li>
+            <li><strong>RSS feed</strong> - View new events in an RSS reader.</li>
+          </ul>
+    search_placeholder: >
+      Search 'Scikit', 'REANA', 'HSF'...
+    providers:
+      title: Training Providers
+    upcoming_events: 'Upcoming events'
+    more_events: 'More events ...'
+  about:
+    registry: >
+      <p>A one-stop shop for the HEP community gathering training materials and events.</p>
+      <p>For training providers (e.g., HSF), %{site_name} provides opportunities to promote training events and news, and to contribute
+      to a growing catalogue of materials.</p>
+      <p>For trainers (e.g., PhD students or PostDocs), the portal offers an environment for sharing materials and event information.</p>
+      <p>For trainees (e.g., students), it offers a convenient gateway via which to identify relevant training
+      events and resources.</p>
+    mtessx: >
+      <p>%{site_name} is part of the <a href='https://elixirtess.github.io/mTeSS-X' target='_blank'>mTeSS-X Project</a> 
+      (Multi-space Training e-Support System with eXchange)
+      which aims at overcoming the fragmentation of training resources across Research Infrastructures and the European Science 
+      Clusters. The goal is to enhance existing TeSS-based training registries – to which %{site_name} originates from – or catalogues like 
+      <a ref='https://tess.elixir-europe.org/' target='_blank'>ELIXIR TeSS (life sciences)</a> and 
+      <a href='https://www.panosc.eu/training-catalogue/' target='_blank'>PaN-Training (photon and neutron)</a>
+      by building an aggregator for these and similar platforms.</p>
+    history: ""
+    events: ""
+    materials: ""
+    subscribe: >
+      Subscribe to our alerts or create an RSS feed to stay informed about courses, workshops, and conferences. 
+      From our alerts, you can automatically add events to your calendar.
+    subscription_manager: >
+      Go to <a href='%{subscriptions_path}'>subscriptions manager</a> to change the frequency or to remove subscriptions.
+    widgets_and_api: >
+      To access %{site_name} data, organisations may readily import information about relevant events and materials to their site using widgets,
+      or may create custom feeds using our API.
+    headings:
+      tess: ELIXIR TeSS
+      materials: Materials
+      events: Events
+    links:
+      learn_more_tess: Learn more about TeSS
+    tess: >
+      %{site_name} is based on the <a href='https://elixir-europe.org/' target='_blank'>ELIXIR</a><i class="icon icon-md arrow-top-right-icon"></i> TeSS architecture and could not have been realized as it is without the foundation of their work.
+    sidebar:
+      materials: "Materials"
+      events: "Events"
+
+  register:
+    registering_resources_in: "Registering Resources in %{site_name}"
+    resources: >
+      <p>Training resources (events and materials) may be added to %{site_name} to reach bigger audiences, increase impact and
+      bolster event attendance. Registering events and training materials makes them more findable in a variety ways, for example:</p>
+
+    methods: ""
+      # <p>There are two ways to register training materials or events for display in %{site_name}:
+      # <ol><li>Arrange for an <a href="#automatic">automatic registration</a> solution;</li>
+      # <li>Use our form to register them <a href="#manual">manually</a>.</li></ol></p>
+    tldr: |
+      <li>Add schema.org formatted metadata in the web page code of your training material/event (<a href="#example">see example below</a>)</li>
+      <li>If you want your entire website to be scraped, your website should contain a <a href="#sitemaps">sitemap</a></li>
+      <li>Register in %{site_name} a <a href="/content_providers/new">new content provider</a> (= your website) and wait for an admin's approval</li>
+      <li>Contact us at <a href="mailto:%{contact_email}">%{contact_email}</a> to discuss how to register your content automatically in %{site_name}</li>
+    automatic: |
+      %{site_name} features several options for automatically "harvesting" resources from external sources (e.g., your website with updated training materials).
+      This can be helpful if you are maintaining a large collection of events and materials that changes frequently.
+    structured: >
+      <p>To register resources in %{site_name} automatically, we need to be able to extract data from target
+      sources reliably. To this end, it is helpful if the data is structured according to some kind of standard format.</p>
+      <p>If your website currently includes no structured data, and you’d like your resources added to %{site_name}, we recommend using
+      <a href="http://schema.org" target="_blank">schema.org</a><i class="icon icon-md arrow-top-right-icon"></i> to structure your resource to be 'machine-readable'.</p>
+    schema: >
+      <p><a href='https://schema.org', target='_blank'>Schema.org</a><i class="icon icon-md arrow-top-right-icon"></i> is a vocabulary to add information to your Web content, thus describing your training material/event (<a href="https://schema.org/docs/gs.html" target="_blank">source</a><i class="icon icon-md arrow-top-right-icon"></i>).<br>
+      Find <a href="#example">below</a> an example of what it looks like.</p>
+      <p>Schema.org is a project run by a consortium of search engines. It has created an extensive library of schemas that web-masters can use to explicitly mark-up their websites content in order to improve search engine visibility and interoperability.</p>
+    sitemap: >
+      <p>Sitemaps are basically a directory listing of all the pages on your site (<a href="https://tess.elixir-europe.org/sitemaps/site.xml" target="_blank">see example here</a><i class="icon icon-md arrow-top-right-icon"></i>). To help search engines (and %{site_name}) discover all the pages on a site that have schema.org markup, a
+      <a target='_blank', href='https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview'>sitemap</a><i class="icon icon-md arrow-top-right-icon"></i>
+      should be used.</p>
+      <p>Sitemaps are a well-established standard, and there should be sitemap libraries and plugins available for
+      whichever software you are using to provide your site.</p>
+    api: >
+      <p>Application Programming Interfaces, or APIs, typically have endpoint URLs that, when accessed, return data in a
+      common exchange format, such as JSON.</p>
+      <p>%{site_name} currently supports the APIs for:
+      <ul>
+      <li><a target='_blank', href='https://eventbrite.com'>Eventbrite</a><i class="icon icon-md arrow-top-right-icon"></i> - for events</li>
+      <li><a target='_blank', href='https://zenodo.com'>Zenodo</a><i class="icon icon-md arrow-top-right-icon"></i> - for materials</li>
+      <li>Other TeSS instances - for events</li>
+      </ul>
+      </p>
+    calendar: >
+      <p>Many organisations use calendar applications to organise and display their events.
+      These may be custom-made or, more likely, utilise applications like Google Calendar. Calendar applications
+      maintain an underlying file for event storage and retrieval, typically in the iCal (.ics) format.</p>
+      <p>%{site_name} can extract event descriptions, dates and locations from iCal files.</p>
+    example: >
+      <p>Add and amend accordingly the following code in the webpage's HTML code of your training material for %{site_name} to read and ingest it:</p>
+      <pre>
+        <code>
+          &lt;script type="application/ld+json"&gt;
+            {
+              "@context": "https://schema.org",
+              "@type": "LearningResource",
+              "name": "Intermediate Research Software Development (Python)",
+              "url": "https://carpentries-incubator.github.io/python-intermediate-development/",
+              "description": "A core set of established, intermediate-level software development skills and best practices for working as part of a team in a research environment using Python as an example programming language.",
+              "learningResourceType": "course",
+              "about": "research software development",
+              "keywords": "programming language, python, intermediate, software engineering, testing, debugging, version control, continuous integration, packaging code, releasing code, integrated development environment, IDE, virtual environment, git, github, good practices, action, CI/CD, automation, reproducible environment",
+              "license": "CC-BY 4.0",
+              "creativeWorkStatus": "Published",
+              "identifier": "https://doi.org/10.5281/zenodo.6532056",
+              "version": "beta-Nov2024",
+              "author": "Aleksandra Nenadic, Steve Crouch, Thomas Kile, Raniere Silv, François Michonnea, Maxim Belkin, James Graham, Greg Wilson, Matthew, Toby Hodges, Zhian N. Kamvar, Sven van der Burg, Abby Cabunoc Mayes, JacalynLair, Sarah Stevens, Katrin Leinweber, Erin Becker, João Rodrigues, Douglas Lowe, Sam Mangham, Rayna M Harris, Matthew Blutea, Renato Alv, Sander van Rijn, Rémi Emon, David Mawdsley, Piotr Banaszkiewi, Jemma Stachelek, Giulia Crocion, William L. Close",
+              "contributor": "anenadic, steve-crouch, thomaskileyukaea, bielsnohr, jag1g13, tobyhodges, svenvanderburg, JacalynLaird, sstevens2, douglowe, smangham, knarrff, sjvrijn, gcroci2, hsaunders1904, tomneep, unode, danielskatz, amangoel185, wk9874, jreeve-nv, gkmurphy, sverchkov, shartleybham-acuk, gadgil48, olexandr-konovalov, martinjrobins, kzscisoft, k-collie, guyer",
+              "audience": "research software engineers",
+              "competencyRequired": "Git, Python, Shell",
+              "educationalLevel": "beginner",
+              "teaches": "Document and structure your software, collaborate to develop, prepare software for others to use.",
+              "dateCreated": "2020-04-22T14:47:31Z",
+              "dateModified": "2025-07-20T17:42:28Z",
+              "provider": "UK's Software Sustainability Institute"
+            }
+          &lt;script&gt;
+        </code>
+      </pre>
+    user_managed_sources: >
+      <p>Owners and editors of content providers in %{site_name} can register and manage <em>Sources</em> to be automatically
+      ingested. A source consists of a URL for %{site_name} to fetch, and an "ingestion method" - which hints to %{site_name} how the
+      contents of the URL should be processed.</p>
+      <p>Once registered, a source will need to be approved by an administrator before it is active, but can be tested
+      to see exactly what metadata %{site_name} can extract from the source.</p>
+      <p>To register a source, click the "Sources" tab on your content provider page, or if you have not yet registered
+      a content provider, click the button below.</p>
+    advice: >
+      Contact <a href="mailto:%{contact_email}">%{contact_email}</a> to discuss how to register your content
+      automatically in %{site_name}.
+    manual: >
+      <p>Resources may be added manually to %{site_name}.</p>
+      <p>To do so, first register for a free account. Members of academic institutions may be able to log-in via CERN SSO.</p>
+      <p>Once registered and logged in, the 'register event' and 'register material' buttons will become visible on the
+      events and materials tabs. Alternatively click here:</p>
+    learning_paths:
+      editorial: >
+        <p>There are several roles associated with learning paths in general:</p>
+        <ul>
+        <li><b>Author</b>: Individuals and organisations involved in the preparation, creation or presentation 
+        of the published work.</li>
+        <li><b>Contributor</b>: Individuals and organisations that contributed to the published work but are not authors.</li>
+        <li><b>Collaborator</b>: An individual who has been granted editing rights to a material, topic or learning path 
+        by the individual (owner) who created it.</li>
+        <li><b>Curator</b>: An individual who has been granted permission to create a learning path in %{site_name}
+        while following their community&rsquo;s editorial process.</li>
+        <li><b>Owner</b>: An individual who has created a material, topic or learning path in %{site_name}.</li></ul>
+        <p>Before registering a learning path, a training provider must: </p>
+        <ol><li>Assign a learning path curator (owner).</li>
+        <li>Contact the %{site_name} team to assign the learning path curator role to their account.</li>
+        <li>Complete your internal editorial processes (if any) before you start registering the learning paths on %{site_name}.</li></ol>
+        <p>After these tasks are completed:</p>
+        <ul><li>A learning path curator has permission to create learning paths for their provider.</li>
+        <li>It is the responsibility of the learning path curator to curate and implement any protocols 
+        required by the community providing the learning path. 
+        <p>Governance: Maintaining the learning path</p>
+        <ol><li>It is the responsibility of the learning path curator to maintain their community's learning paths.</li>
+        <li>The curator can assign collaborators to work on each learning path, depending on the expertise required.</li></ol>
+      topic_naming: >
+        <p>When giving your learning path topic a title, please use a descriptive name. 
+        This will also prevent potential overlaps with identical or similar names used by other content providers, 
+        thereby reducing the risk of mistakenly selecting the wrong topics.</p>
+        <p>Examples of good topic names:</p>
+        <ul><li>HEP30561 Topic 1: Introduction to root</li>
+        <li>Module 3: Moving into coding environments</li></ul>
+        <p>Examples of poor topic names:</p>
+        <ul><li>Topic 3</li><li>Python</li></ul>
+      collaborators: >
+        <p>Collaborators are %{site_name} users who can edit a learning path or topic after it has been created. 
+        Only the learning path or topic owner can add and remove collaborators. To add a collaborator:</p>
+        <ol><li>Navigate to the page for that learning path or topic.</li>
+        <li>Click the 'Collaborators' button at the top-right of the page.</li> 
+        <li>Start to type the name or username of the collaborator you wish to add and select them. 
+        The collaborator needs to be  a registered user of %{site_name}.</li>
+        <li>Repeat for any additional collaborators.</li>
+        <li>When you have finished, click the 'Done' button.</li></ol>
+      view_paths: >
+        <p>Learning paths can be browsed and searched in %{site_name}. They are organised by topic.</p>
+        <ol><li>To view the learning paths, click 'Learning paths' in the main menu. 
+        (Tip: To view a learning path you do not need to be logged in to TeSS.)</li> 
+        <li>To browse all topics, click the 'Manage topics' button on the top-right.</li>
+        <li>Alternatively, you can click in the search box, type your query and press Enter.</li>
+        <li>Click to view a learning path. Read the summary box. The details of the included training materials 
+        appear below; click each item to open it. Information about the content provider appears on the left.</li> 
+        <li>To create a personal collection of your favourite learning paths, click the star icon at the top of each 
+        learning path to add them to a list. You can view your starred resources later by clicking the user icon 
+        at the top-right of the screen then 'My stars'.  To use the star feature you need to be a registered %{site_name} user.</li>
+    buttons:
+      trainers: Register as a trainer
+
+  developer:
+    license: >
+      %{site_name} is committed to the FAIR principles: making data findable, accessible, interoperable and re-usable.
+      As such, all content in %{site_name} is available under the CC BY 4.0 licence, and can be accessed through our API
+      and widgets. The %{site_name} codebase is also available to re-use under the BSD Licence, and can be found on GitHub.
+    widgets: >
+      Widgets are chunks of javascript code that can be copied into website source code to display %{site_name} content.
+      There are several different styles and functionalities available from our configurable widget suite.
+      Widgets can be used to enhance your site and offer your community lists of relevant events or training resources.
+    api_example_3: /materials.json_api?scientific_topics=MC
+    code_license: >
+      <a href="%{repository}/blob/master/LICENSE", target="_blank">BSD 3-Clause<i class="icon icon-md arrow-top-right-icon"></i></a>
+    contributions: >
+      <a href="%{repository}/blob/master/CONTRIBUTING.md", target="_blank">contributions<i class="icon icon-md arrow-top-right-icon"></i></a>
+
+  us:
+    keys:
+      cite: Cite TeSS
+    tess_club: >
+      <p> The %{site_name} platform is based on the <a href='https://tess.elixir-europe.org/about' target='_blank'>ELIXIR TeSS</a><i class="icon icon-md arrow-top-right-icon"></i> architecture. The TeSS community TeSS has fortnightly meetings, where we can discuss updates, advancements, hackathons, shared activities, open priority setting, open contribution to unite the community.</p>
+      <p>For all the details please visit the 
+      <a href="https://elixirtess.github.io/about/" target="_blank">TeSS Club Website<i class="icon icon-md arrow-top-right-icon"></i></a>
+      </p>
+    contact: >
+      For enquiries, information, or assistance; contact the %{site_name} support desk at <br>
+      <a href="mailto:contact.training@cern.ch">contact.training@cern.ch</a>
+    team: >
+      <h5>Leadership</h5>
+      <ul><li><a href="mailto:stefan.roiser@cern.ch">Stefan Roiser</a></li></ul>
+      <h5>Maintainer</h5>
+      <ul><li><a href="mailto:kenneth.brian.rioja@cern.ch">Kenneth Rioja</a></li></ul>
+    funding: ""
+    acknowledgements: ""
+    cite: >
+      Niall Beard, Finn Bacall, Aleksandra Nenadic, Milo Thurston, Carole A Goble, Susanna-Assunta Sansone, Teresa K Attwood,
+      <strong>TeSS: a platform for discovering life-science training opportunities</strong>,
+      <em>Bioinformatics</em>, Volume 36, Issue 10, 15 May 2020, Pages 3290-3291,
+      <a href="https://doi.org/10.1093/bioinformatics/btaa047" target="_blank">https://doi.org/10.1093/bioinformatics/btaa047</a><i class="icon icon-md arrow-top-right-icon"></i>
+
+  devise:
+    mailer:
+      welcome: "Dear %{email}, welcome to %{site_name}!"
+      confirmation_instructions:
+        confirm_through_link: "You can confirm your %{site_name} account email through the link below:"
+      reset_password_instructions:
+        password_change_request: "Someone has requested a link to change your password on %{site_name}. You can do this through the link below."
+        your_account_locked: "Your account on %{site_name} has been locked due to an excessive number of unsuccessful log in attempts."
+
+  footer:
+    version: 'TeSS Version:'
+    instance_version: '%{site_name} Version:'
+    eu_funding_html: ''
+    provider: 'Content providers'
+
+  info:
+    materials:
+      description: >
+        E.g., <b>web pages</b> (github, blog, ...), <b>presentations</b>, <b>videos</b>, <b>tutorials</b>, etc., <b>about training on any HEP-related software</b>, <b>standard</b> or <b>pipeline</b>. Materials can be <a href='materials/new'>manually added</a> or <a href='about/registering#automatic'>automatically harvested from a provider's website</a>.
+        If you are unsure whether your training material is a good fit for the current page, we warmly welcome you to <a href='about/us#contact'>contact us</a>.
+      link : click here for details on automatic registration
+    events:
+      description: >
+        E.g., <b>online</b> or <b>on-site</b> <b>courses</b>, <b>workshops</b>, <b>conferences</b> or <b>webinars</b> <b>about training on any HEP-related software</b>, <b>standard</b> or <b>pipeline</b>. Events can be <a href='materials/new'>manually added</a> or <a href='about/registering#automatic'>automatically harvested from a provider's website (e.g., parent indico link)</a>.
+        If you are unsure whether your training event is a good fit for the current page, we warmly welcome you to <a href='about/us#contact'>contact us</a>.
+      link : see here for details on automatic registration
+    trainers:
+      description: >
+        <b>Are you creating online training materials or giving face-to-face courses and workshops?</b> Your work matters and must be valued!
+        %{site_name} allows <a href="users/sign_up">registered users</a> to provide information about their training experience and make it publicly available.
+    elearning_materials:
+      description: >
+        e-Learning materials are curated materials focused on e-Learning.
+        If your website contains e-Learning materials that you wish to include in %{site_name}, %{link}.
+      link : see here for details on automatic registration
+    topics:
+      description: >
+        %{site_name} generates a scientific topic suggestion for each resource registered. It does this by passing the description and title of the resource to the Bioportal Annotator Web service.
+        The Annotator Web service finds EDAM terms that match terms in the text. You can then accept or reject these terms in %{site_name}.
+        Accepting will add a topic to the resource and rejecting will remove the suggestion permanently.
+    learning_paths:
+      description: >
+        A learning path is a pathway that guides learners through a set of learning modules
+        (courses/materials) to be undertaken progressively (from lower- to higher-order thinking skills
+        to acquire the desired knowledge and skills on a subject by the end of the pathway.<br>
+        1. Register training materials.
+        2. Create a learning path topic and add materials to it (repeat for each topic).
+        3. Register a learning path and add learning path topics to it.<br>
+        %{link}.
+      link : See here for details on learning paths
+    learning_path_topics:
+      description: >
+        A learning path topic is an ordered list of training materials.
+        A topic can be given a competency level (beginner, intermediate, advanced), description and set of keywords.
+        A learning path contains an ordered list of one or more topics, where each topic has one competency level for all its materials. <br>
+        1. Register training materials.
+        2. Create a learning path topic and add materials to it (repeat for each topic).
+        3. Register a learning path and add learning path topics to it.<br>
+        %{link}
+      link : See here for details on learning path topics
+    workflows:
+      description: |
+        Training workflows in %{site_name} are visual, step-by-step protocols that allow users to navigate materials in %{site_name} in topic- or task-related ways.<br>
+        For example, they may encapsulate typical stages of particular kinds of data analysis (protein sequence analysis, structure analysis, etc.), where each stage/node in the workflow represents a given analysis step and links to the corresponding training resources.
+    providers:
+      description: |
+        Content providers are academic institutions, non-profit organisations, portals, etc. that provide training materials of relevance to high energy physics. %{site_name} can then <a href="about/registering#automatic">automatically "harvest"</a> training materials of a specific website / portal.
+        If you are unsure whether you can be a content provider, we warmly welcome you to <a href='about/us#contact'>contact us</a>.
+    sources:
+      description: |
+        %{site_name} provides a facility to automatically ingest events and materials from a variety of sources.
+    collections:
+      description: |
+        Collections can be thought of as folders in which users may collect particular training materials or events, from the full catalogue available within %{site_name} to address their specific training needs.
+    nodes:
+      description: |
+         ELIXIR is a pan-European research infrastructure consisting of the Hub and a number of, primarily,national nodes that provide services to their local communities.
+          Select a node to find out more about its training events, training provision, staff and member institutions.
+    spaces:
+      title: What are spaces?
+      description: |
+        Spaces are customizable, community-managed sub-portals within %{site_name}, each with their own catalogue of training content.
+
+  privacy:
+    registration: |
+      <p>When you register with %{site_name} we ask for a username, password and email address.</p>
+      <ul>
+      <li>Your username is used for authentication and attribution. This information is publicly visible, e.g. when a user views a resource you have created.</li>
+      <li>Your password is stored as a cryptographically-secure hash and is not publicly visible.</li>
+      <li>Your email address is used to confirm your identity and for use when requesting your password to be reset. This email address is not publicly visible, but you may specify an additional public email address (see below).</li>
+      </ul>
+    personal: "You may additionally provide a profile, containing your name, a public email address, website link and avatar. This information is publicly available to all users."
+    resources: "The details of any training materials and events that you register will be publicly visible and searchable. Any workflows and packages created can be opted to be made private, in which case only you, any collaborators you specify, and the %{site_name} administrators will be able to view and search for them."
+    server: "When you browse %{site_name}, the server automatically records logs of which pages you access, when you accessed them, and your IP address. These logs are used to fix errors and are not shared with any third parties. Sensitive information (such as passwords) is automatically stripped out."
+    cookies: >
+      %{site_name} makes use of "strictly necessary cookies" for the site to function. These cookies are needed to establish your "session" with %{site_name}, which allows functionality such as user log-in, and secures against Cross Site Request Forgery (CSRF) attacks.
+    analytics: "%{site_name} uses Google Analytics to track how users are discovering %{site_name} and interacting with the service. The information gathered includes which pages you visited, which search terms lead you to %{site_name} and information about your web browser. No personally identifiable information is sent to Google."
+    retention: "Your information will be retained by %{site_name} until you choose to remove it, you delete your account, or the %{site_name} service ceases to exist."
+    code: "%{site_name} adheres to the <a href='https://wiki.refeds.org/display/CODE/Code+of+Conduct+for+Service+Providers'> GÉANT Data Protection Code of Conduct for Service Providers in EU/EEA </a>"
+    controller: "The data controller for %{site_name} is CERN."
+    post: ""
+
+  cookies:
+    notice: >
+      %{site_name} makes use of some necessary cookies to provide its core functionality.
+    google_analytics: Additionally, we make use of Google Analytics to discover how people are using %{site_name} in order to help us improve the service. To opt out of this, choose the "Allow necessary cookies" option.
+    necessary_cookies_btn: Only allow necessary cookies
+    all_cookies_btn: Allow all cookies
+    no_consent: No cookie consent provided
+    options:
+      tracking: Cookies required for Google Analytics, to help %{site_name} improve its service.
+      necessary: Cookies necessary for %{site_name} to function, for example to provide user-authentication and forgery protection.
+    buttons:
+      revoke: Revoke cookie consent
+      all: Allow all cookies
+      necessary: Allow necessary cookies
+
+  authentication:
+    omniauth:
+      title: ''
+      log_in_with: 'Log in'
