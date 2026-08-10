@@ -120,12 +120,10 @@ class ApplicationPolicy
       if TeSS::Config.feature['api_system_for_groups']
         user_groups = get_cached_groups_of_user_or_fetch(@user)
         space_groups = @space.api_groups
+        return user_groups.any? { |group| space_groups.include?(group) }
       else
-        user_groups  = @user.groups.pluck(:id)
-        space_groups = @space.groups.pluck(:id)
-        
+        return @user.groups.where(id: @space.groups).any?
       end
-      return @user.groups.where(id: @space.groups).any?
     end
 
     return false
