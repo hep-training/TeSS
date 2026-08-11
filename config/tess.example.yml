@@ -159,6 +159,7 @@ default: &default
     sources: false
     nodes: false
     spaces: false
+    api_system_for_groups: # link the the GMS API
 
     # Resources' features
     subscription: true
