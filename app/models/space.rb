@@ -44,7 +44,9 @@ class Space < ApplicationRecord
     #
     # record:: the Space instance being validated.
     def validate(record)
-    if record.is_private && !(record.group_ids.length > 0)
+    return unless record.is_private
+    groups = TeSS.Config::feature['api_system_for_groups'] ? record.api_groups : record.group_ids
+    if groups.empty?
         record.errors.add(:base, I18n.t('private_space.needs_groups_in_form'))
       end
     end
