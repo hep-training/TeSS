@@ -3,10 +3,6 @@
 # Handles authentication via OAuth 2.0 bearer tokens and queries an external
 # group service. Manages token lifecycle by validating and refreshing tokens
 # as needed. Designed to abstract API communication details from consuming code.
-#
-# Points of attention:: Uses class variables (@@bearer_token) for token caching,
-# which is shared across all instances. Consider thread-safety implications
-# in concurrent environments.
 module ApiService
   # Retrieves groups matching the given query identifier.
   #
@@ -18,11 +14,11 @@ module ApiService
   # Returns:: An array of group objects (as hashes) with group data,
   # or an empty array if the query yields no results or the request fails.
   def get_groups_from_query(query)
-    getNewToken unless valid_token?
+    token = get_bearer_token
     response = HTTParty.post(
       TeSS::Config.feature['api_system_for_groups'] + '/Group/-/Query?includeArchivedAndDeleted=false',
       headers: {
-        'Authorization' => "Bearer #{@@bearer_token}",
+        'Authorization' => "Bearer #{token}",
         'Accept' => 'application/json',
         'Content-Type' => 'application/json'
       },
@@ -47,11 +43,11 @@ module ApiService
   # Returns:: An array of group objects (as hashes) associated with the user,
   # or an empty array if no groups are found or the request fails.
   def get_groups_by_username(username)
-    getNewToken unless valid_token?
+    token = get_bearer_token
     response = HTTParty.get(
       TeSS::Config.feature['api_system_for_groups'] + "/Identity/#{username}/groups",
       headers: {
-        "Authorization" => "Bearer #{@@bearer_token}",
+        "Authorization" => "Bearer #{token}",
         "Content-Type" => "application/json"
       }
     )
@@ -62,31 +58,24 @@ module ApiService
 
   private
 
-  # Validates whether the current bearer token is still active and authorized.
+  # Retrieves a valid bearer token, using cached token if available and valid.
   #
-  # Attempts a simple API request with the stored token to verify its validity.
-  #
-  # Returns:: True if the token is valid (API returns 200), false otherwise.
-  def valid_token?
-    return false unless defined?(@@bearer_token)
-    response = HTTParty.get(
-      TeSS::Config.feature['api_system_for_groups'] + "/Group/1",
-      headers: {
-        "Authorization" => "Bearer #{@@bearer_token}",
-        "Content-Type" => "application/json"
-      }
-    )
-    return response.code == 200
+  # Returns:: A valid OAuth 2.0 access token string.
+  def get_bearer_token
+    token = Rails.cache.read("api_service:bearer_token")
+    token = fetch_new_token if token.blank?
+    token
   end
 
-  # Fetches a new bearer token from the SSO service and stores it in the class variable.
+  # Fetches a new bearer token from the SSO service and caches it.
   #
   # Uses OAuth 2.0 client credentials flow to obtain an access token
-  # from the configured SSO issuer. Replaces any previously stored token.
+  # from the configured SSO issuer. Caches the token for 55 minutes
+  # (assuming 1-hour token expiry to allow buffer for refresh).
   # Requires SSO_ISSUER, SSO_API_CLIENT, and SSO_API_SECRET environment variables.
   #
-  # Returns:: The access token string, stored in @@bearer_token.
-  def getNewToken
+  # Returns:: The access token string.
+  def fetch_new_token
     response = HTTParty.post(
         ENV["SSO_ISSUER"] + "/api-access/token",
         headers: {
@@ -100,6 +89,8 @@ module ApiService
         }
     )
 
-    @@bearer_token = response.parsed_response["access_token"]
+    token = response.parsed_response["access_token"]
+    Rails.cache.write("api_service:bearer_token", token, expires_in: (token['expires_in'] - 5).minutes)
+    token
   end
 end
