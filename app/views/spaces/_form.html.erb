@@ -27,13 +27,14 @@
   </div>
 
   <% if TeSS::Config.feature['api_system_for_groups'] %>
-    <div id="groups_container" style="display: none;">
+    <div id="groups_container" style="display: none; width: 50%;">
       <%= f.autocompleter :api_groups,
                         url: '/search_groups', transform_function: 'groups',
                         template: 'autocompleter/group_id',
                         form_field_name: 'space[api_groups]',
                         label_field: :title,
                         id_field: :id %>
+      <p style="color: grey"><%= t('private_space.info_form') %></p>
     </div>
   <% else %>
       <div id="groups_container" style="display: none;">
