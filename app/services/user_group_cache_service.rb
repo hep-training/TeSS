@@ -7,8 +7,6 @@
 module UserGroupCacheService
   include ApiService
 
-  @@redis = Redis.new(url: TeSS::Config.redis_url)
-
   # Retrieves groups for a user, checking Redis cache first before making an API call.
   #
   # Attempts to fetch the user's groups from the Redis cache. If not cached,
@@ -18,7 +16,7 @@ module UserGroupCacheService
   #
   # Returns:: An array of group identifier strings.
   def get_cached_groups_of_user_or_fetch(user)
-    cached_groups ||= @@redis.get(cache_key(user))
+    cached_groups ||= Rails.cache.fetch(cache_key(user))
     if cached_groups.nil?
       cached_groups = fetch_and_cache_groups(user)
     else
@@ -39,11 +37,11 @@ module UserGroupCacheService
   # Returns:: An array of group identifier strings.
   def fetch_and_cache_groups(user)
     groups = get_groups_by_username(@user.username).map { |obj| obj['groupIdentifier'] }
-    @@redis.setex(cache_key(user), 1.hour.to_i, groups.to_json)
+    Rails.cache.fetch(cache_key(user), expires_in: 1.hour.to_i) { groups.to_json }
     groups
   end
 
-  # Generates a Redis cache key for the given user's groups.
+  # Generates a Rails cache key for the given user's groups.
   #
   # user:: The user object for which to generate the cache key.
   #

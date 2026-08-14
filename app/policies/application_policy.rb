@@ -178,4 +178,17 @@ class ApplicationPolicy
       (@space && roles.any? { |r| @user.has_space_role?(@space, r) })
   end
 
+  # Check if the user has any of the current space.
+  #
+  # Returns:: +true+ if the user holds any of the groups of the current space
+  def user_in_space_groups?
+    if TeSS::Config.feature['api_system_for_groups']
+      user_groups = get_cached_groups_of_user_or_fetch(@user)
+      space_groups = @space.api_groups || []
+      (user_groups & space_groups).any? # The Array intersection returns common groups between the two arrays (Example: ["group_a", "group_b"] & ["group_b", "group_c"] -> ["group_b"])
+    else
+      @user.groups.where(id: @space.groups).exists? # .exists? fires an optimized `SELECT 1 ... LIMIT 1` query than loading ActiveRecords into memory.
+    end
+  end
+
 end

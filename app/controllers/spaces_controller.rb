@@ -98,6 +98,7 @@ class SpacesController < ApplicationController
   #
   # Get all the groups of the space. Requires authorization via SpacePolicy#search_groups?.
   # Used only when Group API System is enabled. 
+  # Triggered in the Spaces form when the admin searches for GMS groups
   def search_groups
     authorize Space
     query = params[:q]

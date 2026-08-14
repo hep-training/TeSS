@@ -62,7 +62,7 @@ module ApiService
   #
   # Returns:: A valid OAuth 2.0 access token string.
   def get_bearer_token
-    token = Rails.cache.read("api_service:bearer_token")
+    token = Rails.cache.fetch("api_service:bearer_token")
     token = fetch_new_token if token.blank?
     token
   end
@@ -89,8 +89,10 @@ module ApiService
         }
     )
 
+    raise "SSO Token Request Failed: #{response.code}" unless response.success?
+
     token = response.parsed_response["access_token"]
-    Rails.cache.write("api_service:bearer_token", token, expires_in: (token['expires_in'] - 5).minutes)
+    Rails.cache.fetch("api_service:bearer_token", expires_in: (response.parsed_response['expires_in'] - 5).minutes) { token }
     token
   end
 end

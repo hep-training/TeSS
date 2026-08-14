@@ -54,6 +54,7 @@ class Workflow < ApplicationRecord
       end
 
       integer :user_id
+      integer :space_id
       boolean :public
       integer :collaborator_ids, multiple: true
       time :updated_at

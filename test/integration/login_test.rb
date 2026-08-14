@@ -70,6 +70,19 @@ class LoginTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'clears cached API groups on logout' do
+    user = users(:regular_user)
+    login_user(user.username, user.username, 'hello')
+
+    redis = Redis.new(url: TeSS::Config.redis_url)
+    redis.set("user:#{user.id}:groups", %w[group-1 group-2].to_json)
+    assert_equal %w[group-1 group-2], JSON.parse(redis.get("user:#{user.id}:groups"))
+
+    logout_user
+
+    assert_nil redis.get("user:#{user.id}:groups")
+  end
+
   private
 
   def login_user(username, identifier, password)
