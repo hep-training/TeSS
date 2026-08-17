@@ -96,24 +96,53 @@ class SpacesController < ApplicationController
 
   # GET /search_groups
   #
-  # Get all the groups of the space. Requires authorization via SpacePolicy#search_groups?.
-  # Used only when Group API System is enabled. 
-  # Triggered in the Spaces form when the admin searches for GMS groups
+  # Lists groups for the given space.
+  # Requires authorization via SpacePolicy#search_groups?.
+  # Used only when the Group API System is enabled.
+  # Triggered in the Spaces form when an admin searches for GMS groups.
   def search_groups
     authorize Space
+
     query = params[:q]
     data = get_groups_from_query(query)
-    transformed_data = data.map do |group|
+
+    render json: transform_groups(data)
+  end
+
+  # GET /search_groups
+  #
+  # Search groups for a specific space (identified by :id).
+  #
+  # If the current user does not have permission to search groups of this space,
+  # returns an error JSON.
+  def search_groups_with_id
+    space = Space.find(params[:id].to_i)
+
+    unless policy(space).search_groups?
+      render json: { error: "user does not have permissions do search groups of this space." }
+      return
+    end
+
+    query = params[:q]
+    data = get_groups_from_query(query)
+
+    render json: transform_groups(data)
+  end
+
+  private
+
+  # Converts raw group objects into the JSON structure expected by the client.
+  #
+  # @param data [Array<Hash>] Raw groups returned by get_groups_from_query
+  # @return [Array<Hash>] [{ id: ..., title: ... }, ...]
+  def transform_groups(data)
+    data.map do |group|
       {
         id: group['groupIdentifier'],
         title: group['displayName']
       }
     end
-    
-    render json: transformed_data
   end
-
-  private
 
   # Loads the Space identified by <tt>params[:id]</tt> into +@space+.
   def set_space

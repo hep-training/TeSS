@@ -142,6 +142,7 @@ Rails.application.routes.draw do
 
   resources :spaces, concerns: :activities
 
+  get 'search_groups/:id' => 'spaces#search_groups_with_id'
   get 'search_groups' => 'spaces#search_groups'
 
   get 'stars' => 'stars#index'
