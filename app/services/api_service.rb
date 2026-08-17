@@ -93,7 +93,7 @@ module ApiService
     raise "SSO Token Request Failed: #{response.code}" unless response.success?
 
     token = response.parsed_response["access_token"]
-    Rails.cache.fetch("api_service:bearer_token", expires_in: (response.parsed_response['expires_in'] - 60).seconds) { token }
+    Rails.cache.fetch("api_service:bearer_token", expires_in: response.parsed_response['expires_in'] - 300) { token }
     token
   end
 end
