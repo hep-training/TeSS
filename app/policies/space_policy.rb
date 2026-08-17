@@ -29,7 +29,7 @@ class SpacePolicy < ApplicationPolicy
   end
 
   def search_groups?
-    manage? && TeSS::Config.feature['api_system_for_groups']
+    edit?
   end
 
   # Returns:: +true+ if the current user is a global admin.

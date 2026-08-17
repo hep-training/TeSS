@@ -29,7 +29,7 @@ module ApiService
       }.to_json
     )
 
-    return [] unless response.success?
+    raise "fetch groups from API failed: #{response.code}" unless response.success?
     response.parsed_response["data"] || []
   end
 
@@ -52,7 +52,8 @@ module ApiService
       }
     )
 
-    return [] unless response.success?
+    raise "fetch user (#{username}) groups from API failed: #{response.code}" unless response.success?
+
     response.parsed_response["data"] || []
   end
 
