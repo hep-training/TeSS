@@ -29,7 +29,7 @@ module ApiService
       }.to_json
     )
 
-    raise "fetch groups from API failed: #{response.code}" unless response.success?
+    raise "fetch groups from API failed: #{response.code} (#{response.message})" unless response.success?
     response.parsed_response["data"] || []
   end
 
@@ -52,7 +52,7 @@ module ApiService
       }
     )
 
-    raise "fetch user (#{username}) groups from API failed: #{response.code}" unless response.success?
+    raise "fetch user (#{username}) groups from API failed: #{response.code} (#{response.message})" unless response.success?
 
     response.parsed_response["data"] || []
   end
@@ -90,7 +90,7 @@ module ApiService
         }
     )
 
-    raise "SSO Token Request Failed: #{response.code}" unless response.success?
+    raise "SSO Token Request Failed: #{response.code} (#{response.message})" unless response.success?
 
     token = response.parsed_response["access_token"]
     Rails.cache.fetch("api_service:bearer_token", expires_in: response.parsed_response['expires_in'] - 300) { token }
