@@ -316,7 +316,7 @@ class StaticControllerTest < ActionController::TestCase
       get :home
       assert_select 'section#featured_trainer', count: 1
       assert_select 'section#featured_trainer h2', count: 1
-      assert_select 'section#featured_trainer li', count: 2
+      assert_select 'section#featured_trainer li', count: 1
     end
   end
 
