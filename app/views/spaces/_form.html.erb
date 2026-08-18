@@ -34,7 +34,8 @@
                         template: 'autocompleter/group_id',
                         form_field_name: 'space[api_groups]',
                         label_field: :title,
-                        id_field: :id %>
+                        id_field: :id,
+                        defer_request_by: 1000 %>
       <p style="color: grey"><%= t('private_space.info_form') %></p>
     </div>
   <% else %>
@@ -45,7 +46,8 @@
                           form_field_name: 'space[group_ids]',
                           label_field: :title,
                           id_field: :id,
-                          existing_items_method: :groups %>
+                          existing_items_method: :groups,
+                          defer_request_by: 2000 %>
       </div>
   <% end %>
 

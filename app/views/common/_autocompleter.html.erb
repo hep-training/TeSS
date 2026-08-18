@@ -12,6 +12,11 @@
   data[:singleton] = singleton unless singleton.nil?
   data['transform-function'] = transform_function if transform_function
   data['group-by'] = group_by if group_by
+  # Allow per-element override of debounce via `defer_request_by` local,
+  # otherwise default to 2000ms for groups and 300ms for others.
+  if defined?(defer_request_by) && !defer_request_by.nil?
+    data['defer-request-by'] = defer_request_by
+  end
 
   json = Array(f.object.send(existing_items_method)).map do |r|
     if r.is_a?(String)

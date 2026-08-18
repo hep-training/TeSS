@@ -48,7 +48,7 @@ en:
     no_authorized: You are not authorized to access this page.
     needs_sign_in: You need to sign in to the main application to access this page.
     needs_groups_in_form: If the space is private, you must add required groups.
-    info_form: copy-paste directly the group you want to add
+    info_form: you can copy-paste directly the group you want to add
   group:
     show:
       group: Group
