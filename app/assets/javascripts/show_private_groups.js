@@ -19,5 +19,6 @@ function show_private_groups() {
 }
 
 window.addEventListener('turbolinks:load', function() {
-    show_private_groups();
+    if (document.getElementById("groups_container"))
+        show_private_groups();
 });
