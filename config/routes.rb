@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :groups
+
+  resources :groups unless TeSS::Config.feature['api_system_for_groups']
+  
   concern :collaboratable do
     resources :collaborations, only: [:create, :destroy, :index, :show]
   end
@@ -140,6 +142,9 @@ Rails.application.routes.draw do
   resources :activities, only: [:show]
 
   resources :spaces, concerns: :activities
+
+  get 'search_groups/:id' => 'spaces#search_groups_with_id'
+  get 'search_groups' => 'spaces#search_groups'
 
   get 'stars' => 'stars#index'
   post 'stars' => 'stars#create'

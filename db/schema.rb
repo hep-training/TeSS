@@ -565,6 +565,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_120000) do
     t.datetime "image_updated_at"
     t.text "image_url"
     t.boolean "is_private"
+    t.string "api_groups", array: true
     t.string "theme"
     t.string "title"
     t.datetime "updated_at", null: false

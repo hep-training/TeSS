@@ -25,8 +25,8 @@ class Space < ApplicationRecord
   has_many :space_role_users, through: :space_roles, source: :user, class_name: 'User'
   has_many :administrator_roles, -> { where(key: :admin) }, class_name: 'SpaceRole'
   has_many :administrators, through: :administrator_roles, source: :user, class_name: 'User'
-  has_and_belongs_to_many :groups
 
+  has_and_belongs_to_many :groups unless TeSS::Config.feature['api_system_for_groups'] # Used only when Group API System is disabled.
   auto_strip_attributes :title, :description, :host
 
   validates :title, presence: true
@@ -43,7 +43,9 @@ class Space < ApplicationRecord
     #
     # record:: the Space instance being validated.
     def validate(record)
-    if record.is_private && !(record.group_ids.length > 0)
+    return unless record.is_private
+    groups_count = TeSS::Config.feature['api_system_for_groups'] ? record.api_groups.length-1 : record.group_ids.length
+    if groups_count == 0
         record.errors.add(:base, I18n.t('private_space.needs_groups_in_form'))
       end
     end
