@@ -222,6 +222,8 @@ GEM
     faraday-net_http (3.4.2)
       net-http (~> 0.5)
     ffi (1.15.5)
+    ffi-icu (0.5.3)
+      ffi (~> 1.0, >= 1.0.9)
     font-awesome-sass (4.7.0)
       sass (>= 3.2)
     friendly_id (5.5.0)
@@ -280,7 +282,7 @@ GEM
     jquery-turbolinks (2.1.0)
       railties (>= 3.1.0)
       turbolinks
-    json (2.21.1)
+    json (2.21.2)
     json-canonicalization (1.0.0)
     json-jwt (1.16.6)
       activesupport (>= 4.2)
@@ -763,6 +765,10 @@ GEM
     sparql-client (3.3.0)
       net-http-persistent (~> 4.0, >= 4.0.2)
       rdf (~> 3.3)
+    spring (4.3.0)
+    spring-watcher-listen (2.1.0)
+      listen (>= 2.7, < 4.0)
+      spring (>= 4)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -877,6 +883,7 @@ DEPENDENCIES
   devise
   devise_invitable
   eventbrite_sdk
+  ffi-icu
   font-awesome-sass (~> 4.7.0)
   friendly_id
   geocoder
@@ -936,6 +943,7 @@ DEPENDENCIES
   sitemap-parser
   sitemap_generator
   slim
+  spring-watcher-listen
   sunspot_rails
   terser
   tess_rdf_extractors!

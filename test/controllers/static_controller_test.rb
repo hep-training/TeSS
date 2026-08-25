@@ -320,6 +320,15 @@ class StaticControllerTest < ActionController::TestCase
     end
   end
 
+  test 'should not show featured trainer' do
+    with_settings({ site: { home_page: { featured_trainer: nil } } }) do
+      get :home
+      assert_select 'section#featured_trainer', count: 0
+      assert_select 'section#featured_trainer h2', count: 0
+      assert_select 'section#featured_trainer li', count: 0
+    end
+  end
+
   test 'should not show featured trainer (legacy boolean value set to `false`)' do
     with_settings({ site: { home_page: { featured_trainer: false } } }) do
       get :home

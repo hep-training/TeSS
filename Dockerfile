@@ -53,8 +53,8 @@ RUN yarn install --frozen-lockfile --non-interactive
 COPY . .
 
 # precompile assets
-RUN bundle exec rake assets:precompile
-
+RUN bundle exec rake assets:precompile && \
+    bundle exec rake tmp:clear 
 
 ARG CR
 
