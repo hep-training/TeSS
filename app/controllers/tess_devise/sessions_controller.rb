@@ -7,12 +7,8 @@ class TessDevise::SessionsController < Devise::SessionsController
   end
 
   def destroy
-    if user_signed_in? && TeSS::Config.feature['api_system_for_groups']
-      current_user.clear_cached_groups
-    end
-
     super
-
+    
     clear_legacy_cookie
   end
 
