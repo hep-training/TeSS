@@ -288,6 +288,9 @@ default: &default
     blue:
       primary: '#024552'
       secondary: '#00839d'
+    hep:
+      primary: '#024552'
+      secondary: '#00839d'
     space:
       primary: '#260252'
       secondary: '#5c29b1'
