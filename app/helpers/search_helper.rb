@@ -39,7 +39,9 @@ module SearchHelper
     end
 
     if filter_limit_reached?
-      content_tag(:span, class: 'facet-option filter-limit-reached', &content)
+      html_options[:class] = [html_options[:class], 'filter-limit-reached'].compact.join(' ')
+
+      content_tag(:span, html_options, &content)
     else
       link_to parameters, html_options, &content
     end
