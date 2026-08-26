@@ -1763,4 +1763,60 @@ class MaterialsControllerTest < ActionController::TestCase
       assert_select '#space-info', count: 0
     end
   end
+
+  test 'displays warning when filter limit reached for anonymous users' do
+    with_settings(solr_enabled: true, filter_limit: 2) do
+      Material.stub(:search_and_filter, MockSearch.new(Material.all)) do
+        get :index, params: { keywords: ['dancing', 'singing'] }
+
+        assert_response :success
+      end
+    end
+
+    assert_select 'div.alert', text: /Filter limit reached/
+    assert_select '.facet-option.filter-limit-reached'
+  end
+
+  test 'does not display filter limit warning for logged-in users' do
+    sign_in(@user)
+
+    with_settings(solr_enabled: true, filter_limit: 2) do
+      Material.stub(:search_and_filter, MockSearch.new(Material.all)) do
+        get :index, params: { keywords: ['dancing', 'singing'] }
+
+        assert_response :success
+      end
+    end
+
+    assert_select 'div.alert', text: /Filter limit reached/, count: 0
+    assert_select '.facet-option.filter-limit-reached', count: 0
+  end
+
+  test 'throws error if filter limit exceeded for anonymous users' do
+    with_settings(solr_enabled: true, filter_limit: 2) do
+      Material.stub(:search_and_filter, MockSearch.new(Material.all)) do
+        get :index, params: { keywords: ['dancing', 'singing', 'acrobatics'] }
+
+        assert_response :bad_request
+      end
+    end
+
+    assert_select '#error-message', text: /Filter limit reached/
+  end
+
+  test 'does not throw error if filter limit exceeded for logged-in users' do
+    sign_in(@user)
+
+    with_settings(solr_enabled: true, filter_limit: 2) do
+      Material.stub(:search_and_filter, MockSearch.new(Material.all)) do
+        get :index, params: { keywords: ['dancing', 'singing', 'acrobatics'] }
+
+        assert_response :success
+      end
+    end
+
+    assert_select '#error-message', count: 0
+    assert_select 'div.alert', text: /Filter limit reached/, count: 0
+    assert_select '.facet-option.filter-limit-reached', count: 0
+  end
 end

@@ -288,6 +288,7 @@ default: &default
     space:
       primary: '#260252'
       secondary: '#5c29b1'
+  filter_limit: # Maximum number filter values allowed for anonymous users
 development:
   <<: *default
 
