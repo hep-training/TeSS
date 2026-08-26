@@ -1819,4 +1819,27 @@ class MaterialsControllerTest < ActionController::TestCase
     assert_select 'div.alert', text: /Filter limit reached/, count: 0
     assert_select '.facet-option.filter-limit-reached', count: 0
   end
+
+  test 'does not throw error if filter limit exceeded for API requests' do
+    with_settings(solr_enabled: true, filter_limit: 2) do
+      Material.stub(:search_and_filter, MockSearch.new(Material.all)) do
+        get :index, params: { keywords: ['dancing', 'singing', 'acrobatics'], format: :json_api }
+
+        assert_response :success
+        assert_not_nil assigns(:materials)
+        assert_valid_json_api_response
+        body = nil
+        assert_nothing_raised do
+          body = JSON.parse(response.body)
+        end
+
+        assert body['data'].any?
+        assert body['meta']['results-count'] > 0
+        assert_includes body['meta']['facets']['keywords'], 'acrobatics'
+        assert body['meta']['available-facets'].keys.any?
+        assert body['meta']['available-facets'].values.any?
+        assert body['links']['self'].include?('acrobatics')
+      end
+    end
+  end
 end
