@@ -1198,7 +1198,6 @@ en:
           A user being part of a group has access to every private space which requires the group.
           Each group has multiple owners. A owner can add and remove people to the group.
   orcid:
-  orcid:
     error: 'An error occurred whilst trying to authenticate your ORCID.'
     link: 'Link your ORCID'
     authenticate: 'Authenticate your ORCID'
@@ -1241,3 +1240,6 @@ en:
     link: Go to original entry
   other_space:
     link: View in space
+  search:
+    errors:
+      filter_limit_reached: Filter limit reached, please log in to apply additional filters.
