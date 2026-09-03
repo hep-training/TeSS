@@ -1,5 +1,7 @@
 # The controller for actions related to the Spaces model
 class SpacesController < ApplicationController
+  include ApiService
+
   before_action :ensure_feature_enabled
   before_action :set_space, only: [:show, :edit, :update, :destroy]
   before_action :set_breadcrumbs
@@ -92,7 +94,55 @@ class SpacesController < ApplicationController
     end
   end
 
+  # GET /search_groups
+  #
+  # Lists groups for the given space.
+  # Requires authorization via SpacePolicy#search_groups?.
+  # Used only when the Group API System is enabled.
+  # Triggered in the Spaces form when an admin searches for GMS groups.
+  def search_groups
+    authorize Space
+
+    query = params[:q]
+    data = get_groups_from_query(query)
+
+    render json: transform_groups(data)
+  end
+
+  # GET /search_groups
+  #
+  # Search groups for a specific space (identified by :id).
+  #
+  # If the current user does not have permission to search groups of this space,
+  # returns an error JSON.
+  def search_groups_with_id
+    space = Space.find(params[:id].to_i)
+
+    unless policy(space).search_groups?
+      render json: { error: "user does not have permissions do search groups of this space." }
+      return
+    end
+
+    query = params[:q]
+    data = get_groups_from_query(query)
+
+    render json: transform_groups(data)
+  end
+
   private
+
+  # Converts raw group objects into the JSON structure expected by the client.
+  #
+  # @param data [Array<Hash>] Raw groups returned by get_groups_from_query
+  # @return [Array<Hash>] [{ id: ..., title: ... }, ...]
+  def transform_groups(data)
+    data.map do |group|
+      {
+        id: group['groupIdentifier'],
+        title: group['displayName']
+      }
+    end
+  end
 
   # Loads the Space identified by <tt>params[:id]</tt> into +@space+.
   def set_space
@@ -103,8 +153,9 @@ class SpacesController < ApplicationController
   #           update. Includes +:host+ only when the current user is an
   #           admin.
   def space_params
-    permitted = [:title, :description, :theme, :image, :image_url, :is_private, { administrator_ids: [] }, { enabled_features: [] }, { group_ids: [] }]
+    permitted = [:title, :description, :theme, :image, :image_url, :is_private, { administrator_ids: [] }, { enabled_features: [] }]
     permitted += [:host] if current_user.is_admin?
+    permitted += TeSS::Config.feature['api_system_for_groups'] ? [{ api_groups: [] }] : [{ group_ids: [] }]
     params.require(:space).permit(*permitted)
   end
 end

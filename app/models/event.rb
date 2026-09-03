@@ -344,9 +344,17 @@ class Event < ApplicationRecord
 
     scope = provider_id.present? ? where(content_provider_id: provider_id) : all
 
-    event = scope.where(url: given_event.url).last if given_event.url.present?
+    if given_event.url.present?
+      events_with_url = scope.where(url: given_event.url).to_a
+      non_private = events_with_url.reject { |ev| ev.space&.is_private }
+      event = non_private.last if non_private.any?
+    end
 
-    event ||= where(content_provider_id: provider_id, title: given_event.title, start: given_event.start).last if given_event.title.present? && given_event.start.present?
+    if given_event.title.present? && given_event.start.present?
+      events_q = scope.where(content_provider_id: provider_id, title: given_event.title, start: given_event.start).to_a
+      non_private = events_q.reject { |ev| ev.space&.is_private }
+      event ||= non_private.last if non_private.any?
+    end
 
     event
   end

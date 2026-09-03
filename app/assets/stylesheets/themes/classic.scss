@@ -58,4 +58,6 @@ $navbar-default-toggle-hover-bg: $bgHighlight;
 $navbar-default-toggle-icon-bar-bg: $colHover2;
 $navbar-default-toggle-border-color: $bgHighlight;
 
+@import "mixins/modern_base";
+
 @import "../application";

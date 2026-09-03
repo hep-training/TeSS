@@ -1,3 +1,4 @@
+<% is_for_edit ||= false %>
 <%= simple_form_for(@space) do |f| %>
   <%= render partial: 'common/error_summary', locals: { resource: @space } %>
 
@@ -26,15 +27,29 @@
     <%= f.input :is_private, label: "", input_html: { id: "space_is_private" } %>
   </div>
 
-  <div id="groups_container" style="display: none;">
-    <%= f.autocompleter :groups,
-                      url: groups_path, transform_function: 'groups',
-                      template: 'autocompleter/group_id',
-                      form_field_name: 'space[group_ids]',
-                      label_field: :title,
-                      id_field: :id,
-                      existing_items_method: :groups %>
-  </div>
+  <% if TeSS::Config.feature['api_system_for_groups'] %>
+    <div id="groups_container" style="display: none; width: 50%;">
+      <%= f.autocompleter :api_groups,
+                        url: (is_for_edit ? "/search_groups/#{@space.id}" : "/search_groups"), transform_function: 'groups',
+                        template: 'autocompleter/group_id',
+                        form_field_name: 'space[api_groups]',
+                        label_field: :title,
+                        id_field: :id,
+                        defer_request_by: 1000 %>
+      <p style="color: grey"><%= t('private_space.info_form') %></p>
+    </div>
+  <% else %>
+      <div id="groups_container" style="display: none;">
+        <%= f.autocompleter :groups,
+                          url: groups_path, transform_function: 'groups',
+                          template: 'autocompleter/group_id',
+                          form_field_name: 'space[group_ids]',
+                          label_field: :title,
+                          id_field: :id,
+                          existing_items_method: :groups,
+                          defer_request_by: 2000 %>
+      </div>
+  <% end %>
 
   <div>
     <%= f.input :enabled_features, label: t('features.enabled'), collection: space_feature_options, as: :check_boxes %>

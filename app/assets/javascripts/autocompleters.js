@@ -10,16 +10,21 @@ var Autocompleters = {
     },
     transformFunctions: {
         default: function (response, config) {
+            var resp = Array.isArray(response) ? response : [];
             return {
-                suggestions: $.map(response, function(item) {
-                    return { value: item[config.labelField], data: { id: item[config.idField], item: item } };
+                suggestions: $.map(resp, function(item) {
+                    var label = item && item[config.labelField];
+                    if (label == null) { return null; }
+                    return { value: String(label), data: { id: item && item[config.idField], item: item } };
                 })
             };
         },
         events: function (response, config) {
+            var resp = Array.isArray(response) ? response : [];
             var today = new Date();
             return {
-                suggestions: $.map(response, function(item) {
+                suggestions: $.map(resp, function(item) {
+                    if (!item) { return null; }
                     var group;
                     if (item.end && new Date(item.end) < today) {
                         group = 'Past';
@@ -30,26 +35,34 @@ var Autocompleters = {
                     if (item.start) {
                         hint = item.start.substr(0,10);
                     }
-                    return { value: item[config.labelField], data: { id: item[config.idField], group: group, item: item, hint: hint } };
+                    var label = item[config.labelField];
+                    if (label == null) { return null; }
+                    return { value: String(label), data: { id: item[config.idField], group: group, item: item, hint: hint } };
                 })
             };
         },
         users: function (response, config) {
+            var resp = Array.isArray(response) ? response : [];
             return {
-                suggestions: $.map(response, function (item) {
-                    var name = item.username;
+                suggestions: $.map(resp, function (item) {
+                    if (!item) { return null; }
+                    var name = item.username || '';
                     if (item.firstname) {
-                        name = name + " (" + item.firstname + " " + item.surname + ")";
+                        name = name + " (" + item.firstname + " " + (item.surname || '') + ")";
                     }
                     item.name = name;
-                    return { value: name, data: { id: item[config.idField], item: item } };
+                    return { value: String(name), data: { id: item[config.idField], item: item } };
                 })
             };
         },
         groups: function (response, config) {
+            var resp = Array.isArray(response) ? response : [];
             return {
-                suggestions: $.map(response, function (item) {
-                    return { value: item.title, data: { id: item[config.idField], item: item } };
+                suggestions: $.map(resp, function (item) {
+                    if (!item) { return null; }
+                    var title = item.title;
+                    if (title == null) { return null; }
+                    return { value: String(title), data: { id: item[config.idField], item: item } };
                 })
             };
         },
@@ -65,6 +78,7 @@ var Autocompleters = {
         var existingValues = JSON.parse($(element).find('[data-role="autocompleter-existing"]').html()) || [];
         var listElement = $(element).find('[data-role="autocompleter-list"]');
         var inputElement = $(element).find('[data-role="autocompleter-input"]');
+        var transformName = $(element).data("transformFunction") || "default";
         var defaults = {
             url: $(element).data("url"),
             prefix: $(element).data("prefix"),
@@ -73,9 +87,22 @@ var Autocompleters = {
             singleton: $(element).data("singleton") || false,
             groupBy: $(element).data("groupBy") || false,
             templateName: $(element).data("template"),
-            transformFunction: Autocompleters.transformFunctions[$(element).data("transformFunction") || "default"]
-        }
+            transformFunction: Autocompleters.transformFunctions[transformName],
+            // Allow per-element override via `data-defer-request-by`. Default to 2s for groups, 300ms otherwise.
+            deferRequestBy: $(element).data("deferRequestBy") || (transformName === 'groups' ? 2000 : 300)
+        };
+
+        var loaderElement = $(element).find('[data-role="autocompleter-loader"]');
+
         opts = Object.assign({}, defaults, opts);
+
+        // Ensure deferRequestBy is a number (milliseconds)
+        opts.deferRequestBy = parseInt(opts.deferRequestBy, 10) || 0;
+
+        // Temporary debug logs to trace requests / loader behavior
+        try {
+            console.debug('[Autocompleters] initGroup', { url: opts.url, deferRequestBy: opts.deferRequestBy, transformName: transformName });
+        } catch (e) { /* no-op in older consoles */ }
 
         opts.templateName = opts.templateName || (opts.singleton ? "autocompleter/singleton_resource" :
             "autocompleter/resource");
@@ -94,14 +121,20 @@ var Autocompleters = {
         inputElement.autocomplete({
             serviceUrl: opts.url,
             dataType: "json",
-            deferRequestBy: 300, // Wait 300ms before submitting to stop search being flooded
+            deferRequestBy: opts.deferRequestBy,
+            // Ensure requests are sent instead of being served from cache
+            noCache: true,
             paramName: "q",
             groupBy: opts.groupBy,
             formatResult: Autocompleters.formatResultWithHint,
             transformResult: function(response) {
+                try {
+                    console.debug('[Autocompleters] transformResult', { responseLength: (response && response.length) || 0, url: opts.url });
+                } catch (e) {}
                 return opts.transformFunction(response, opts);
             },
             onSelect: function (suggestion) {
+                try { console.debug('[Autocompleters] onSelect', suggestion); } catch (e) {}
                 // Don't add duplicates
                 var id = suggestion.data.id;
                 if (!$("[data-id='" + id + "']", listElement).length) {
@@ -122,10 +155,14 @@ var Autocompleters = {
                 $(this).val('').focus();
             },
             onSearchStart: function (query) {
+                try { console.debug('[Autocompleters] onSearchStart', { query: query, url: opts.url }); } catch (e) {}
                 inputElement.addClass("loading");
+                if (loaderElement && loaderElement.length) { loaderElement.show(); }
             },
             onSearchComplete: function () {
+                try { console.debug('[Autocompleters] onSearchComplete', { url: opts.url }); } catch (e) {}
                 inputElement.removeClass("loading");
+                if (loaderElement && loaderElement.length) { loaderElement.hide(); }
             }
         });
     }

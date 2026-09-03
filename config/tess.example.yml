@@ -161,6 +161,9 @@ default: &default
     nodes: false
     spaces: false
 
+    # Spaces features
+    api_system_for_groups: # group management system API URL, e.g., 'https://myapi.com/api/v1.0'
+
     # Resources' features
     subscription: true
     geocoding: false
@@ -285,6 +288,9 @@ default: &default
       primary: '#529d00'
       secondary: '#829d30'
     blue:
+      primary: '#024552'
+      secondary: '#00839d'
+    hep:
       primary: '#024552'
       secondary: '#00839d'
     space:

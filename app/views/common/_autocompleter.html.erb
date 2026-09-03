@@ -12,12 +12,27 @@
   data[:singleton] = singleton unless singleton.nil?
   data['transform-function'] = transform_function if transform_function
   data['group-by'] = group_by if group_by
+  # Allow per-element override of debounce via `defer_request_by` local,
+  # otherwise default to 2000ms for groups and 300ms for others.
+  if defined?(defer_request_by) && !defer_request_by.nil?
+    data['defer-request-by'] = defer_request_by
+  end
+
   json = Array(f.object.send(existing_items_method)).map do |r|
-    { item: { id: r.send(id_field),
-              id_field => r.send(id_field),
-              label_field => r.send(label_field) },
-      prefix: form_field_name }
-  end.to_json
+    if r.is_a?(String)
+      # When the stored item is just a string (the ID), use it as both ID and label
+      { item: { id: r,
+                id_field => r,
+                label_field => r },
+        prefix: form_field_name }
+    else
+      # When the item is an object with methods
+      { item: { id: r.send(id_field),
+                id_field => r.send(id_field),
+                label_field => r.send(label_field) },
+        prefix: form_field_name }
+    end
+  end.reject { |item| item[:item][:id].blank? }.to_json
 
   placeholder_text = if singleton
                        "Select #{f.object.class.human_attribute_name(field_name).singularize.downcase}"

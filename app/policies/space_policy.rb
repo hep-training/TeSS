@@ -28,6 +28,10 @@ class SpacePolicy < ApplicationPolicy
     edit?
   end
 
+  def search_groups?
+    edit?
+  end
+
   # Returns:: +true+ if the current user is a global admin.
   def manage?
     @user&.is_admin?

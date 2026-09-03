@@ -11,6 +11,8 @@
 # this and override individual query methods as needed.
 class ApplicationPolicy
 
+  include UserGroupCacheService
+
   attr_reader :user, :record
   attr_accessor :request
 
@@ -105,6 +107,8 @@ class ApplicationPolicy
   #   an admin, or belong to at least one of the space's groups (and only
   #   when the space in question is the current space, or the record *is*
   #   the space itself).
+  # When Group API System is enabled, we check if user groups are in redis cache, otherwise we fetch them.
+  # When it is not, we use regular groups in the database.
   #
   # Returns:: +true+ or +false+.
   def shown?
@@ -112,9 +116,14 @@ class ApplicationPolicy
     return true if !@space.is_private
     return false unless @user # and so if space is private
     if @space == Space.current_space || @record == @space
-      user_groups  = @user.groups.pluck(:id)
-      space_groups = @space.groups.pluck(:id)
-      return @user.is_admin? || @user.groups.where(id: @space.groups).any?
+      return true if @user.is_admin?
+      if TeSS::Config.feature['api_system_for_groups']
+        user_groups = get_cached_groups_of_user_or_fetch(@user)
+        space_groups = @space.api_groups
+        return user_groups.any? { |group| space_groups.include?(group) }
+      else
+        return @user.groups.where(id: @space.groups).any?
+      end
     end
 
     return false
@@ -167,6 +176,19 @@ class ApplicationPolicy
     return false if @user.nil?
     roles.any? { |r| @user.has_role?(r) } ||
       (@space && roles.any? { |r| @user.has_space_role?(@space, r) })
+  end
+
+  # Check if the user has any of the current space.
+  #
+  # Returns:: +true+ if the user holds any of the groups of the current space
+  def user_in_space_groups?
+    if TeSS::Config.feature['api_system_for_groups']
+      user_groups = get_cached_groups_of_user_or_fetch(@user)
+      space_groups = @space.api_groups || []
+      (user_groups & space_groups).any? # The Array intersection returns common groups between the two arrays (Example: ["group_a", "group_b"] & ["group_b", "group_c"] -> ["group_b"])
+    else
+      @user.groups.where(id: @space.groups).exists? # .exists? fires an optimized `SELECT 1 ... LIMIT 1` query than loading ActiveRecords into memory.
+    end
   end
 
 end

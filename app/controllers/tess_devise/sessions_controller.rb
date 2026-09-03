@@ -8,7 +8,7 @@ class TessDevise::SessionsController < Devise::SessionsController
 
   def destroy
     super
-
+    
     clear_legacy_cookie
   end
 

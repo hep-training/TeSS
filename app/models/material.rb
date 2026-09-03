@@ -176,10 +176,19 @@ class Material < ApplicationRecord
     provider_id = (given_material.content_provider_id || given_material.content_provider&.id)&.to_s
 
     scope = provider_id.present? ? where(content_provider_id: provider_id) : all
+    if given_material.url.present?
+      # Load matching materials, then filter out those in private spaces
+      materials_with_url = scope.where(url: given_material.url).to_a
+      non_private = materials_with_url.reject { |m| m.space&.is_private }
+      material = non_private.last if non_private.any?
+    end
 
-    material = scope.where(url: given_material.url).last if given_material.url.present?
 
-    material ||= scope.where(content_provider_id: provider_id, title: given_material.title).last if provider_id.present? && given_material.title.present?
+    if provider_id.present? && given_material.title.present?
+      materials_with_title = scope.where(content_provider_id: provider_id, title: given_material.title).to_a
+      non_private_title = materials_with_title.reject { |m| m.space&.is_private }
+      material ||= non_private_title.last if non_private_title.any?
+    end
 
     material
   end
