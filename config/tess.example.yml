@@ -296,6 +296,7 @@ default: &default
     hep:
       primary: '#0033A0' # CERN blue by default
       secondary: '#2E53A1' # Darkest by default
+  filter_limit: # Maximum number of filter values allowed for anonymous users
 development:
   <<: *default
 
