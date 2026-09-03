@@ -290,12 +290,12 @@ default: &default
     blue:
       primary: '#024552'
       secondary: '#00839d'
-    hep:
-      primary: '#024552'
-      secondary: '#00839d'
     space:
       primary: '#260252'
       secondary: '#5c29b1'
+    hep:
+      primary: '#0033A0' # CERN blue by default
+      secondary: '#2E53A1' # Darkest by default
 development:
   <<: *default
 
